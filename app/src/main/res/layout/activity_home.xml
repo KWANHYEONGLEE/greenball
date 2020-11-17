@@ -61,6 +61,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout_Home_Recommend"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -92,6 +93,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_Home_Introduce"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -124,6 +126,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_Home_ARroad"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -155,6 +158,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_Home_ARgame"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
