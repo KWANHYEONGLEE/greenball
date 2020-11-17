@@ -37,7 +37,6 @@ public class InstagramActivity extends AppCompatActivity {
 
         selectGallery();
 
-
 }
 
 
