@@ -17,9 +17,14 @@ import com.google.ar.core.examples.java.augmentedimage.R;
 
 public class StartActivity extends AppCompatActivity {
 
+    private Button btn_ar0;
     private Button btn_ar1;
     private Button btn_ar2;
     private Button btn_ar3;
+
+    private Button btn_tmap;
+
+
 
     private Button shareButton_insta;
 
@@ -35,6 +40,16 @@ public class StartActivity extends AppCompatActivity {
         //FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         setContentView(R.layout.activity_start);
+
+
+        //test01이미지를 인식하는 activity 등장
+        btn_tmap = (Button) findViewById(R.id.btn_tmap);
+        btn_tmap.setOnClickListener(onClickListener);
+
+
+        //test01이미지를 인식하는 activity 등장
+        btn_ar0 = (Button) findViewById(R.id.btn_ar0);
+        btn_ar0.setOnClickListener(onClickListener);
 
         //test01이미지를 인식하는 activity 등장
         btn_ar1 = (Button) findViewById(R.id.btn_ar1);
@@ -72,6 +87,21 @@ public class StartActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+
+                //test01이미지를 인식하는 activity 등장
+                case R.id.btn_tmap:
+                    Intent intent5 = new Intent(StartActivity.this, TmapActivity.class);
+                    intent5.putExtra("AR", 5);
+                    startActivity(intent5);
+                    break;
+
+                //test01이미지를 인식하는 activity 등장
+                case R.id.btn_ar0:
+                    Intent intent0 = new Intent(StartActivity.this, ArNavigationActivity.class);
+                    intent0.putExtra("AR", 0);
+                    startActivity(intent0);
+                    break;
+
                 //test01이미지를 인식하는 activity 등장
                 case R.id.btn_ar1:
                     Intent intent1 = new Intent(StartActivity.this, AugmentedImageActivity.class);

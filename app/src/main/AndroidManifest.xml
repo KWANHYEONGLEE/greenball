@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -24,10 +29,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.google.ar.core.examples.java.HomeActivity">
-
-
-        </activity>
+        <activity android:name="com.google.ar.core.examples.java.ArNavigationActivity"></activity>
+        <activity android:name="com.google.ar.core.examples.java.HomeActivity"></activity>
         <activity
             android:name="com.google.ar.core.examples.java.kotlingif.GifActivity"
             android:theme="@style/Theme.AppCompat" />
@@ -43,11 +46,13 @@
         <activity
             android:name="com.google.ar.core.examples.java.Answer"
             android:theme="@style/Theme.AppCompat" />
-
         <activity
             android:name="com.google.ar.core.examples.java.InstagramActivity"
             android:theme="@style/Theme.AppCompat" />
 
+        <activity
+            android:name="com.google.ar.core.examples.java.TmapActivity"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".AugmentedImageActivity"
             android:configChanges="orientation|screenSize"
@@ -70,8 +75,6 @@
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
-
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

@@ -143,7 +143,7 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
 
         infoCard.setParent(arFragment.getArSceneView().getScene());
         infoCard.setEnabled(true);
-        infoCard.setLocalPosition(new Vector3(0f, 0f, 1.5f)); // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
+        infoCard.setLocalPosition(new Vector3(0f, 0f, -1.5f)); // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
         infoCard.setLocalRotation(new Quaternion(new Vector3(1.0f,0.0f,0.0f),0));
 
         ViewRenderable.builder()
