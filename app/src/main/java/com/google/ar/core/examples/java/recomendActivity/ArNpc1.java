@@ -1,18 +1,4 @@
-/*
- * Copyright 2018 Google LLC. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.google.ar.core.examples.java.recomendActivity;
 
 import android.app.Activity;
@@ -49,14 +35,15 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.ExternalTexture;
 import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.rendering.PlaneRenderer;
+import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
-/**
- * This is an example activity that shows how to display a video with chroma key filtering in
- * Sceneform.
- */
+import java.util.concurrent.CompletableFuture;
+
+
 public class ArNpc1 extends AppCompatActivity {
     private static final String TAG = ArNpc1.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
@@ -74,7 +61,6 @@ public class ArNpc1 extends AppCompatActivity {
     private static final float VIDEO_HEIGHT_METERS = 0.85f;
 
 
-
     //!!!!!!!!!!!텍스트뷰 접근!!!!!!!!!!!!!!
     //private Button button;
 
@@ -82,9 +68,6 @@ public class ArNpc1 extends AppCompatActivity {
     private Button btn_showDialog;
 
     @Override
-    @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-    // CompletableFuture requires api level 24
-    // FutureReturnValueIgnored is not valid
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -95,10 +78,8 @@ public class ArNpc1 extends AppCompatActivity {
 //        btn_showDialog.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-
 //            }
 //        });
-
 
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
@@ -111,8 +92,8 @@ public class ArNpc1 extends AppCompatActivity {
 
 
         //!!!!!!!!!!!텍스트뷰 접근!!!!!!!!!!!!!!
-//        button = (Button) findViewById(R.id.button);
-//        button.setOnClickListener(onClickListener);
+        //button = (Button) findViewById(R.id.button);
+        //button.setOnClickListener(onClickListener);
 
         // Create an ExternalTexture for displaying the contents of the video.
         ExternalTexture texture = new ExternalTexture();
@@ -122,21 +103,103 @@ public class ArNpc1 extends AppCompatActivity {
         mediaPlayer.setSurface(texture.getSurface());
         mediaPlayer.setLooping(true);
 
-        // Create a renderable with a material that has a parameter of type 'samplerExternal' so that
-        // it can display an ExternalTexture. The material also has an implementation of a chroma key
-        // filter.
+
+
+        // 이게 움직이는 모델
+        //Create the transformable model and add it to the anchor.
+        //TransformableNode model = new TransformableNode(arFragment.getTransformationSystem());
+        Node model = new Node();
+
+        model.setParent(arFragment.getArSceneView().getScene());
+        model.setLocalPosition(new Vector3(0.0f, -1.5f, -1.5f));
+
+
+
+
+        // !!!!!!!!!!!!!!!!!! video 노드 !!!!!!!!!!!!!!!!!!!
+        // Create a node to render the video and add it to the anchor.
+        Node videoNode = new Node();
+        videoNode.setParent(arFragment.getArSceneView().getScene());
+
+        // Set the scale of the node so that the aspect ratio of the video is correct.
+        float videoWidth = mediaPlayer.getVideoWidth();
+        float videoHeight = mediaPlayer.getVideoHeight();
+        videoNode.setLocalScale(
+                new Vector3(VIDEO_HEIGHT_METERS * (videoWidth / videoHeight), VIDEO_HEIGHT_METERS, 1.0f));
+
+        // Start playing the video when the first node is placed.
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+
+            // Wait to set the renderable until the first frame of the  video becomes available.
+            // This prevents the renderable from briefly appearing as a black quad before the video
+            // plays.
+            texture
+                    .getSurfaceTexture()
+                    .setOnFrameAvailableListener(
+                            (SurfaceTexture surfaceTexture) -> {
+                                //이거끄고
+                                //videoNode.setRenderable(videoRenderable);
+
+                                texture.getSurfaceTexture().setOnFrameAvailableListener(null);
+                            });
+        } else {
+            //이거끄고
+            //videoNode.setRenderable(videoRenderable);
+
+        }
+        // !!!!!!!!!!!!!!!!!! video 노드 !!!!!!!!!!!!!!!!!!!
+
+
+        // !!!!!!!!!!!!!!!!!! tigerTitleNode 노드!!!!!!!!!!!!!!!!!!!
+        Node tigerTitleNode = new Node();
+
+        //이거끄고
+        //tigerTitleNode.setParent(videoRenderable);
+        tigerTitleNode.setParent(model);
+        tigerTitleNode.setEnabled(false);
+        tigerTitleNode.setLocalPosition(new Vector3(0.0f, 1.0f, 0.0f));
+
+        ViewRenderable.builder()
+                .setView(this, R.layout.tiger_card_view)
+                .build()
+                .thenAccept(
+                        (renderable) -> {
+
+                            tigerTitleNode.setRenderable(renderable);
+                            tigerTitleNode.setEnabled(true);
+
+                            TextView textView = (TextView) renderable.getView();
+                            textView.setText("호랑이기운이 솟아나요");
+
+                        })
+                .exceptionally(
+                        (throwable) -> {
+                            throw new AssertionError("Could not load card view.", throwable);
+                        }
+                );
+
+        // !!!!!!!!!!!!!!!!!! tigerTitleNode 노드!!!!!!!!!!!!!!!!!!!
+
+
+        // !!!!!!!!!!!!!!!!!! 준비된 쓰리디 모델 띄워주기 !!!!!!!!!!!!!!!!!!!
         ModelRenderable.builder()
                 .setSource(this, R.raw.chroma_key_video)
                 .build()
                 .thenAccept(
                         renderable -> {
 
+                            arFragment.getPlaneDiscoveryController().hide();
+                            changePlane();
+
                             // 평평한것 렌더링 해줌
                             videoRenderable = renderable;
+                            model.setRenderable(videoRenderable);
 
                             // 크로마키용 제외요소들
                             renderable.getMaterial().setExternalTexture("videoTexture", texture);
                             renderable.getMaterial().setFloat4("keyColor", CHROMA_KEY_COLOR);
+
                         })
                 .exceptionally(
                         throwable -> {
@@ -147,218 +210,174 @@ public class ArNpc1 extends AppCompatActivity {
                             return null;
                         });
 
+        // !!!!!!!!!!!!!!!!!! 준비된 쓰리디 모델 띄워주기 !!!!!!!!!!!!!!!!!!!
 
 
 
-        Node infoCard = new Node();
-
-        infoCard.setParent(arFragment.getArSceneView().getScene());
-        infoCard.setEnabled(true);
-
-        infoCard.setLocalPosition(new Vector3(0f, 0f, -1.5f)); // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-        infoCard.setLocalRotation(new Quaternion(new Vector3(1.0f,0.0f,0.0f),0));
-
-        ViewRenderable.builder()
-                .setView(this, R.layout.tiger_card_view)
-                .build()
-                .thenAccept(
-                        (renderable) -> {
-                            infoCard.setRenderable(renderable);
-                            TextView textView = (TextView) renderable.getView();
-                            textView.setText("Value from setImage");
-
-                            Button button1 = (Button) findViewById(R.id.button) ;
-                            button1.setOnClickListener(new Button.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                    Toast.makeText(ArNpc1.this, "123123", Toast.LENGTH_SHORT).show();
-                                    textView.setText("www");
-
-                                }
-                            });
-
-                            Button btn_showDialog = (Button) findViewById(R.id.btn_showDialog) ;
-                            btn_showDialog.setOnClickListener(new Button.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                    Toast.makeText(ArNpc1.this, "123123", Toast.LENGTH_SHORT).show();
+//        //////////////////////////// 시작하면 바로뜨던 말풍선 ////////////////////////////
+//        Node infoCard = new Node();
+//
+//        infoCard.setParent(arFragment.getArSceneView().getScene());
+//        infoCard.setEnabled(true);
+//
+//        infoCard.setLocalPosition(new Vector3(0f, 0f, -1.5f)); // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
+//        infoCard.setLocalRotation(new Quaternion(new Vector3(1.0f,0.0f,0.0f),0));
+//
+//        ViewRenderable.builder()
+//                .setView(this, R.layout.tiger_card_view)
+//                .build()
+//                .thenAccept(
+//                        (renderable) -> {
+//                            infoCard.setRenderable(renderable);
+//                            TextView textView = (TextView) renderable.getView();
+//                            textView.setText("Value from setImage");
+//
+//                            Button button1 = (Button) findViewById(R.id.button) ;
+//                            button1.setOnClickListener(new Button.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//
+//                                    Toast.makeText(ArNpc1.this, "123123", Toast.LENGTH_SHORT).show();
 //                                    textView.setText("www");
-
-                                    DialogTempProd dialogTempProd = new DialogTempProd(ArNpc1.this);
-                                    dialogTempProd.callDialog();
-                                }
-                            });
-
-                            Button btn_imgSlider = (Button) findViewById(R.id.btn_imgSlider) ;
-                            btn_imgSlider.setOnClickListener(new Button.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    startActivityC(RecoActivity.class);
-                                }
-                            });
-
-
-                        })
-                .exceptionally(
-                        (throwable) -> {
-                            throw new AssertionError("Could not load info card view.", throwable);
-                        });
-
-
-
-
-
-        //탭을 하면!!!!!!!!!!!!!
-        arFragment.setOnTapArPlaneListener(
-                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-                    if (videoRenderable == null) {
-                        return;
-                    }
-
-                    // Create the Anchor.
-                    Anchor anchor = hitResult.createAnchor();
-                    AnchorNode anchorNode = new AnchorNode(anchor);
-                    anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-
-                    // 이게 움직이는 모델
-                    //Create the transformable model and add it to the anchor.
-                    TransformableNode model = new TransformableNode(arFragment.getTransformationSystem());
-                    model.setParent(anchorNode);
-                    model.setRenderable(videoRenderable);
-                    model.select();
-
-
-                    // Create a node to render the video and add it to the anchor.
-                    Node videoNode = new Node();
-                    videoNode.setParent(anchorNode);
-
-
-                    // Set the scale of the node so that the aspect ratio of the video is correct.
-                    float videoWidth = mediaPlayer.getVideoWidth();
-                    float videoHeight = mediaPlayer.getVideoHeight();
-                    videoNode.setLocalScale(
-                            new Vector3(
-                                    VIDEO_HEIGHT_METERS * (videoWidth / videoHeight), VIDEO_HEIGHT_METERS, 1.0f));
-
-
-                    // Start playing the video when the first node is placed.
-                    if (!mediaPlayer.isPlaying()) {
-                        mediaPlayer.start();
-
-                        // Wait to set the renderable until the first frame of the  video becomes available.
-                        // This prevents the renderable from briefly appearing as a black quad before the video
-                        // plays.
-                        texture
-                                .getSurfaceTexture()
-                                .setOnFrameAvailableListener(
-                                        (SurfaceTexture surfaceTexture) -> {
-                                            //이거끄고
-                                            //videoNode.setRenderable(videoRenderable);
-
-                                            texture.getSurfaceTexture().setOnFrameAvailableListener(null);
-                                        });
-                    } else {
-                        //이거끄고
-                        //videoNode.setRenderable(videoRenderable);
-
-                    }
-
-
-                    // 노드라는건 새로운 하나의 쓰리디일뿐...
-                    Node tigerTitleNode = new Node();
-
-                    //이거끄고
-                    //tigerTitleNode.setParent(videoRenderable);
-                    tigerTitleNode.setParent(model);
-                    tigerTitleNode.setEnabled(false);
-                    tigerTitleNode.setLocalPosition(new Vector3(0.0f, 1.0f, 0.0f));
-
-
-                    ViewRenderable.builder()
-                            .setView(this, R.layout.tiger_card_view)
-                            .build()
-                            .thenAccept(
-                                    (renderable) -> {
-
-                                        tigerTitleNode.setRenderable(renderable);
-                                        tigerTitleNode.setEnabled(true);
-
-
-
-                                        TextView textView = (TextView) renderable.getView();
-                                        textView.setText("Value from setImage");
-
-
-
-                                    })
-                            .exceptionally(
-                                    (throwable) -> {
-                                        throw new AssertionError("Could not load card view.", throwable);
-                                    }
-                            );
-
-
-                    ViewRenderable.builder()
-                            .setView(this, R.layout.tiger_card_view)
-                            .build()
-                            .thenAccept(
-                                    (renderable) -> {
-
-                                        tigerTitleNode.setRenderable(renderable);
-                                        tigerTitleNode.setEnabled(true);
-
-
-
-                                        TextView textView = (TextView) renderable.getView();
-                                        textView.setText("Value from setImageㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ");
+//
+//                                }
+//                            });
+//
+//
+//                            Button btn_showDialog = (Button) findViewById(R.id.btn_showDialog) ;
+//                            btn_showDialog.setOnClickListener(new Button.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//
+//                                    Toast.makeText(ArNpc1.this, "123123", Toast.LENGTH_SHORT).show();
+////                                    textView.setText("www");
+//
+//                                    DialogTempProd dialogTempProd = new DialogTempProd(ArNpc1.this);
+//                                    dialogTempProd.callDialog();
+//                                }
+//                            });
+//
+//
+//                            Button btn_imgSlider = (Button) findViewById(R.id.btn_imgSlider) ;
+//                            btn_imgSlider.setOnClickListener(new Button.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    startActivityC(RecoActivity.class);
+//                                }
+//                            });
+//
+//
+//                        })
+//                .exceptionally(
+//                        (throwable) -> {
+//                            throw new AssertionError("Could not load info card view.", throwable);
+//                        });
+//
+//        //////////////////////////// 시작하면 바로뜨던 말풍선 ////////////////////////////
 
 
 
 
-
-
-
-//                                        View.OnClickListener onClickListener = new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                switch (v.getId()) {
-//                                                    //test01이미지를 인식하는 activity 등장
-//                                                    case R.id.button:
+//        //////////////////////////// 탭을 하면!!!!!!!!!!!!! ////////////////////////////
+//        arFragment.setOnTapArPlaneListener(
+//                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+//
+//
+//
+//                    if (videoRenderable == null) {
+//                        return;
+//                    }
+//
+//                    // anchor -> anchornode -> model(videoRenderable) -> videonode , tigerTitleNode
+//
+//
+//                    // Create the Anchor.
+//                    Anchor anchor = hitResult.createAnchor();
+//                    AnchorNode anchorNode = new AnchorNode(anchor);
+//                    anchorNode.setParent(arFragment.getArSceneView().getScene());
+//
+//
+//                    // 이게 움직이는 모델
+//                    //Create the transformable model and add it to the anchor.
+//                    TransformableNode model = new TransformableNode(arFragment.getTransformationSystem());
+//                    model.setParent(anchorNode);
+//                    model.setRenderable(videoRenderable);
+//                    model.select();
+//
+//
+//                    // !!!!!!!!!!!!!!!!!! video 노드 !!!!!!!!!!!!!!!!!!!
+//                    // Create a node to render the video and add it to the anchor.
+//                    Node videoNode = new Node();
+//                    videoNode.setParent(anchorNode);
+//
+//                    // Set the scale of the node so that the aspect ratio of the video is correct.
+//                    float videoWidth = mediaPlayer.getVideoWidth();
+//                    float videoHeight = mediaPlayer.getVideoHeight();
+//                    videoNode.setLocalScale(
+//                            new Vector3(VIDEO_HEIGHT_METERS * (videoWidth / videoHeight), VIDEO_HEIGHT_METERS, 1.0f));
+//
+//                    // Start playing the video when the first node is placed.
+//                    if (!mediaPlayer.isPlaying()) {
+//                        mediaPlayer.start();
+//
+//                        // Wait to set the renderable until the first frame of the  video becomes available.
+//                        // This prevents the renderable from briefly appearing as a black quad before the video
+//                        // plays.
+//                        texture
+//                                .getSurfaceTexture()
+//                                .setOnFrameAvailableListener(
+//                                        (SurfaceTexture surfaceTexture) -> {
+//                                            //이거끄고
+//                                            //videoNode.setRenderable(videoRenderable);
+//
+//                                            texture.getSurfaceTexture().setOnFrameAvailableListener(null);
+//                                        });
+//                    } else {
+//                        //이거끄고
+//                        //videoNode.setRenderable(videoRenderable);
+//
+//                    }
+//                    // !!!!!!!!!!!!!!!!!! video 노드 !!!!!!!!!!!!!!!!!!!
+//
+//
+//                    // !!!!!!!!!!!!!!!!!! tigerTitleNode 노드!!!!!!!!!!!!!!!!!!!
+//                    Node tigerTitleNode = new Node();
+//
+//                    //이거끄고
+//                    //tigerTitleNode.setParent(videoRenderable);
+//                    tigerTitleNode.setParent(model);
+//                    tigerTitleNode.setEnabled(false);
+//                    tigerTitleNode.setLocalPosition(new Vector3(0.0f, 1.0f, 0.0f));
+//
+//                    ViewRenderable.builder()
+//                            .setView(this, R.layout.tiger_card_view)
+//                            .build()
+//                            .thenAccept(
+//                                    (renderable) -> {
+//
+//                                        tigerTitleNode.setRenderable(renderable);
+//                                        tigerTitleNode.setEnabled(true);
+//
+//                                        TextView textView = (TextView) renderable.getView();
+//                                        textView.setText("호랑이기운이 솟아나요");
+//
+//                                    })
+//                            .exceptionally(
+//                                    (throwable) -> {
+//                                        throw new AssertionError("Could not load card view.", throwable);
+//                                    }
+//                            );
+//
+//                    // !!!!!!!!!!!!!!!!!! tigerTitleNode 노드!!!!!!!!!!!!!!!!!!!
 //
 //
 //
 //
-//
-//
-
-//
-//
-//
-//
-//                                                }
-//                                            }
-//                                        };
+//                });
+//        //////////////////////////// 탭을 하면!!!!!!!!!!!!! ////////////////////////////
 
 
 
-
-                                    })
-                            .exceptionally(
-                                    (throwable) -> {
-                                        throw new AssertionError("Could not load card view.", throwable);
-                                    }
-                            );
-
-
-
-
-
-
-
-                });
     }
 
 
@@ -438,6 +457,30 @@ public class ArNpc1 extends AppCompatActivity {
         startActivity(intent);
         // 화면전환 애니메이션 없애기
         overridePendingTransition(0, 0);
+    }
+
+
+    private void changePlane(){
+        Texture.Sampler sampler = Texture.Sampler.builder()
+                .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+                .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
+                .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+                .build();
+
+        // Build texture with sampler
+        CompletableFuture<Texture> trigrid = Texture.builder()
+                /*************
+                 //R.drawable.arrow_t1 -> 투명 배경으로 변경하시면 됩니다.*/
+                .setSource(this, R.drawable.opacity)
+                .setSampler(sampler).build();
+
+        // Set plane texture
+        this.arFragment.getArSceneView()
+                .getPlaneRenderer()
+                .getMaterial()
+                .thenAcceptBoth(trigrid, (material, texture) -> {
+                    material.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture);
+                });
     }
 
 
