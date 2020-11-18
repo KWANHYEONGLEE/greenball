@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -24,6 +29,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.google.ar.core.examples.java.ArNavigationActivity"></activity>
         <activity android:name="com.google.ar.core.examples.java.DescriptionActivity"></activity>
         <activity android:name="com.google.ar.core.examples.java.IntroduceActivity"></activity>
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.ArNpc1"></activity>
@@ -46,6 +52,9 @@
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name="com.google.ar.core.examples.java.InstagramActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name="com.google.ar.core.examples.java.TmapActivity"
             android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".AugmentedImageActivity"
