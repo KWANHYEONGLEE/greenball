@@ -18,6 +18,7 @@ package com.google.ar.core.examples.java.recomendActivity;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -187,6 +188,14 @@ public class ArNpc1 extends AppCompatActivity {
 
                                     DialogTempProd dialogTempProd = new DialogTempProd(ArNpc1.this);
                                     dialogTempProd.callDialog();
+                                }
+                            });
+
+                            Button btn_imgSlider = (Button) findViewById(R.id.btn_imgSlider) ;
+                            btn_imgSlider.setOnClickListener(new Button.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    startActivityC(RecoActivity.class);
                                 }
                             });
 
@@ -393,6 +402,43 @@ public class ArNpc1 extends AppCompatActivity {
         return true;
     }
 
+
+    // 액티비티 전환 함수
+
+    // 인텐트 액티비티 전환함수
+    public void startActivityC(Class c) {
+        Intent intent = new Intent(getApplicationContext(), c);
+        startActivity(intent);
+        // 화면전환 애니메이션 없애기
+        overridePendingTransition(0, 0);
+    }
+    // 인텐트 화면전환 하는 함수
+    // FLAG_ACTIVITY_CLEAR_TOP = 불러올 액티비티 위에 쌓인 액티비티 지운다.
+    public void startActivityflag(Class c) {
+        Intent intent = new Intent(getApplicationContext(), c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        // 화면전환 애니메이션 없애기
+        overridePendingTransition(0, 0);
+    }
+
+    // 문자열 인텐트 전달 함수
+    public void startActivityString(Class c, String name , String sendString) {
+        Intent intent = new Intent(getApplicationContext(), c);
+        intent.putExtra(name, sendString);
+        startActivity(intent);
+        // 화면전환 애니메이션 없애기
+        overridePendingTransition(0, 0);
+    }
+
+    // 백스택 지우고 새로 만들어 전달
+    public void startActivityNewTask(Class c){
+        Intent intent = new Intent(getApplicationContext(), c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        // 화면전환 애니메이션 없애기
+        overridePendingTransition(0, 0);
+    }
 
 
 

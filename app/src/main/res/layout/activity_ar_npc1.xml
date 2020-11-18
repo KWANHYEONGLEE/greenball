@@ -41,6 +41,12 @@
             android:layout_height="59dp"
             android:text="디이얼로그" />
 
+        <Button
+            android:id="@+id/btn_imgSlider"
+            android:layout_width="115dp"
+            android:layout_height="59dp"
+            android:text="추천이미지" />
+
     </LinearLayout>
 
 
