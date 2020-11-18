@@ -96,7 +96,7 @@ public class IntroduceActivity extends AppCompatActivity {
         List_playing.add(new IntroduceItem("AR게임", "가족과 함께 즐길 수 있는 현실 공간 속의 가상의 게임을 즐겨봐요!", "푸른길", "", "",  R.drawable.ar_game));
         List_playing.add(new IntroduceItem("원데이 클래스", "즐기며 배우고 나의 취미, 특기를 찾을 수 있습니다.", "백운광장", "", "",  R.drawable.onedayclass));
         List_playing.add(new IntroduceItem("셀카존", "사랑하는 가족, 친구, 연인과 찰칵! 남는건 사진입니다.", "푸른길", "", "",  R.drawable.selfi));
-        List_eating.add(new IntroduceItem("오매라멘", "장인의 손맛을 그대로 재현해 낸 생라멘과 진한 육수를 즐겨보세요.", "스트리트 푸드존", "", "",  R.drawable.ramen));
+        List_eating.add(new IntroduceItem("오매라멘", "장인의 손맛을 그대로 재현해 낸 생라멘과 진한 육수를 즐겨보세요.", "스트리트 푸드존", "", "",  R.drawable.ramen_));
         List_eating.add(new IntroduceItem("큐브스테이크", "불판위에서 노릇하게 구워지는 큐브스테이크입니다.", "스트리트 푸드존", "", "",  R.drawable.cube));
         List_eating.add(new IntroduceItem("구름솜사탕", "몽실몽실 솜사탕 안에 시원한 아이스크림이 들어있어요.", "스트리트 푸드존", "", "",  R.drawable.somsatang));
         List_eating.add(new IntroduceItem("크레페", "푸드존의 명물! 달달한 크레페에 초코시럽을 듬뿍 뿌려 드셔보세요!", "스트리트 푸드존", "", "",  R.drawable.crepe));
