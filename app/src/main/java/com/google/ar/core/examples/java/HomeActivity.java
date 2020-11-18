@@ -44,6 +44,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        linearLayout_Home_ARroad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityC(Map.class);
+            }
+        });
 
     }
 
