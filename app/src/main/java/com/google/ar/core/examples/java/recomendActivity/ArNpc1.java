@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.ar.core.examples.java;
+package com.google.ar.core.examples.java.recomendActivity;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -38,7 +38,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
+import com.google.ar.core.examples.java.StartActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.dialog.DialogTempProd;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
@@ -54,8 +56,8 @@ import com.google.ar.sceneform.ux.TransformableNode;
  * This is an example activity that shows how to display a video with chroma key filtering in
  * Sceneform.
  */
-public class ChromaKeyVideoActivity extends AppCompatActivity {
-    private static final String TAG = ChromaKeyVideoActivity.class.getSimpleName();
+public class ArNpc1 extends AppCompatActivity {
+    private static final String TAG = ArNpc1.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
 
     private ArFragment arFragment;
@@ -75,6 +77,9 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
     //!!!!!!!!!!!텍스트뷰 접근!!!!!!!!!!!!!!
     //private Button button;
 
+    // 초기 변수 설정
+    private Button btn_showDialog;
+
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
     // CompletableFuture requires api level 24
@@ -82,14 +87,23 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        // 뷰 요소 연결
+//        btn_showDialog = findViewById(R.id.btn_showDialog);
+//
+//        // 다이얼로그 보여주는 버튼 클릭
+//        btn_showDialog.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
 
+//            }
+//        });
 
 
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
 
-        setContentView(R.layout.activity_video);
+        setContentView(R.layout.activity_ar_npc1);
 
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
@@ -98,10 +112,6 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
         //!!!!!!!!!!!텍스트뷰 접근!!!!!!!!!!!!!!
 //        button = (Button) findViewById(R.id.button);
 //        button.setOnClickListener(onClickListener);
-
-
-
-
 
         // Create an ExternalTexture for displaying the contents of the video.
         ExternalTexture texture = new ExternalTexture();
@@ -143,9 +153,9 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
 
         infoCard.setParent(arFragment.getArSceneView().getScene());
         infoCard.setEnabled(true);
+
         infoCard.setLocalPosition(new Vector3(0f, 0f, -1.5f)); // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
         infoCard.setLocalRotation(new Quaternion(new Vector3(1.0f,0.0f,0.0f),0));
-
 
         ViewRenderable.builder()
                 .setView(this, R.layout.tiger_card_view)
@@ -161,9 +171,22 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
 
-                                    Toast.makeText(ChromaKeyVideoActivity.this, "123123", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ArNpc1.this, "123123", Toast.LENGTH_SHORT).show();
                                     textView.setText("www");
 
+                                }
+                            });
+
+                            Button btn_showDialog = (Button) findViewById(R.id.btn_showDialog) ;
+                            btn_showDialog.setOnClickListener(new Button.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    Toast.makeText(ArNpc1.this, "123123", Toast.LENGTH_SHORT).show();
+//                                    textView.setText("www");
+
+                                    DialogTempProd dialogTempProd = new DialogTempProd(ArNpc1.this);
+                                    dialogTempProd.callDialog();
                                 }
                             });
 
