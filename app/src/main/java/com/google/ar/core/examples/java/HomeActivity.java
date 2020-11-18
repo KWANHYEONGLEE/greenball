@@ -35,6 +35,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // 관광지 소개 클릭
+        linearLayout_Home_Introduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityC(IntroduceActivity.class);
+
+            }
+        });
+
 
     }
 
