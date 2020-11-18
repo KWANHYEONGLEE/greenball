@@ -23,6 +23,40 @@
         app:layout_constraintVertical_bias="0.197" />
 
     <Button
+        android:id="@+id/btn_ar0"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:layout_marginBottom="84dp"
+        android:background="@drawable/btn_black"
+        android:text="길찾기 ar띄우기"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_ar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.88" />
+
+    <Button
+        android:id="@+id/btn_tmap"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:layout_marginBottom="84dp"
+        android:background="@drawable/btn_black"
+        android:text="tmap 액티비티"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_ar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <Button
         android:id="@+id/btn_ar1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -34,6 +68,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_ar2"
         android:layout_margin="15dp"/>
+
+
 
     <Button
         android:id="@+id/btn_ar2"

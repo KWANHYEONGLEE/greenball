@@ -43,6 +43,9 @@ android {
 
 dependencies {
 
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation files('libs\\com.skt.Tmap_1.66.jar')
+
     // Facebook Share only
     implementation 'com.facebook.android:facebook-share:[5,6)'
 
