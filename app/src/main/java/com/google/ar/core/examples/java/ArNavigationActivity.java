@@ -36,8 +36,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.Anchor;
+import com.google.ar.core.Camera;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
+import com.google.ar.core.Pose;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
@@ -75,13 +77,7 @@ public class ArNavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
-
         setContentView(R.layout.activity_ar_navigation);
-
-
 
         ///////////////////////////AR용
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
@@ -94,6 +90,7 @@ public class ArNavigationActivity extends AppCompatActivity {
         Node infoCard = new Node();
         infoCard.setParent(arFragment.getArSceneView().getScene());
         infoCard.setEnabled(true);
+
 
 
         double angle    = Math.PI * (90-userangle) / 180.0;

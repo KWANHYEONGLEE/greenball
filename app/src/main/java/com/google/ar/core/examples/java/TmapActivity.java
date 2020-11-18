@@ -213,6 +213,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                 // 노드 생성후 정보확인
 
 
+                Toast.makeText(TmapActivity.this, userangle, Toast.LENGTH_SHORT).show();
+
                 infoCard.setRenderable(null);
 
                 arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
@@ -235,7 +237,14 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                 userangle =   (int) camera.getLocalRotation().y;
 
 
-                Toast.makeText(TmapActivity.this, userangle, Toast.LENGTH_SHORT).show();
+                Vector3 cameraPosition = arFragment.getArSceneView().getScene().getCamera().getWorldPosition();
+                Vector3 catPosition = infoCard.getWorldPosition();
+                Vector3 direction = Vector3.subtract(cameraPosition, catPosition);
+                Quaternion lookRotation = Quaternion.lookRotation(direction, Vector3.up());
+                infoCard.setWorldRotation(lookRotation);
+
+
+
 
                 double angle = Math.PI * (90 - userangle) / 180.0;
                 double sinAngle = Math.sin(angle);
