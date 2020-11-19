@@ -2,6 +2,7 @@ package com.google.ar.core.examples.java.recomendActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import com.google.ar.core.examples.java.Model.SliderItem;
 import com.google.ar.core.examples.java.adapter.SliderAdapterExample;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -23,10 +25,26 @@ public class RecoActivity extends AppCompatActivity {
     SliderView sliderView;
     private SliderAdapterExample adapter;
 
+    // PersonChoiceInfo 사용자 선택 정보담는 객체
+    private PersonChoiceInfo pschoice;
+
+    //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reco);
+
+        //객체전달받기
+        Log.i("추천액티비티", "객체전달받는 부분");
+        Intent intent = getIntent();
+        if(intent != null){
+            Log.i("추천액티비티", "널이 아니라 들어옴");
+            pschoice = (PersonChoiceInfo) intent.getParcelableExtra("psChoice");
+            Log.i("추천액티비티", pschoice.getFromWho());
+            Log.i("추천액티비티", pschoice.getWantSomthing());
+        }
+
 
         sliderView = findViewById(R.id.imageSlider);
 
