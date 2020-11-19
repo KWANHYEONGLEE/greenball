@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.Camera;
@@ -119,7 +120,7 @@ public class ArNavigationActivity extends AppCompatActivity {
 
                             // 이 node를 생성
                             infoCard.setRenderable(renderable);
-                            TextView textView = (TextView) renderable.getView();
+                            //ConstraintLayout textView = (ConstraintLayout) renderable.getView();
                             //textView.setText("Value from setImage");
 
 
@@ -139,7 +140,7 @@ public class ArNavigationActivity extends AppCompatActivity {
                                     //infoCard.setLocalRotation(new Quaternion(new Vector3(1.0f,0.0f,0.0f),90));
 
                                     Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-                                    Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), 45); // rotate Y axis 90 degrees
+                                    Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), 30 -1); // rotate Y axis 90 degrees
                                     infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
 
 

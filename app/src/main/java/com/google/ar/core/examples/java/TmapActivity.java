@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.ar.core.Anchor;
+import com.google.ar.core.Frame;
 import com.google.ar.core.Pose;
 import com.google.ar.core.Session;
 import com.google.ar.core.TrackingState;
@@ -56,6 +57,9 @@ import org.w3c.dom.NodeList;
 import java.util.concurrent.CompletableFuture;
 
 public class TmapActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback, SensorEventListener {
+
+
+    //private AnchorNode cameraPositionNode;
 
 
     private String TAG = "TMAP";
@@ -107,7 +111,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     /////////////////////////////////////////////////////////AR용
     /////////////////////////////////////////////////////////AR용
 
-    int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +122,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         //Intent intent=getIntent();
         //DestinationLatitude=intent.getFloatExtra("latitude",0.0f);
         //DestinationLongitude=intent.getFloatExtra("longitude",0.0f);
-        level = 0;
 
 
         ////////////////////////
@@ -141,11 +143,11 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         /////////////////////////////////////////////////////////AR용
         /////////////////////////////////////////////////////////AR용
 
-
         // 노드 생성후 정보확인
 
-
         infoCard.setParent(arFragment.getArSceneView().getScene());
+        //infoCard.setParent(arFragment.getArSceneView().getScene());
+        //
         // infoCard.setEnabled(true);
 
         double angle = Math.PI * (90 - userangle) / 180.0;
@@ -153,19 +155,29 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         double cosAngle = Math.cos(angle);
 
         //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것
-
-        infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle), -1.5f, (float) (meter * sinAngle)));
+        //infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle), -1.5f, (float) (meter * sinAngle)));
+        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f)));
         // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
 
         //infoCard.setLocalPosition(new Vector3(1.0f, -1.5f, -2.5f));
 
         //Vector3 aaa = new Vector3(0.0f,0.0f,1.0f);
+
+        int degree = test(curLatitude, curLongitude, 37.484460, 126.972891);
+        int resultDegree;
+        if (azimuthinDegree > degree) {
+            resultDegree = 360 - (azimuthinDegree - degree);
+        } else {
+            resultDegree = degree - azimuthinDegree;
+        }
+
         Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), userangle); // rotate Y axis 90 degrees
+        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), resultDegree); // rotate Y axis 90 degrees
         infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-        userangle = 0;
+
 
         //viewArrow();
+
 
         ViewRenderable.builder()
                 .setView(this, R.layout.tiger_card_view2)
@@ -181,9 +193,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                             TextView textView = (TextView) renderable.getView();
                             //textView.setText("Value from setImage");
 
-
                             Camera camera = arFragment.getArSceneView().getScene().getCamera();
-                            xxx =   (int) camera.getLocalRotation().y;
+                            xxx = (int) camera.getLocalRotation().y;
 
                         })
                 .exceptionally(
@@ -199,78 +210,46 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         LinearLayout_tmap = findViewById(R.id.LinearLayout_tmap);
         button_find = findViewById(R.id.button_find);
 
-        button_find.setText(Integer.toString(level));
         //버튼 이벤트
         button_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TmapActivity.this, "버튼 눌림", Toast.LENGTH_SHORT).show();
                 //findPath();
-//                level = level + 30;
-//                button_find.setText(Integer.toString(level));
+                //viewArrow();
+                int degree=test(curLatitude, curLongitude, 37.484460, 126.972891);
+                int resultDegree;
+                if(azimuthinDegree>degree){
+                    resultDegree=360-(azimuthinDegree-degree);
+                }else{
+                    resultDegree=degree-azimuthinDegree;
+                }
+                if(resultDegree>180){
+                    resultDegree= resultDegree-180;
+                }
+                    Log.e("TMAP"," "+resultDegree);
+                Toast.makeText(TmapActivity.this, "목표지점까지와의 각도: " + resultDegree, Toast.LENGTH_SHORT).show();
 
-                /////////////////////////////////////// 테스트용 ///////////////////////////////////////
-                // 노드 생성후 정보확인
+                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
 
+                infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f)));
 
-                Toast.makeText(TmapActivity.this, userangle, Toast.LENGTH_SHORT).show();
-
-                infoCard.setRenderable(null);
-
-                arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-
-                Camera camera = arFragment.getArSceneView().getScene().getCamera();
-
-                //arFragment.getArSceneView().getScene().removeChild(infoCard);
-                //infoCard.setLocalPosition(null);
-                //Camera camera = arFragment.getArSceneView().getScene().getCamera();
-                //infoCard.setLocalPosition(new Vector3(camera.getLocalPosition().x, camera.getLocalPosition().y, camera.getLocalPosition().z));
-                //infoCard.worldToLocalDirection(new Vector3(camera.getLocalRotation().x, camera.getLocalRotation().y, camera.getLocalRotation().z));
-                //infoCard.world
-                //infoCard.setParent(camera);
-                //infoCard.setWorldPosition(new Vector3(camera.getWorldPosition().x, camera.getWorldPosition().y, camera.getWorldPosition().z));
-                //infoCard.setWorldRotation(new Quaternion(camera.getLocalRotation().x, camera.getLocalRotation().y, camera.getLocalRotation().z, camera.getLocalRotation().w));
-                //infoCard.setEnabled(true);
+                Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
+                Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), resultDegree); // rotate Y axis 90 degrees
+                infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
 
 
+                infoCard.setParent(arFragment.getArSceneView().getScene());
 
-                userangle =   (int) camera.getLocalRotation().y;
-
-
-                Vector3 cameraPosition = arFragment.getArSceneView().getScene().getCamera().getWorldPosition();
-                Vector3 catPosition = infoCard.getWorldPosition();
-                Vector3 direction = Vector3.subtract(cameraPosition, catPosition);
-                Quaternion lookRotation = Quaternion.lookRotation(direction, Vector3.up());
-                infoCard.setWorldRotation(lookRotation);
-
-
-
+                //카메라에 묶이면 카메라에서 나옴옴
+                //infoCard.setParent(arFragment.getArSceneView().getScene().getCamera());
 
                 double angle = Math.PI * (90 - userangle) / 180.0;
                 double sinAngle = Math.sin(angle);
                 double cosAngle = Math.cos(angle);
 
 
-                //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것 //
-
-                //infoCard.setLocalPosition(new Vector3((float)  camera.getLocalPosition().x, camera.getLocalPosition().y, (float) -1.5f + camera.getLocalPosition().z));
-
-                infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle) + camera.getLocalPosition().x, -1.5f + camera.getLocalPosition().y, (float) (meter * sinAngle) + camera.getLocalPosition().z));
-                //infoCard.setLocalPosition(new Vector3((float) (0) , -1.5f + camera.getLocalPosition().y, (float) (meter) + camera.getLocalPosition().z));
-
-                //infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle) , -1.5f, (float) (meter * sinAngle) )); //원래있던것
-                // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-
-
-                Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-                Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), userangle); // rotate Y axis 90 degrees
-                infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-
-                //viewArrow();
-
                 ViewRenderable.builder()
-                        .setView(getApplicationContext(), R.layout.tiger_card_view2)
+                        .setView(getApplicationContext(), R.layout.opacity)
                         .build()
                         .thenAccept(
                                 (renderable) -> {
@@ -278,10 +257,24 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                                     arFragment.getPlaneDiscoveryController().hide();
                                     changePlane();
 
-                                    // 이 node를 생성
-                                    infoCard.setRenderable(renderable);
-                                    TextView textView = (TextView) renderable.getView();
-                                    //textView.setText("Value from setImage");
+
+                                    Frame frame = arFragment.getArSceneView().getArFrame();
+                                    Session session = arFragment.getArSceneView().getSession();
+
+
+                                    Anchor newAnchor = session.createAnchor(
+                                            // 이것도 -1이면 1m 앞에 // v는 위아래 연관된것 같고 // v1은 좌우 // v2는 앞뒤 ( 근데 벡터성분이 조금씩 섞인 느낌이다 : 테스트 더 필요함)
+                                            frame.getCamera().getPose().compose(Pose.makeTranslation(0.5f, 0.0f, -3.0f))
+                                                    .extractTranslation());
+
+                                    AnchorNode cameraPositionNode = new AnchorNode(newAnchor);
+
+
+                                    infoCard.setParent(cameraPositionNode);
+
+
+                                    cameraPositionNode.setRenderable(renderable);
+                                    cameraPositionNode.setParent(arFragment.getArSceneView().getScene());
 
 
                                 })
@@ -291,7 +284,9 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                                 });
 
 
-                /////////////////////////////////////// 테스트용 ///////////////////////////////////////
+                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
+                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
+                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
 
             }
         });
@@ -304,6 +299,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
         //linearLayout에 tmap 생성하기
         tMapView = new TMapView(this);
+
+        // 키주석처리
         tMapView.setSKTMapApiKey("l7xx1594bcedc86a49e58421f38d190b69fa");
         LinearLayout_tmap.addView(tMapView);
 
@@ -419,7 +416,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         }
         Log.e(TAG, "result: " + true_bearing);
 
-        return (int) true_bearing + level;
+        return (int) true_bearing;
 
     }
 
@@ -427,230 +424,82 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     //위치가 바뀔 때마다 나침반을 이용하여 목적지까지 몇도 차이나는지 확인
     @Override
     public void onLocationChange(Location location) {
-        Log.e(TAG, "체인지");
-        Toast.makeText(this, "체인지", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "위치 바뀜", Toast.LENGTH_SHORT).show();
         //TODO
         int degree = test(curLatitude, curLongitude, 37.484460, 126.972891);
-
+        int resultDegree;
         if (azimuthinDegree > degree) {
-            int resultDegree = azimuthinDegree - degree;
+            resultDegree=360-(azimuthinDegree-degree);
             Log.e(TAG, "resultDegree: " + resultDegree);
-
-
-            userangle = 0;
-
-
-            /////////////////////////////////////// 테스트용 ///////////////////////////////////////
-            // 노드 생성후 정보확인
-            Toast.makeText(TmapActivity.this, "위치바꾸기버튼눌림", Toast.LENGTH_SHORT).show();
-
-            infoCard.setRenderable(null);
-
-            arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-
-            Camera camera = arFragment.getArSceneView().getScene().getCamera();
-
-            //arFragment.getArSceneView().getScene().removeChild(infoCard);
-            //infoCard.setLocalPosition(null);
-            //Camera camera = arFragment.getArSceneView().getScene().getCamera();
-            //infoCard.setLocalPosition(new Vector3(camera.getLocalPosition().x, camera.getLocalPosition().y, camera.getLocalPosition().z));
-            //infoCard.worldToLocalDirection(new Vector3(camera.getLocalRotation().x, camera.getLocalRotation().y, camera.getLocalRotation().z));
-            //infoCard.world
-            //infoCard.setParent(camera);
-            //infoCard.setWorldPosition(new Vector3(camera.getWorldPosition().x, camera.getWorldPosition().y, camera.getWorldPosition().z));
-            //infoCard.setWorldRotation(new Quaternion(camera.getLocalRotation().x, camera.getLocalRotation().y, camera.getLocalRotation().z, camera.getLocalRotation().w));
-            //infoCard.setEnabled(true);
-
-
-            double angle = Math.PI * (90 - userangle) / 180.0;
-            double sinAngle = Math.sin(angle);
-            double cosAngle = Math.cos(angle);
-
-
-            //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것 //
-
-            //infoCard.setLocalPosition(new Vector3((float)  camera.getLocalPosition().x, camera.getLocalPosition().y, (float)  -1.5f + camera.getLocalPosition().z));
-
-            infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle) + camera.getLocalPosition().x, -1.5f + camera.getLocalPosition().y, (float) (meter * sinAngle) + camera.getLocalPosition().z));
-            //infoCard.setLocalPosition(new Vector3((float) (0) , -1.5f + camera.getLocalPosition().y, (float) (meter) + camera.getLocalPosition().z));
-
-            //infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle) , -1.5f, (float) (meter * sinAngle) )); //원래있던것
-            // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-
-
-            Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-            Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), userangle); // rotate Y axis 90 degrees
-            infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-
-            //viewArrow();
-
-            ViewRenderable.builder()
-                    .setView(getApplicationContext(), R.layout.tiger_card_view2)
-                    .build()
-                    .thenAccept(
-                            (renderable) -> {
-
-                                arFragment.getPlaneDiscoveryController().hide();
-                                changePlane();
-
-                                // 이 node를 생성
-                                infoCard.setRenderable(renderable);
-                                TextView textView = (TextView) renderable.getView();
-                                //textView.setText("Value from setImage");
-
-
-                            })
-                    .exceptionally(
-                            (throwable) -> {
-                                throw new AssertionError("Could not load info card view.", throwable);
-                            });
-
-
-            /////////////////////////////////////// 테스트용 ///////////////////////////////////////
-
-
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-
-
-//            arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-//
-//            if (!checkIsSupportedDeviceOrFinish(this)) {
-//                return;
-//            }
-//
-//            // 노드 생성후 정보확인
-//
-//            infoCard.setParent(arFragment.getArSceneView().getScene());
-//            infoCard.setEnabled(true);
-//
-//
-//            double angle = Math.PI * (90 - userangle) / 180.0;
-//            double sinAngle = Math.sin(angle);
-//            double cosAngle = Math.cos(angle);
-//
-//            //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것
-//            infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle), -1.5f, (float) (meter * sinAngle)));
-//            // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-//
-//            //infoCard.setLocalPosition(new Vector3(1.0f, -1.5f, -2.5f));
-//
-//            //Vector3 aaa = new Vector3(0.0f,0.0f,1.0f);
-//            Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-//            Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), userangle); // rotate Y axis 90 degrees
-//            infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-//
-//            viewArrow();
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
 
 
         } else {
-            int resultDegree = degree - azimuthinDegree;
+            resultDegree = degree - azimuthinDegree;
             Log.e(TAG, "resultDegree: " + resultDegree);
 
-
-            userangle = resultDegree;
-
-            /////////////////////////////////////// 테스트용 ///////////////////////////////////////
-            // 노드 생성후 정보확인
-            Toast.makeText(TmapActivity.this, "위치바꾸기버튼눌림", Toast.LENGTH_SHORT).show();
-
-            infoCard.setRenderable(null);
-
-            arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-
-            Camera camera = arFragment.getArSceneView().getScene().getCamera();
-
-            double angle = Math.PI * (90 - userangle) / 180.0;
-            double sinAngle = Math.sin(angle);
-            double cosAngle = Math.cos(angle);
-
-
-            //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것 //
-
-            infoCard.setLocalPosition(new Vector3((float)  camera.getLocalPosition().x, camera.getLocalPosition().y, (float) camera.getLocalPosition().z));
-
-
-            //infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle) + camera.getLocalPosition().x, -1.5f + camera.getLocalPosition().y, (float) (meter * sinAngle) + camera.getLocalPosition().z));
-            //infoCard.setLocalPosition(new Vector3((float) (0), -1.5f + camera.getLocalPosition().y, (float) (meter) + camera.getLocalPosition().z));
-
-            //infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle) , -1.5f, (float) (meter * sinAngle) )); //원래있던것
-            // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-
-
-            Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-            Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), userangle); // rotate Y axis 90 degrees
-            infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-
-            //viewArrow();
-
-            ViewRenderable.builder()
-                    .setView(getApplicationContext(), R.layout.tiger_card_view2)
-                    .build()
-                    .thenAccept(
-                            (renderable) -> {
-
-                                arFragment.getPlaneDiscoveryController().hide();
-                                changePlane();
-
-                                // 이 node를 생성
-                                infoCard.setRenderable(renderable);
-                                TextView textView = (TextView) renderable.getView();
-                                //textView.setText("Value from setImage");
-
-
-                            })
-                    .exceptionally(
-                            (throwable) -> {
-                                throw new AssertionError("Could not load info card view.", throwable);
-                            });
-
-
-            /////////////////////////////////////// 테스트용 ///////////////////////////////////////
-
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-
-//            arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-//
-//            if (!checkIsSupportedDeviceOrFinish(this)) {
-//                return;
-//            }
-//
-//            // 노드 생성후 정보확인
-//
-//            infoCard.setParent(arFragment.getArSceneView().getScene());
-//            infoCard.setEnabled(true);
-//
-//
-//            double angle = Math.PI * (90 - userangle) / 180.0;
-//            double sinAngle = Math.sin(angle);
-//            double cosAngle = Math.cos(angle);
-//
-//            //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것
-//            infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle), -1.5f, (float) (meter * sinAngle)));
-//            // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-//
-//            //infoCard.setLocalPosition(new Vector3(1.0f, -1.5f, -2.5f));
-//
-//            //Vector3 aaa = new Vector3(0.0f,0.0f,1.0f);
-//            Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-//            Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), userangle); // rotate Y axis 90 degrees
-//            infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-//
-//            viewArrow();
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-            /////////////////////////////////////////////////////////AR용
-
-
         }
+        /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
+
+        Toast.makeText(TmapActivity.this, "버튼 눌림", Toast.LENGTH_SHORT).show();
+
+
+        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f)));
+
+        Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
+        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), resultDegree); // rotate Y axis 90 degrees
+        infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
+
+
+        infoCard.setParent(arFragment.getArSceneView().getScene());
+
+        //카메라에 묶이면 카메라에서 나옴옴
+        //infoCard.setParent(arFragment.getArSceneView().getScene().getCamera());
+
+        double angle = Math.PI * (90 - userangle) / 180.0;
+        double sinAngle = Math.sin(angle);
+        double cosAngle = Math.cos(angle);
+
+
+        ViewRenderable.builder()
+                .setView(getApplicationContext(), R.layout.opacity)
+                .build()
+                .thenAccept(
+                        (renderable) -> {
+
+                            arFragment.getPlaneDiscoveryController().hide();
+                            changePlane();
+
+
+                            Frame frame = arFragment.getArSceneView().getArFrame();
+                            Session session = arFragment.getArSceneView().getSession();
+
+
+                            Anchor newAnchor = session.createAnchor(
+                                    // 이것도 -1이면 1m 앞에 // v는 위아래 연관된것 같고 // v1은 좌우 // v2는 앞뒤 ( 근데 벡터성분이 조금씩 섞인 느낌이다 : 테스트 더 필요함)
+                                    frame.getCamera().getPose().compose(Pose.makeTranslation(0.5f, 0.0f, -3.0f))
+                                            .extractTranslation());
+
+                            AnchorNode cameraPositionNode = new AnchorNode(newAnchor);
+
+
+                            infoCard.setParent(cameraPositionNode);
+
+
+                            cameraPositionNode.setRenderable(renderable);
+                            cameraPositionNode.setParent(arFragment.getArSceneView().getScene());
+
+
+                        })
+                .exceptionally(
+                        (throwable) -> {
+                            throw new AssertionError("Could not load info card view.", throwable);
+                        });
+
+
+        /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
+
+
 
     }
 
@@ -701,6 +550,12 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+
+    }
+
+    private void newArrow() {
+
 
 
     }

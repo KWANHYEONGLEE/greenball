@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -17,6 +18,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -169,6 +171,7 @@ public class ArNpc1 extends AppCompatActivity {
                             tigerTitleNode.setRenderable(renderable);
                             tigerTitleNode.setEnabled(true);
 
+
 //                            renderable.getView("")
 
                             View view = (View) renderable.getView();
@@ -285,6 +288,28 @@ public class ArNpc1 extends AppCompatActivity {
                                 }
                             });
 
+                                    ViewRenderable.builder()
+                                            .setView(getApplicationContext(), R.layout.tiger_card_view)
+                                            .build()
+                                            .thenAccept(
+                                                    (renderable) -> {
+
+                                                        tigerTitleNode.setRenderable(renderable);
+                                                        tigerTitleNode.setEnabled(true);
+
+                                                        //textView.setText("호랑이기운이 솟아나요");
+
+                                                    })
+                                            .exceptionally(
+                                                    (throwable) -> {
+                                                        throw new AssertionError("Could not load card view.", throwable);
+                                                    }
+                                            );
+
+
+                                }
+                            });
+                            ////////////////////////////////////////////////////////////////////
                         })
                 .exceptionally(
                         (throwable) -> {
@@ -306,8 +331,45 @@ public class ArNpc1 extends AppCompatActivity {
                             changePlane();
 
                             // 평평한것 렌더링 해줌
-                            videoRenderable = renderable;
-                            model.setRenderable(videoRenderable);
+                            //videoRenderable = renderable;
+
+                            model.setRenderable(renderable);
+
+
+                            ////////////////////////////////////////////////////////////////////
+//                            ImageView textView = (ImageView) renderable.getView();
+//                            textView.setOnClickListener(new Button.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//
+//                                    ViewRenderable.builder()
+//                                            .setView(getApplicationContext(), R.layout.tiger_card_view)
+//                                            .build()
+//                                            .thenAccept(
+//                                                    (renderable) -> {
+//
+//                                                        tigerTitleNode.setRenderable(renderable);
+//                                                        tigerTitleNode.setEnabled(true);
+//
+//                                                        //textView.setText("호랑이기운이 솟아나요");
+//
+//                                                    })
+//                                            .exceptionally(
+//                                                    (throwable) -> {
+//                                                        throw new AssertionError("Could not load card view.", throwable);
+//                                                    }
+//                                            );
+//
+//
+//                                }
+//                            });
+                            ////////////////////////////////////////////////////////////////////
+
+
+
+
+
+                            //ImageView textView = (ImageView) renderable.getView();
 
                             // 크로마키용 제외요소들
                             renderable.getMaterial().setExternalTexture("videoTexture", texture);
