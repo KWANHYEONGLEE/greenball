@@ -29,6 +29,9 @@
         tools:replace="android:allowBackup">
         <activity android:name="com.google.ar.core.examples.java.GameCardActivity"></activity>
         <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
+        <activity android:name="com.google.ar.core.examples.java.Road"></activity>
+        <activity android:name="com.google.ar.core.examples.java.Map" />
+        <activity android:name=".Map" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity" />
         <activity android:name="com.google.ar.core.examples.java.DescriptionActivity" />
         <activity android:name="com.google.ar.core.examples.java.IntroduceActivity" />
