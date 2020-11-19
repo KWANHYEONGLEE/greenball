@@ -4,21 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.google.ar.core.examples.java.DescriptionActivity">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_image_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@drawable/bottom_round"
-
         android:elevation="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,37 +18,199 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="30dp"
             android:layout_height="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="20dp"
             android:src="@drawable/arrow_back"
-            android:tint="#9A9A9A"/>
+            android:tint="#9A9A9A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/btn_map"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:src="@drawable/map_icon"-->
+<!--            android:tint="#717171"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/info_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="370dp"
+        android:layout_marginTop="35dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/gl_image_bottom"
-        app:srcCompat="@drawable/ramen"
-        android:layout_marginTop="45dp"
-        android:scaleType="fitXY"/>
+        app:srcCompat="@drawable/food_ramen" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/info_image"
+        android:layout_height="380dp"
+        android:background="#17000000"
         app:layout_constraintEnd_toEndOf="@id/info_image"
-        app:layout_constraintTop_toTopOf="@id/info_image"
+        app:layout_constraintStart_toStartOf="@id/info_image"
+        app:layout_constraintTop_toTopOf="@id/info_image" />
+
+    <TextView
+        android:id="@+id/info_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오매라멘"
+        android:textColor="@android:color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/info_location"
+        app:layout_constraintEnd_toEndOf="@id/info_image"
+        app:layout_constraintStart_toStartOf="@id/info_image" />
+
+    <TextView
+        android:id="@+id/info_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="백운광장"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@id/info_image"
-        android:background="#17000000"/>
+        app:layout_constraintEnd_toEndOf="@id/info_image"
+        app:layout_constraintStart_toStartOf="@id/info_image" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_go_ar_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/gradation_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_image">
+
+        <ImageView
+            android:id="@+id/walk_icon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/walk_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/walk_string"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/walk_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="AR 길안내 시작"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/info_menu"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/btn_go_ar_navigation">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:background="@drawable/bottom_color_bar"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/question_mark"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:src="@drawable/question_mark"-->
+<!--                android:tint="#575757"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/question_string"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:text="About"-->
+<!--                android:textSize="15dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/question_mark"-->
+<!--                app:layout_constraintStart_toStartOf="@id/question_mark"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/question_mark"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="28dp"-->
+<!--            android:layout_height="28dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:src="@drawable/phone"-->
+<!--            android:tint="#575757"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <TextView
+        android:id="@+id/info_name_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오매라멘"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_go_ar_navigation"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:layout_margin="20dp"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/info_address_about"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="광주광역시 남구 백운동 어쩌고"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/info_name_about"-->
+<!--        android:layout_marginLeft="20dp"/>-->
+
+    <TextView
+        android:id="@+id/info_description_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="장인의 손맛을 그대로 재현해 낸 생라멘과 진한 육수를 즐겨보세요."
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_name_about"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

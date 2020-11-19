@@ -35,27 +35,31 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // AR 길찾기 클릭
+
+        // 관광지 소개 클릭
+        linearLayout_Home_Introduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityC(IntroduceActivity.class);
+
+            }
+        });
+
+        // AR 길안내 클릭
         linearLayout_Home_ARroad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityC(TmapActivity.class);
-
+                startActivityC(Map.class);
             }
         });
-
-        // AR 길찾기 클릭
+      
+        // AR 게임 클릭
         linearLayout_Home_ARgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startActivityC(Answer.class);
-
+                startActivityC(GameInfoActivity.class);
             }
         });
-
-
-
     }
 
 

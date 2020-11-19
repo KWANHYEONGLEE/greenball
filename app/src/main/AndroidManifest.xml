@@ -5,11 +5,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -28,13 +25,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
-        tools:replace="android:allowBackup"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity"></activity>
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
+        <activity android:name="com.google.ar.core.examples.java.GameCardActivity"></activity>
+        <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
+        <activity android:name="com.google.ar.core.examples.java.Road"></activity>
+        <activity android:name="com.google.ar.core.examples.java.Map" />
+        <activity android:name=".Map" />
+        <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity" />
         <activity android:name="com.google.ar.core.examples.java.DescriptionActivity" />
         <activity android:name="com.google.ar.core.examples.java.IntroduceActivity" />
-        <activity android:name="com.google.ar.core.examples.java.ArNavigationActivity"></activity>
-        <activity android:name="com.google.ar.core.examples.java.recomendActivity.ArNpc1"></activity>
+        <activity android:name="com.google.ar.core.examples.java.ArNavigationActivity" />
+        <activity android:name="com.google.ar.core.examples.java.recomendActivity.ArNpc1" />
         <activity android:name="com.google.ar.core.examples.java.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
