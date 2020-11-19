@@ -34,6 +34,7 @@
         <activity android:name=".Map" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity" />
         <activity android:name="com.google.ar.core.examples.java.DescriptionActivity" />
+        <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoDescriptionActivity" />
         <activity android:name="com.google.ar.core.examples.java.IntroduceActivity" />
         <activity android:name="com.google.ar.core.examples.java.ArNavigationActivity" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.ArNpc1" />

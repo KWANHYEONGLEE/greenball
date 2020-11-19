@@ -2,11 +2,18 @@ package com.google.ar.core.examples.java;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.recomendActivity.ArNpc1;
 
@@ -14,6 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
     LinearLayout linearLayout_Home_Recommend,linearLayout_Home_Introduce,linearLayout_Home_ARroad,linearLayout_Home_ARgame;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +32,47 @@ public class HomeActivity extends AppCompatActivity {
         linearLayout_Home_Introduce=findViewById(R.id.linearLayout_Home_Introduce);
         linearLayout_Home_ARroad=findViewById(R.id.linearLayout_Home_ARroad);
         linearLayout_Home_ARgame=findViewById(R.id.linearLayout_Home_ARgame);
+
+        final View viewPos = findViewById(R.id.myCoordinatorLayout);
+
+        Snackbar snackbar = Snackbar.make(viewPos, "R.string.snackbar_text", Snackbar.LENGTH_INDEFINITE)
+                .setAction("이벤트 확인", new View.OnClickListener() {
+                    @SuppressLint("ResourceAsColor")
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(HomeActivity.this, "스낵바 클릭", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        View layout = snackbar.getView();
+        //setting background color
+        layout.setBackgroundColor(this.getResources().getColor(R.color.d));
+        // action 버튼 색상변경
+        snackbar.setActionTextColor(Color.WHITE);
+
+        snackbar.show();
+
+
+        // 쉐어드에 추천받은 정보가 있  다면
+        // 스낵바를 통해 알림 예) 추천 받은 곳은 마음에 드셨나요?
+        String recommendItem = getSharedString("recommendItem");
+        Log.i("홈액티비티", "recommendItem: "+ recommendItem);
+        if(recommendItem.equals("null")) {
+            Log.i("홈액티비티", "recommendItem: null 과 같다.");
+
+        }else {
+            Log.i("홈액티비티", "recommendItem: null이 아님으로 추천받은 곳이 있다.");
+            // 추천받은 곳이 있는 경우
+            if(getSharedString("recommendItemCount").equals("0")) {
+                // 업데이트 이후 처음 홈화면에 온 경우에는 스낵바를 띄우지 않는다.
+                updateSharedString("recommendItemCount", "1");
+            }else if(getSharedString("recommendItemCount").equals("1")){
+                // 1 인 겨우 2번째 본것으로 판단하고 스낵바를 띄우는 로직 실행한다.
+                // 스낵바는 상단에 띄운다.
+            }
+        }
+
+
 
 
         // 푸른길 추천 클릭
@@ -100,5 +149,25 @@ public class HomeActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    // 쉐어드 함수정의
+    public void updateSharedString(String key, String value) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String getSharedString(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        String result = prefs.getString(key, "null");
+        return result;
+    }
+
+    public void deleteShared(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(key);
+        editor.commit();
+    }
 
 }
