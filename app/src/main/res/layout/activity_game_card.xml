@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/water_drop"
+    android:background="@drawable/skyblue"
     tools:context="com.google.ar.core.examples.java.GameCardActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,16 +46,17 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_slider_mainActivity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_top">
+        app:layout_constraintTop_toBottomOf="@+id/layout_top"
+        android:layout_margin="50dp">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/gameSlider"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="wrap_content"
             app:sliderAnimationDuration="600"
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderIndicatorAnimationDuration="600"
@@ -64,10 +65,11 @@
             app:sliderIndicatorMargin="15dp"
             app:sliderIndicatorOrientation="horizontal"
             app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorRadius="1.9dp"
             app:sliderIndicatorSelectedColor="#5A5A5A"
             app:sliderIndicatorUnselectedColor="#FFF"
-            app:sliderScrollTimeInSec="1" />
+            app:sliderScrollTimeInSec="1"
+            android:background="@drawable/skyblue"/>
 
     </androidx.cardview.widget.CardView>
 
