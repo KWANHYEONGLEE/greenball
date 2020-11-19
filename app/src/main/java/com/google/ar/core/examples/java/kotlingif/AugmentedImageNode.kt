@@ -30,9 +30,8 @@ class AugmentedImageNode(context: Context) : AnchorNode() {
         .build()
     private var gifView: ViewRenderable? = null
 
+
     private lateinit var image: AugmentedImage
-
-
 
 
     init {
@@ -77,6 +76,7 @@ class AugmentedImageNode(context: Context) : AnchorNode() {
         centerNode.localPosition = localPosition
         centerNode.localRotation = Quaternion(pose.qx(), 90f, -90f, pose.qw())
         centerNode.renderable = gifView
+
 
         gifView?.view?.let { view ->
             val imageView = view.findViewById<ImageView>(R.id.imageView)

@@ -35,6 +35,26 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // AR 길찾기 클릭
+        linearLayout_Home_ARroad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityC(TmapActivity.class);
+
+            }
+        });
+
+        // AR 길찾기 클릭
+        linearLayout_Home_ARgame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivityC(Answer.class);
+
+            }
+        });
+
+
 
     }
 

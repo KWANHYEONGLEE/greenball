@@ -156,6 +156,17 @@ public class ChromaKeyVideoActivity extends AppCompatActivity {
                             TextView textView = (TextView) renderable.getView();
                             textView.setText("Value from setImage");
 
+                            textView.setOnClickListener(new Button.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    Toast.makeText(ChromaKeyVideoActivity.this, "123123", Toast.LENGTH_SHORT).show();
+                                    textView.setText("www");
+
+                                }
+                            });
+
+
                             Button button1 = (Button) findViewById(R.id.button) ;
                             button1.setOnClickListener(new Button.OnClickListener() {
                                 @Override
