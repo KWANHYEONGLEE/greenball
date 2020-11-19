@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:backgroundTint="@color/b"
+    tools:context="com.google.ar.core.examples.java.GameInfoActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:elevation="3dp"
+                android:src="@drawable/arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/info_image"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ar_game" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="#17000000"
+                app:layout_constraintEnd_toEndOf="@id/info_image"
+                app:layout_constraintStart_toStartOf="@id/info_image"
+                app:layout_constraintTop_toTopOf="@id/info_image" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="380dp"
+                android:background="@drawable/top_round"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/game_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="백운이의 모험"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/game_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="백운광장  |  푸른길"
+                    android:textSize="15dp"
+                    app:layout_constraintStart_toStartOf="@id/game_name"
+                    app:layout_constraintTop_toBottomOf="@id/game_name" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/clock_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/clock"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:id="@+id/clock_string"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="1시간 이내"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/clock_icon"
+                        app:layout_constraintStart_toStartOf="@id/clock_icon"
+                        app:layout_constraintTop_toBottomOf="@id/clock_icon" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/bar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#ECECEC"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/game_location" />
+
+                <TextView
+                    android:id="@+id/story"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="스토리"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bar1" />
+
+                <View
+                    android:id="@+id/bar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#ECECEC"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/story" />
+
+                <TextView
+                    android:id="@+id/story_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="#백운광장 #푸른길 #광주남구 #백운이"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bar2" />
+
+                <TextView
+                    android:id="@+id/story_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:text="백운광장에 홀로 남겨진 백운이가 오랫동안 꿈꿔왔던 소망을 이루기 위해  친구들을 찾으러 다니는 이야기"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/story_tag" />
+
+                <View
+                    android:id="@+id/bar3"
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="#ECECEC"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/story_content" />
+
+                <TextView
+                    android:id="@+id/game_announce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="게임 안내"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bar3" />
+
+                <View
+                    android:id="@+id/bar4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#ECECEC"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/game_announce" />
+
+                <TextView
+                    android:id="@+id/announce_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="📍 이동거리\n      약 1~2km\n\n🚏 게임 시작 지점\n      백운광장\n\n&lt;백운이의 모험&gt;을 즐기기 위해서는 AR 기능을 지원하는 스마트폰이 필요합니다. AR 기능이 지원되지 않는 기종의 경우, 원활한 게임 플레이가 어려운 점 양해해주세요. 또한 AR 기능을 지원하더라도 스마트폰 기종에 따라 인식률이 상이할 수 있습니다."
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bar4"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--    <TextView-->
+            <!--        android:id="@+id/info_name"-->
+            <!--        android:layout_width="wrap_content"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:text="오매라멘"-->
+            <!--        android:textColor="@android:color/white"-->
+            <!--        android:textSize="25dp"-->
+            <!--        android:textStyle="bold"-->
+            <!--        app:layout_constraintBottom_toTopOf="@id/info_location"-->
+            <!--        app:layout_constraintEnd_toEndOf="@id/info_image"-->
+            <!--        app:layout_constraintStart_toStartOf="@id/info_image" />-->
+
+            <!--    <TextView-->
+            <!--        android:id="@+id/info_location"-->
+            <!--        android:layout_width="wrap_content"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_marginBottom="30dp"-->
+            <!--        android:text="백운광장"-->
+            <!--        android:textColor="@android:color/white"-->
+            <!--        android:textSize="20dp"-->
+            <!--        app:layout_constraintBottom_toBottomOf="@id/info_image"-->
+            <!--        app:layout_constraintEnd_toEndOf="@id/info_image"-->
+            <!--        app:layout_constraintStart_toStartOf="@id/info_image" />-->
+
+            <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--        android:id="@+id/info_menu"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="70dp"-->
+            <!--        android:orientation="horizontal"-->
+            <!--        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toBottomOf="@id/bar">-->
+
+            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="70dp"-->
+            <!--            android:layout_marginLeft="20dp"-->
+            <!--            android:background="@drawable/bottom_color_bar"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/question_mark"-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_marginLeft="20dp"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                android:layout_marginRight="20dp"-->
+            <!--                android:src="@drawable/question_mark"-->
+            <!--                android:tint="#575757"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/question_string"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:text="About"-->
+            <!--                android:textSize="15dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="@id/question_mark"-->
+            <!--                app:layout_constraintStart_toStartOf="@id/question_mark"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/question_mark"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+
+            <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <!--        <ImageView-->
+            <!--            android:layout_width="28dp"-->
+            <!--            android:layout_height="28dp"-->
+            <!--            android:layout_marginRight="20dp"-->
+            <!--            android:src="@drawable/phone"-->
+            <!--            android:tint="#575757"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+            <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--        android:id="@+id/btn_go_ar_navigation"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="65dp"-->
+            <!--        android:background="@drawable/gradation_background"-->
+            <!--        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--        app:layout_constraintHorizontal_bias="0.0"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toBottomOf="@id/info_image">-->
+
+            <!--        <ImageView-->
+            <!--            android:id="@+id/walk_icon"-->
+            <!--            android:layout_width="28dp"-->
+            <!--            android:layout_height="28dp"-->
+            <!--            android:layout_marginRight="10dp"-->
+            <!--            android:src="@drawable/walk_icon"-->
+            <!--            app:tint="@color/white"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintEnd_toStartOf="@id/walk_string"-->
+            <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/walk_string"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginLeft="30dp"-->
+            <!--            android:text="AR 길안내 시작"-->
+            <!--            android:textColor="@color/white"-->
+            <!--            android:textSize="22dp"-->
+            <!--            android:textStyle="bold"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+            <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <!--    <TextView-->
+            <!--        android:id="@+id/info_name_about"-->
+            <!--        android:layout_width="wrap_content"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:text="오매라멘"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toBottomOf="@id/btn_go_ar_navigation"-->
+            <!--        android:textSize="20dp"-->
+            <!--        android:textColor="@color/black"-->
+            <!--        android:layout_margin="20dp"/>-->
+
+            <!--    &lt;!&ndash;    <TextView&ndash;&gt;-->
+            <!--    &lt;!&ndash;        android:id="@+id/info_address_about"&ndash;&gt;-->
+            <!--    &lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--    &lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--    &lt;!&ndash;        android:text="광주광역시 남구 백운동 어쩌고"&ndash;&gt;-->
+            <!--    &lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+            <!--    &lt;!&ndash;        app:layout_constraintTop_toBottomOf="@id/info_name_about"&ndash;&gt;-->
+            <!--    &lt;!&ndash;        android:layout_marginLeft="20dp"/>&ndash;&gt;-->
+
+            <!--    <TextView-->
+            <!--        android:id="@+id/info_description_about"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:text="장인의 손맛을 그대로 재현해 낸 생라멘과 진한 육수를 즐겨보세요."-->
+            <!--        android:textSize="17dp"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toBottomOf="@id/info_name_about"-->
+            <!--        android:layout_marginLeft="20dp"-->
+            <!--        android:layout_marginRight="20dp"-->
+            <!--        android:layout_marginTop="10dp"/>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_gamestart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/gradation_background"
+        android:elevation="10dp"
+        android:stateListAnimator="@null"
+        android:text="게임 시작"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:translationZ="10dp"/>
+
+</LinearLayout>
