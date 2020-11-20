@@ -3,10 +3,14 @@ package com.google.ar.core.examples.java;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.google.ar.core.examples.java.Model.GameItem;
@@ -17,6 +21,7 @@ import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.gamelist.ep1_answer;
 import com.google.ar.core.examples.java.gamelist.ep2_answer;
 import com.google.ar.core.examples.java.gamelist.ep3_question;
+import com.google.gson.Gson;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -32,6 +37,9 @@ public class GameCardActivity extends AppCompatActivity {
 
     //게임 카드목록이 들어갈 리스트
     ArrayList<GameItem> gameItems = new ArrayList<>();
+
+    // json 변환 라이브러리
+    private Gson gson = new Gson();
 
     private ImageView back_game_card;
 
@@ -68,9 +76,19 @@ public class GameCardActivity extends AppCompatActivity {
         renewGameItems();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 쉐어드에 현재 상태 업데이트
+        String saveGameItemData = gson.toJson(gameItems);
+        updateSharedString("gameItem", saveGameItemData);
+
+    }
+
     public void renewGameItems() {
-        gameItems.add(new GameItem("모험의 시작", R.drawable.dessert_somsatang));
-        gameItems.add(new GameItem("모험의 시작", R.drawable.dessert_somsatang));
+        gameItems.add(new GameItem("1단계 모험의 시작", R.drawable.dessert_somsatang, true));
+        gameItems.add(new GameItem("2단계 모험의 시작", R.drawable.dessert_somsatang, false));
 
         adapter.renewGameItems(gameItems);
         adapter.setOnItemClickListener(new GameSliderAdapter.OnItemClickListener() {
@@ -127,4 +145,48 @@ public class GameCardActivity extends AppCompatActivity {
         // 화면전환 애니메이션 없애기
         overridePendingTransition(0, 0);
     }
+
+    // 쉐어드 함수정의
+    public void updateSharedString(String key, String value) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String getSharedString(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        String result = prefs.getString(key, "null");
+        return result;
+    }
+
+    public void deleteShared(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(key);
+        editor.commit();
+    }
+
+    // EditText가 아닌 다른 곳 클릭시 키보드 내리기
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //Log.i("login_log", "이벤트 발생");
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            //Log.i("login_log", "포커스가 있다면");
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y)) {
+                // 터치위치가 태그위치에 속하지 않으면 키보드 내리기
+                //Log.i("login_log", "터치위치가 태그위치에 속하지 않으면 키보드 내리기");
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }
