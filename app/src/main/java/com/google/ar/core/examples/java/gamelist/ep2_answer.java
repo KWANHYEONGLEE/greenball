@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,14 +14,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.ar.core.examples.java.Model.GameItem;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogNoAnswer;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ep2_answer extends AppCompatActivity {
 
     private ImageView back_game_card;
     private EditText ep2_answer_;
     private Button answer_button;
+
+    // json 변환 라이브러리
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,26 @@ public class ep2_answer extends AppCompatActivity {
                     //정답 맞췄을 때
                     if(answer.equals("스트리트 푸드존") || answer.equals("스트리트푸드존")){
                         Toast.makeText(ep2_answer.this, "정답", Toast.LENGTH_SHORT).show();
+
+                        // 쉐어드에 진행중이던 게임이 있는경우
+                        String gameItemData = getSharedString("gameItem");
+                        Log.i("게임카드액티비티", "gameItemData:" + gameItemData);
+
+                        if(gameItemData.equals("null") || gameItemData.equals("[]")) {
+                            // 저장중인 게임이 없는경우
+                            Log.i("게임카드액티비티", "저장중인 게임이 없는경우");
+                        }else {
+                            // 저장중인 게임이 있는경우
+                            Log.i("게임카드액티비티", "저장중인 게임이 있는경우");
+                            Type type = new TypeToken<ArrayList<GameItem>>() {}.getType();
+                            ArrayList<GameItem> gameItems = gson.fromJson(gameItemData, type);
+                            // 다음스테이지 오픈
+                            gameItems.get(2).setLock(true);
+                            String gameitemData = gson.toJson(gameItems);
+                            updateSharedString("gameItem", gameitemData);
+
+                        }
+
                         startActivityC(ep3_question.class);
                         finish();
                     }
@@ -75,4 +105,26 @@ public class ep2_answer extends AppCompatActivity {
         // 화면전환 애니메이션 없애기
         overridePendingTransition(0, 0);
     }
+
+    // 쉐어드 함수정의
+    public void updateSharedString(String key, String value) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String getSharedString(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        String result = prefs.getString(key, "null");
+        return result;
+    }
+
+    public void deleteShared(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(key);
+        editor.commit();
+    }
+
 }
