@@ -93,22 +93,6 @@ public class GameCardActivity extends AppCompatActivity {
             adapter.renewGameItems(gameItems);
         }
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("게임카드액티비티", "온디스트로이드");
-        // 쉐어드에 현재 상태 업데이트
-        String saveGameItemData = gson.toJson(gameItems);
-        updateSharedString("gameItem", saveGameItemData);
-
-    }
-
-    public void renewGameItems() {
-        gameItems.add(new GameItem("1단계 모험의 시작", R.drawable.dessert_somsatang, true));
-        gameItems.add(new GameItem("2단계 모험의 시작", R.drawable.dessert_somsatang, false));
-
         // 어댑터 클릭처리
         adapter.renewGameItems(gameItems);
         adapter.setOnItemClickListener(new GameSliderAdapter.OnItemClickListener() {
@@ -135,6 +119,24 @@ public class GameCardActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("게임카드액티비티", "온디스트로이드");
+        // 쉐어드에 현재 상태 업데이트
+        String saveGameItemData = gson.toJson(gameItems);
+        updateSharedString("gameItem", saveGameItemData);
+
+    }
+
+    public void renewGameItems() {
+        gameItems.add(new GameItem("1단계 모험의 시작", R.drawable.dessert_somsatang, true));
+        gameItems.add(new GameItem("2단계 모험의 시작", R.drawable.dessert_somsatang, false));
+
+
 
     }
 
