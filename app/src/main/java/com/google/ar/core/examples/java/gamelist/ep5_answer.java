@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogNoAnswer;
+import com.google.ar.core.examples.java.game.GameStory6;
 
 public class ep5_answer extends AppCompatActivity {
 
@@ -54,7 +55,7 @@ public class ep5_answer extends AppCompatActivity {
                     //정답 맞췄을 때
                     if (answer.equals("9마리") || answer.equals("9")) {
                         Toast.makeText(ep5_answer.this, "정답", Toast.LENGTH_SHORT).show();
-                        //startActivityC(ep3_question.class);
+                        startActivityC(GameStory6.class);
                         finish();
                     }
                     //정답 아닐때

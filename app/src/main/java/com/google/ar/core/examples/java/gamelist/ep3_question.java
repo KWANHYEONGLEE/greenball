@@ -21,7 +21,7 @@ public class ep3_question extends AppCompatActivity {
         ep3_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                //몬스터 npc 등장 장면
             }
         });
     }

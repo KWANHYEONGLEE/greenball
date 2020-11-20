@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="괴물의 저주"
+            android:text="몬스터의 저주"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,7 @@
         android:id="@+id/img_backwoon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_margin="30dp"
+        android:layout_margin="80dp"
         android:elevation="10dp"
         android:src="@drawable/backwoon"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="스트리트 푸드존에 도착해 주변을\n살피다 솜사탕 가게 뒤에서\n아래처럼 생긴 그림을 발견했다."
+        android:text="스트리트 푸드존에 도착해\n주변을 살피는데 누군가 와서\n말을 건다."
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="22dp"
@@ -88,32 +88,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ep3_arrow" />
 
-    <TextView
-        android:id="@+id/ep3_content2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="이 그림을 한 번 스캔해볼까?"
-        android:textColor="@android:color/white"
-        android:textSize="25dp"
-        android:textStyle="bold|italic"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_monster"
-        android:layout_margin="10dp"/>
-
     <Button
         android:id="@+id/ep3_scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/btn_white"
-        android:text="스캔하기"
+        android:text="누구지?"
         android:textColor="@android:color/black"
+        android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="17dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
