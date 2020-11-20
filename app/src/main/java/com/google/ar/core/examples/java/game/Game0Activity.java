@@ -85,53 +85,53 @@ public class Game0Activity extends AppCompatActivity {
             }
         });
 
-        Button btn_restart = (Button) findViewById(R.id.btn_restart) ;
-        btn_restart.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    mediaPlayer.seekTo(0,MediaPlayer.SEEK_CLOSEST);
-                else
-                    mediaPlayer.seekTo((int)0);
-                mediaPlayer.start();
-
-
-            }
-        });
-
-        Button btn_pause = (Button) findViewById(R.id.btn_pause) ;
-        btn_pause.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                mediaPlayer.pause();
-
-
-
-            }
-        });
-
-        Button btn_seek = (Button) findViewById(R.id.btn_seek) ;
-        btn_seek.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    mediaPlayer.seekTo(3000,MediaPlayer.SEEK_CLOSEST);
-                else
-                    mediaPlayer.seekTo((int)3000);
-
-
-
-            }
-        });
+//        Button btn_restart = (Button) findViewById(R.id.btn_restart) ;
+//        btn_restart.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+//                    mediaPlayer.seekTo(0,MediaPlayer.SEEK_CLOSEST);
+//                else
+//                    mediaPlayer.seekTo((int)0);
+//                mediaPlayer.start();
+//
+//
+//            }
+//        });
+//
+//        Button btn_pause = (Button) findViewById(R.id.btn_pause) ;
+//        btn_pause.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                mediaPlayer.pause();
+//
+//
+//
+//            }
+//        });
+//
+//        Button btn_seek = (Button) findViewById(R.id.btn_seek) ;
+//        btn_seek.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//
+//
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+//                    mediaPlayer.seekTo(3000,MediaPlayer.SEEK_CLOSEST);
+//                else
+//                    mediaPlayer.seekTo((int)3000);
+//
+//
+//
+//            }
+//        });
 
 
 

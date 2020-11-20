@@ -24,11 +24,13 @@ import com.google.ar.core.examples.java.gamelist.ep1_answer;
 import com.google.ar.core.examples.java.gamelist.ep2_answer;
 import com.google.ar.core.examples.java.gamelist.ep3_question;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,13 +77,28 @@ public class GameCardActivity extends AppCompatActivity {
             }
         });
 
-        renewGameItems();
+        // 쉐어드에 진행중이던 게임이 있는경우
+        String gameItemData = getSharedString("gameItem");
+        Log.i("게임카드액티비티", "gameItemData:" + gameItemData);
+
+        if(gameItemData.equals("null") || gameItemData.equals("[]")) {
+            // 저장중인 게임이 없는경우
+            Log.i("게임카드액티비티", "저장중인 게임이 없는경우");
+            renewGameItems();
+        }else {
+            // 저장중인 게임이 있는경우
+            Log.i("게임카드액티비티", "저장중인 게임이 있는경우");
+            Type type = new TypeToken<ArrayList<GameItem>>() {}.getType();
+            gameItems = gson.fromJson(gameItemData, type);
+            adapter.renewGameItems(gameItems);
+        }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        Log.i("게임카드액티비티", "온디스트로이드");
         // 쉐어드에 현재 상태 업데이트
         String saveGameItemData = gson.toJson(gameItems);
         updateSharedString("gameItem", saveGameItemData);
@@ -92,6 +109,7 @@ public class GameCardActivity extends AppCompatActivity {
         gameItems.add(new GameItem("1단계 모험의 시작", R.drawable.dessert_somsatang, true));
         gameItems.add(new GameItem("2단계 모험의 시작", R.drawable.dessert_somsatang, false));
 
+        // 어댑터 클릭처리
         adapter.renewGameItems(gameItems);
         adapter.setOnItemClickListener(new GameSliderAdapter.OnItemClickListener() {
             @Override
@@ -117,6 +135,7 @@ public class GameCardActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public void removeLastGame(View view) {
