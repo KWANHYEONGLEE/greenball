@@ -15,6 +15,9 @@ import com.google.ar.core.examples.java.augmentedimage.R;
 
 
 import android.os.Environment;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +29,24 @@ public class InstagramActivity extends AppCompatActivity {
     int GALLERY_CODE = 101;
     int REQUEST_PERMISSION_CODE = 1001;
 
+    private Button btn_share_instar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instagram);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        selectGallery();
+        btn_share_instar = findViewById(R.id.btn_share_instar);
+
+        btn_share_instar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectGallery();
+            }
+        });
+
+        //selectGallery();
 
 }
 
