@@ -140,6 +140,9 @@ public class GameCardActivity extends AppCompatActivity {
         gameItems.add(new GameItem("5단계\n저주를 풀다 2", R.drawable.dessert_somsatang, false));
         gameItems.add(new GameItem("6단계\n저주를 풀다 3", R.drawable.dessert_somsatang, false));
         gameItems.add(new GameItem("7단계\n구름이 되어", R.drawable.dessert_somsatang, false));
+        // 쉐어드에 현재 상태 업데이트
+        String saveGameItemData = gson.toJson(gameItems);
+        updateSharedString("gameItem", saveGameItemData);
     }
 
     public void removeLastGame(View view) {
