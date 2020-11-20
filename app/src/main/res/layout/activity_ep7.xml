@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c"
-    tools:context="com.google.ar.core.examples.java.gamelist.ep2_answer">
+    tools:context="com.google.ar.core.examples.java.gamelist.ep7">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ep2_layout_top"
+        android:id="@+id/ep1_layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="모험의 시작"
+            android:text="구름이 되어"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,59 +42,41 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/ep2_question"
+    <ImageView
+        android:id="@+id/img_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="어디로 가야하지?"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_layout_top" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ep1_layout_top"
+        android:src="@drawable/cloud"
+        android:layout_margin="50dp"/>
 
     <TextView
-        android:id="@+id/ep2_hint"
+        android:id="@+id/ep7_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="출입구 기둥을 스캔하고 살펴보세요"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_cloud"
+        android:text="안녕!\n내 오랜 소망은 바로\n친구들과 함께 구름이 되는 것이였어.\n\n도와줘서 고마워!\n덕분에 구름세계로\n잘 돌아올 수 있었어! 안녕! \n\n-백운이가-"
         android:textColor="@color/white"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ep2_question" />
-
-    <EditText
-        android:id="@+id/ep2_answer_"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:background="@drawable/edittext_background"
-        android:hint="정답을 입력하세요"
-        android:maxLength="10"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_hint">
-        <requestFocus />
-    </EditText>
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        android:padding="10dp"/>
 
     <Button
-        android:id="@+id/answer_button"
+        android:id="@+id/game_finish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
         android:background="@drawable/btn_white"
-        android:text="확인"
+        android:text="게임 종료"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_answer_" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

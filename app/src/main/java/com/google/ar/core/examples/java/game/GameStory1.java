@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogWhereGo;
 import com.google.ar.core.examples.java.dialog.DialogWithWho;
+import com.google.ar.core.examples.java.gamelist.ep1_answer;
 import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
 import com.google.ar.core.examples.java.listener.OnDialogReturnResultListener;
 import com.google.ar.core.examples.java.recomendActivity.RecoActivity;
@@ -175,6 +176,8 @@ public class GameStory1 extends AppCompatActivity {
                                     if(bagun_speach.getText().toString().trim().equals("여기가 어디더라...")) {
                                         // 여기가 어디더라 말버튼 클릭하면
                                         Log.i("GameStory1액티비티", "여기가 어디더라 말버튼 클릭");
+                                        startActivityC(ep1_answer.class);
+                                        finish();
                                     }
                                 }
                             });

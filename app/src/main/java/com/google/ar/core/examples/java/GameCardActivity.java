@@ -18,6 +18,8 @@ import com.google.ar.core.examples.java.Model.SliderItem;
 import com.google.ar.core.examples.java.adapter.GameSliderAdapter;
 import com.google.ar.core.examples.java.adapter.SliderAdapterExample;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.game.GameStory1;
+import com.google.ar.core.examples.java.game.GameStory2;
 import com.google.ar.core.examples.java.gamelist.ep1_answer;
 import com.google.ar.core.examples.java.gamelist.ep2_answer;
 import com.google.ar.core.examples.java.gamelist.ep3_question;
@@ -100,13 +102,13 @@ public class GameCardActivity extends AppCompatActivity {
                     //ep 1
                     //npc : 백운아! 정신차려봐! 여기가 어딘지 알겠어?
                     //버튼1 : 여기가 어디더라... (정답입력 페이지)
-                    startActivityC(ep1_answer.class);
+                    startActivityC(GameStory1.class);
                 }
                 else if(position == 1){
                     //ep 2
                     //npc : 시간이 없어! 육교를 내려가서 백운광장역 6번출입구 기둥을 스캔해봐!
                     //버튼 : 스캔하기 (스캔 페이지)
-                    startActivityC(ep3_question.class);
+                    startActivityC(GameStory2.class);
                 }
                 else if(position == 2){
                     //ep 3

@@ -27,17 +27,21 @@
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-
-        <activity android:name="com.google.ar.core.examples.java.game.Game4Activity"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep7"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep6_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep6_answer" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep5_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep5_answer" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep4_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep4_answer" />
+        <activity android:name="com.google.ar.core.examples.java.game.Game4Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.Game0Intro" />
-
-        <activity android:name="com.google.ar.core.examples.java.gamelist.ep3_question"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep3_question" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_wrong" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_answer" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_wrong" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_answer" />
-        <activity android:name="com.google.ar.core.examples.java.game.Game0Intro"></activity>
-
+        <activity android:name="com.google.ar.core.examples.java.game.Game0Intro" />
         <activity android:name="com.google.ar.core.examples.java.game.Game0Next" />
         <activity android:name="com.google.ar.core.examples.java.game.Game0Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.Game3Next" />
