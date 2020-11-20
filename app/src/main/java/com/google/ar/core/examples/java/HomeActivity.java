@@ -84,7 +84,13 @@ public class HomeActivity extends AppCompatActivity {
                                             deleteShared("recommendItemCount");
 
                                             // 인스타 추천 로직 실행
-                                            startActivityC(InstagramActivity.class);
+                                            Intent intent = new Intent(Intent.ACTION_SEND);
+                                            //intent.setType("image/*");
+                                            intent.putExtra(Intent.EXTRA_STREAM, "");
+                                            intent.setPackage("com.instagram.android");
+                                            startActivity(intent);
+
+                                            //startActivityC(InstagramActivity.class);
                                         }else {
                                             // 추천받았던 정보 쉐어드에서 삭제
                                             deleteShared("recommendItem");
