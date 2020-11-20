@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final View viewPos = findViewById(R.id.myCoordinatorLayout);
 
-        Snackbar snackbar = Snackbar.make(viewPos, "R.string.snackbar_text", Snackbar.LENGTH_INDEFINITE)
+        Snackbar snackbar = Snackbar.make(viewPos, "추천 받은 곳은 마음에 드셨나요?", Snackbar.LENGTH_INDEFINITE)
                 .setAction("이벤트 확인", new View.OnClickListener() {
                     @SuppressLint("ResourceAsColor")
                     @Override
