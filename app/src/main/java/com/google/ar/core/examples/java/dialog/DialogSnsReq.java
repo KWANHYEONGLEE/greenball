@@ -90,6 +90,7 @@ public class DialogSnsReq {
             public void onClick(View view) {
                 Log.i("SNS다이얼로그", "Yes버튼 클릭");
                 onItemClickListener.onitemClick(true);
+                dig.dismiss();
             }
         });
 

@@ -238,13 +238,11 @@
 
         </FrameLayout>
 
-
-
         <TextView
             android:id="@+id/txt_family"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="볼거리"
+            android:text="가족이랑 함께"
             app:layout_constraintEnd_toEndOf="@+id/img_btn_family"
             app:layout_constraintStart_toStartOf="@+id/img_btn_family"
             app:layout_constraintTop_toBottomOf="@+id/img_btn_family" />
