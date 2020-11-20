@@ -8,9 +8,18 @@ public class GameItem implements Serializable {
     private int imageDrawable;
     private boolean lock;
 
-    public GameItem(String description, int imageDrawable){
+    public GameItem(String description, int imageDrawable, boolean lock) {
         this.description = description;
         this.imageDrawable = imageDrawable;
+        this.lock = lock;
+    }
+
+    public boolean isLock() {
+        return lock;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
     }
 
     public String getDescription() {
