@@ -6,26 +6,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="wrap_content"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    android:background="@drawable/map_background2"
+    android:background="@drawable/sns_dailog_background"
     >
-
-
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/map_background2"
-            android:backgroundTint="@color/u"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/map_background3"
+            android:backgroundTint="@color/sns"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,7 +40,9 @@
                     android:id="@+id/dialog_tit_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginBottom="16dp"
                     android:text="SNS에 글을 남겨주세요."
                     android:textColor="@color/white"
@@ -63,10 +60,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/sns_background_bottom"
-            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
 
@@ -75,11 +71,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:textStyle="bold|italic"
+                    android:gravity="center"
                     android:text="추첨을 통해 \n 백운광장 푸드존 식사권을\n매달 10분께 드립니다."
                     android:textColor="@color/dark_gray"
-                    android:gravity="center"
                     android:textSize="18sp"
+                    android:textStyle="bold|italic"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,9 +85,12 @@
                     android:id="@+id/btn_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginStart="16dp"
                     android:background="@drawable/btn_background_nomal"
                     android:text="NO"
+                    android:backgroundTint="@color/white_gray"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/gl_cen"
                     app:layout_constraintTop_toTopOf="@+id/btn_yes" />
 
@@ -100,10 +99,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="32dp"
                     android:background="@drawable/btn_background"
                     android:text="YES"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/gl_cen"
                     app:layout_constraintTop_toBottomOf="@+id/txt_explane"

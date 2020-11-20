@@ -125,7 +125,6 @@ public class StartActivity extends AppCompatActivity {
                 case R.id.shareButton_insta:
                     Intent intent4 = new Intent(StartActivity.this, InstagramActivity.class);
                     startActivity(intent4);
-
                     break;
 
 
