@@ -229,6 +229,8 @@ public class GameStory6 extends AppCompatActivity {
                         renderable -> {
 
                             arFragment.getPlaneDiscoveryController().hide();
+                            View aaa = (View) findViewById(R.id.btn_answer) ;
+                            arFragment.getPlaneDiscoveryController().setInstructionView(aaa);
                             changePlane();
 
                             // 평평한것 렌더링 해줌
