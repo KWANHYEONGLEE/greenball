@@ -3,6 +3,7 @@ package com.google.ar.core.examples.java;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,6 +70,11 @@ public class DescriptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //위도, 경도 푸른길로 설정해서 ar 길찾기 실행
+                //항상 백운광장을 가르킴
+                Intent intent=new Intent(getApplicationContext(), TmapActivity.class);
+                intent.putExtra("latitude",35.132889);
+                intent.putExtra("longitude",126.902474);
+                startActivity(intent);
             }
         });
 

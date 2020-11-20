@@ -1,43 +1,33 @@
 
-package com.google.ar.core.examples.java.recomendActivity;
+package com.google.ar.core.examples.java.game;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.SurfaceTexture;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.ar.core.Anchor;
-import com.google.ar.core.HitResult;
-import com.google.ar.core.Plane;
-import com.google.ar.core.examples.java.StartActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogWhereGo;
 import com.google.ar.core.examples.java.dialog.DialogWithWho;
-import com.google.ar.core.examples.java.game.GameStory1;
 import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
 import com.google.ar.core.examples.java.listener.OnDialogReturnResultListener;
-import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.core.examples.java.recomendActivity.RecoActivity;
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.ExternalTexture;
@@ -46,13 +36,12 @@ import com.google.ar.sceneform.rendering.PlaneRenderer;
 import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
-import com.google.ar.sceneform.ux.TransformableNode;
 
 import java.util.concurrent.CompletableFuture;
 
 
-public class ArNpc1 extends AppCompatActivity {
-    private static final String TAG = ArNpc1.class.getSimpleName();
+public class GameStory1 extends AppCompatActivity {
+    private static final String TAG = GameStory1.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
 
     private ArFragment arFragment;
@@ -67,8 +56,10 @@ public class ArNpc1 extends AppCompatActivity {
     // Controls the height of the video in world space.
     private static final float VIDEO_HEIGHT_METERS = 0.85f;
 
-    // PersonChoiceInfo 사용자 선택 정보담는 객체
-    private PersonChoiceInfo pschoice;
+
+
+    // storyPage index 이야기 흐름 넘버
+    private int storyPage = 0;
 
     //!!!!!!!!!!!텍스트뷰 접근!!!!!!!!!!!!!!
     //private Button button;
@@ -84,13 +75,13 @@ public class ArNpc1 extends AppCompatActivity {
             return;
         }
 
-        // 사용자 정보 초기화
-        pschoice = new PersonChoiceInfo(0);
-
-        setContentView(R.layout.activity_ar_npc1);
 
 
-        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+
+        setContentView(R.layout.activity_game_story1);
+
+
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment_game);
 
 
         //!!!!!!!!!!!텍스트뷰 접근!!!!!!!!!!!!!!
@@ -171,126 +162,49 @@ public class ArNpc1 extends AppCompatActivity {
 //                            renderable.getView("")
 
                             View view = (View) renderable.getView();
-
-                            //게임 테스트
-                            Button btn_gametest = (Button) findViewById(R.id.btn_gametest) ;
-                            btn_gametest.setOnClickListener(new Button.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    startActivityC(GameStory1.class);
-                                }
-                            });
-
-                            Log.i("ArNpc1Test", "ArNpc1 다이얼로그 onResult 실행");
                             TextView textView = view.findViewById(R.id.test_test);
-                            textView.setText("안녕 나는 라이언이야 \n" +
-                                    "푸른길에 온 걸 환영해~");
+                            textView.setText("백운아! 백운아! \n 정신 차려봐!");
 //                            TextView textView = (TextView) renderable.getView();
 
-                            Log.i("ArNpc1Test", "ArNpc1 다이얼로그 onResult 실행");
+                            // 백운이 말 모양 버튼
+                            Button bagun_speach = findViewById(R.id.bagun_speach);
 
-                            // 다이얼로그 인터페이스 선언
-                            OnDialogReturnResultListener onDialogReturnResultListener = new OnDialogReturnResultListener() {
+                            bagun_speach.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onWhoResult(String result) {
-                                    // 누구랑 왔는지 다이얼로그 선택 결과 들어옴
-                                    Log.i("ArNpc1Test", "ArNpc1 다이얼로그 onResult 실행");
-                                    Log.i("ArNpc1Test", "result : " + result);
-                                    pschoice.setFromWho(result);
-                                    // 누구누구랑 왔구나 반가워~
-                                    if (result.equals("혼자")) {
-                                        // 혼자
-                                        textView.setText(result + " 왔구나 반가워~");
-                                    } else if (result.equals("친구") || result.equals("가족")) {
-                                        // 친구, 가족
-                                        textView.setText(result + "들이랑 왔구나 반가워~");
-                                    } else {
-                                        // 연인
-                                        textView.setText(result + "이랑 왔구나 반가워~");
+                                public void onClick(View view) {
+                                    if(bagun_speach.getText().toString().trim().equals("여기가 어디더라...")) {
+                                        // 여기가 어디더라 말버튼 클릭하면
+                                        Log.i("GameStory1액티비티", "여기가 어디더라 말버튼 클릭");
                                     }
-                                    // 다음 페이지로 설정
-                                    pschoice.setStorypage(pschoice.getStorypage() + 1); // 더하고 나면 2
                                 }
-
-                                @Override
-                                public void onWantResult(String result) {
-                                    // 무엇을 하고 싶은지 다이얼로그 선택 결과 들어옴
-                                    Log.i("ArNpc1Test", "ArNpc1 다이얼로그 onResult 실행");
-                                    Log.i("ArNpc1Test", "result : " + result);
-                                    pschoice.setWantSomthing(result);
-
-                                    //음 푸른길에 (선택받은 할것) 이 무엇이 있지?
-                                    if (result.equals("먹거리") || result.equals("놀거리") || result.equals("볼거리")) {
-                                        // 먹거리
-                                        textView.setText("음 푸른길에 " + result + "가 어떤게 있더라~");
-                                    } else if (result.equals("후식") || result.equals("가족")) {
-                                        // 후식
-                                        textView.setText("음 푸른길에 " + result + "으로 먹을게 어떤게 있더라~");
-                                    }
-                                    // 다음 페이지로 설정
-                                    pschoice.setStorypage(pschoice.getStorypage() + 1); // 더하고 나면 4
-
-                                }
-                            };
+                            });
 
 
                             textView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.i("ArNpc1Test", "텍스트뷰 클릭");
-                                    switch (pschoice.getStorypage()) {
+                                    Log.i("NPC", "텍스트뷰 클릭");
+                                    switch (storyPage) {
                                         case 0:
-                                            textView.setText("누구랑 왔니?");
-                                            pschoice.setStorypage(pschoice.getStorypage() + 1);
+                                            textView.setText("여기가 어딘지 알겠어?");
+                                            storyPage = storyPage +1;
                                             break;
                                         case 1:
-                                            DialogWithWho dialogWithWho = new DialogWithWho(ArNpc1.this);
-                                            dialogWithWho.setOnDialogReturnResultListener(onDialogReturnResultListener);
-                                            dialogWithWho.callDialog();
+                                            // 여기가 어디더라 부분
+                                            bagun_speach.setText("여기가 어디더라...");
+                                            bagun_speach.setVisibility(View.VISIBLE);
                                             break;
                                         case 2:
-                                            textView.setText("푸른길에서 무엇을 하고싶니?");
-                                            pschoice.setStorypage(pschoice.getStorypage() + 1);
+
                                             break;
                                         case 3:
-                                            DialogWhereGo dialogWhereGo = new DialogWhereGo(ArNpc1.this);
-                                            dialogWhereGo.setOnDialogReturnResultListener(onDialogReturnResultListener);
-                                            dialogWhereGo.callDialog();
+
                                             break;
                                         case 4:
-                                            // 문자열 문구 만들기
-                                            // 혼자 왔을 때
-                                            // 가족들이랑 왔을 때
-                                            // 친구랑 왔을 때
-                                            // 연인이랑 왔을 때
-                                            String fromWho = pschoice.getFromWho();
-                                            if (pschoice.getFromWho().equals("친구")) {
-                                                fromWho = "친구랑";
-                                            } else if (pschoice.getFromWho().equals("연인")) {
-                                                fromWho = "연인이랑";
-                                            } else if (pschoice.getFromWho().equals("가족")) {
-                                                fromWho = "가족들이랑";
-                                            }
-
-                                            String wantSomthing = pschoice.getWantSomthing() + "를";
-                                            // 놀거리를 추천 해줄게
-                                            // 볼거리를 추천 해줄게
-                                            // 먹거리를 추천 해줄게
-                                            // 후식을 추천 해줄게
-                                            if (pschoice.getWantSomthing().equals("후식")) {
-                                                wantSomthing = wantSomthing.replace("를", "을");
-                                            }
-
-                                            // 그래 (누구랑) (선택받은 할것)을 추천해줄게!
-                                            textView.setText("그래 " + fromWho + " 왔을때 " + wantSomthing + " 추천해줄게!");
-
-                                            pschoice.setStorypage(pschoice.getStorypage() + 1);
                                             break;
 
                                         case 5:
-                                            // 추천 액티비티 이동
-                                            startActivityObject(RecoActivity.class, "psChoice", pschoice);
-                                            //startActivityC(RecoActivity.class);
+                                            break;
                                         default:
                                             break;
                                     }

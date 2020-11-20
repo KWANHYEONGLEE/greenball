@@ -14,45 +14,43 @@
    limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AugmentedImageActivity">
 
     <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
-        android:id="@+id/ux_fragment"
+        android:id="@+id/ux_fragment_game"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bagun_speach"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:text="여기가 어디더라..."
+            android:background="@drawable/btn_background"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <Button
-            android:id="@+id/button"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/btn_showDialog"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="디이얼로그" />
-
-        <Button
-            android:id="@+id/btn_imgSlider"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="추천이미지" />
-
-        <Button
-            android:id="@+id/btn_gametest"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="게임테스트" />
-
     </LinearLayout>
 
 

@@ -24,46 +24,47 @@ public class Map extends AppCompatActivity {
         button_office4=findViewById(R.id.button_office4);
 
         //버튼 이벤트
-        //1사무실
+        //7,8사무실
         button_office1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Road.class);
-                intent.putExtra("latitude",37.484083);
-                intent.putExtra("longitude",126.972013);
+                Intent intent=new Intent(getApplicationContext(),TmapActivity.class);
+                intent.putExtra("latitude",37.485476);
+                intent.putExtra("longitude",126.972240);
+                startActivity(intent);
+            }
+        });
+
+        //1사무실
+        button_office2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),TmapActivity.class);
+                intent.putExtra("latitude",37.483983);
+                intent.putExtra("longitude",126.972157);
+
+                startActivity(intent);
+            }
+        });
+
+        //test
+        button_office3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),TmapActivity.class);
+                intent.putExtra("latitude",37.486989);
+                intent.putExtra("longitude",126.976147);
                 startActivity(intent);
             }
         });
 
         //5사무실
-        button_office2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Road.class);
-                intent.putExtra("latitude",37.482928);
-                intent.putExtra("longitude",126.973840);
-                startActivity(intent);
-            }
-        });
-
-        //6사무실
-        button_office3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Road.class);
-                intent.putExtra("latitude",37.483080);
-                intent.putExtra("longitude",126.975181);
-                startActivity(intent);
-            }
-        });
-
-        //7사무실
         button_office4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Road.class);
-                intent.putExtra("latitude",37.485801);
-                intent.putExtra("longitude",126.972067);
+                Intent intent=new Intent(getApplicationContext(),TmapActivity.class);
+                intent.putExtra("latitude",37.482903);
+                intent.putExtra("longitude",126.973812);
                 startActivity(intent);
             }
         });
