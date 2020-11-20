@@ -30,7 +30,6 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.StartActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
-import com.google.ar.core.examples.java.dialog.DialogTempProd;
 import com.google.ar.core.examples.java.dialog.DialogWhereGo;
 import com.google.ar.core.examples.java.dialog.DialogWithWho;
 import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
@@ -167,7 +166,6 @@ public class ArNpc1 extends AppCompatActivity {
 
                             tigerTitleNode.setRenderable(renderable);
                             tigerTitleNode.setEnabled(true);
-
 
 //                            renderable.getView("")
 
