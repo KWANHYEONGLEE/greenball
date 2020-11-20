@@ -8,6 +8,7 @@
     android:padding="5dp"
     tools:context="com.google.ar.core.examples.java.HomeActivity">
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_start"
         android:layout_width="wrap_content"
@@ -189,82 +190,22 @@
 
     </LinearLayout>
 
-    <Button
-        android:textSize="8dp"
-        android:id="@+id/game1"
-        android:layout_width="56dp"
-        android:layout_height="41dp"
-        android:text="game1"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintEnd_toStartOf="@+id/gl_end"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/game2"
-        android:layout_width="56dp"
-        android:layout_height="41dp"
-        android:text="game2"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintEnd_toStartOf="@+id/gl_end"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/myCoordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <Button
-        android:id="@+id/game3"
-        android:layout_width="56dp"
-        android:layout_height="41dp"
-        android:text="game3"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintEnd_toStartOf="@+id/gl_end"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/game4"
-        android:layout_width="56dp"
-        android:layout_height="31dp"
-        android:text="game4"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintEnd_toStartOf="@+id/gl_end"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/game5"
-        android:layout_width="56dp"
-        android:layout_height="31dp"
-        android:text="game5"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintEnd_toStartOf="@+id/gl_end"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/game6"
-        android:layout_width="56dp"
-        android:layout_height="31dp"
-        android:text="game6"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_top"
-        app:layout_constraintEnd_toStartOf="@+id/gl_end"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

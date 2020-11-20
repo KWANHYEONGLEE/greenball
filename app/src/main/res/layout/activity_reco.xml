@@ -38,25 +38,6 @@
         android:layout_below="@id/cv_slider_mainActivity"
         android:gravity="center"
         android:orientation="vertical">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="addNewItem"
-            android:text="Add An Item" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="removeLastItem"
-            android:text="Rmove Last Item" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="renewItems"
-            android:text="Renew Items" />
-
     </LinearLayout>
 
 </android.widget.RelativeLayout>
