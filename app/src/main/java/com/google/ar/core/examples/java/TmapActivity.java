@@ -221,11 +221,10 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
             public void onFindPathDataAll(Document document) {
                 Element root = document.getDocumentElement();
                 NodeList nodeListPlacemark = root.getElementsByTagName("Placemark");
-                Log.e(TAG,"1111: "+nodeListPlacemark.toString());
                 for (int i = 0; i < nodeListPlacemark.getLength(); i++) {
                     NodeList nodeListPlacemarkItem = nodeListPlacemark.item(i).getChildNodes();
                     for (int j = 0; j < nodeListPlacemarkItem.getLength(); j++) {
-//                        Log.e(TAG, nodeListPlacemarkItem.item(j).getTextContent().trim());
+                        Log.e(TAG, nodeListPlacemarkItem.item(j).getTextContent().trim());
                         if (nodeListPlacemarkItem.item(j).getNodeName().equals("description")) {
 //                            Log.e(TAG, nodeListPlacemarkItem.item(j).getTextContent().trim() );
                         }
@@ -514,36 +513,32 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
        if(permissionCheckCamera!= PackageManager.PERMISSION_GRANTED){
            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
-
-           }else{
                ActivityCompat.requestPermissions(this,
                        new String[]{Manifest.permission.CAMERA},
                        1001);
+           }else{
+
            }
        }
        if(permissionCheckInternet!= PackageManager.PERMISSION_GRANTED){
            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.INTERNET)){
-
-           }else{
                ActivityCompat.requestPermissions(this,
                        new String[]{Manifest.permission.INTERNET},
                        1002);
+           }else{
+
            }
        }
        if(permissionCheckCoarseLocation!= PackageManager.PERMISSION_GRANTED&&
                permissionCheckFineLocation!= PackageManager.PERMISSION_GRANTED){
            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION)&&
                    ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                Log.e(TAG,"!!!!!");
-               ActivityCompat.requestPermissions(this,
-                       new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                       1003);
 
-           }else{
-               Log.e(TAG,"@@@@@@");
                ActivityCompat.requestPermissions(this,
                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                        1003);
+           }else{
+
            }
        }
    }
