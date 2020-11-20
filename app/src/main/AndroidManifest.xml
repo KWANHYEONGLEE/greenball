@@ -27,7 +27,9 @@
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name="com.google.ar.core.examples.java.InstargramShare"></activity>
+        <activity android:name="com.google.ar.core.examples.java.InstargramShare"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            ></activity>
         <activity android:name="com.google.ar.core.examples.java.monster.MonsterThreeActivity"></activity>
         <activity android:name="com.google.ar.core.examples.java.monster.MonsterTwoActivity"></activity>
         <activity android:name="com.google.ar.core.examples.java.game.MonsterOneActivity"></activity>
