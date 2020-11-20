@@ -1,11 +1,16 @@
 package com.google.ar.core.examples.java;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -54,6 +59,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 
 public class TmapActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback, SensorEventListener {
@@ -65,7 +72,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     private String TAG = "TMAP";
 
     LinearLayout LinearLayout_tmap;//tmap과 연결시킬 Layout
-    Button button_find;
+
+
     double curLatitude, curLongitude;// 현재 위치의 위도 및 경도
     TMapMarkerItem TmapMarker_Cur, TmapMarker_Destination;
     TMapPoint tMapPoint_Cur, tMapPoint_Destination;
@@ -96,10 +104,10 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     boolean firstBarrior;
 
 
-
-
-    /////////////////////////////////////////////////////////AR용
-    /////////////////////////////////////////////////////////AR용
+    //새로운 방향을 알려주기 위해 주기적으로 실행 될 타이머
+    Timer timer;
+    TimerTask TT;
+    GpsTracker gpsTracker;
 
     //private static final String TAG = ArNavigationActivity.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
@@ -117,12 +125,21 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tmap);
 
+        //권한 확인 및 설정하기
+//        permissionCheck();
+
+
+
+        //xml 과 연결하기
+        LinearLayout_tmap = findViewById(R.id.LinearLayout_tmap);
 
         //intent로 값 받아오기
         Intent intent=getIntent();
         DestinationLatitude=intent.getDoubleExtra("latitude",0.0);
         DestinationLongitude=intent.getDoubleExtra("longitude",0.0);
 
+        //나침반 센서가 실행되고나서 첫 번째 화살표를 만들어주기 위한 boolean
+        //나침반 센서가 실행되면 길찾기와 첫 번째 화살표가 만들어지게된다.
         firstBarrior=true;
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
@@ -131,12 +148,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
-
-
-        //xml 과 연결하기
-        LinearLayout_tmap = findViewById(R.id.LinearLayout_tmap);
-        button_find = findViewById(R.id.button_find);
-
 
         //나침반 센서 선언하기
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -148,7 +159,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         tMapView.setSKTMapApiKey("l7xx1594bcedc86a49e58421f38d190b69fa");
         LinearLayout_tmap.addView(tMapView);
 
-        GpsTracker gpsTracker = new GpsTracker(TmapActivity.this);
+        gpsTracker = new GpsTracker(TmapActivity.this);
         curLatitude = gpsTracker.getLatitude();//현재위치 위도
         curLongitude = gpsTracker.getLongitude();//현재위치 경도
 
@@ -163,11 +174,12 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         tMapView.setZoomLevel(17);//줌 레벨
 
         // gps 세팅
-        TMapGpsManager gps = new TMapGpsManager(TmapActivity.this);
-        gps.setMinTime(20000000);
-        gps.setMinDistance(1.0f);
-        gps.setProvider(gps.GPS_PROVIDER);
-        gps.OpenGps();
+//        TMapGpsManager gps = new TMapGpsManager(TmapActivity.this);
+//        gps.setMinTime(5000);
+//        gps.setMinDistance(5);
+//        gps.setProvider(gps.GPS_PROVIDER);
+//        gps.OpenGps();
+
 
         //현재 내 위치에 마커 지정하기
         tMapPoint_Cur = new TMapPoint(curLatitude, curLongitude);
@@ -179,7 +191,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         TmapMarker_Cur.setCalloutTitle("내 위치");
         tMapView.addMarkerItem("cur", TmapMarker_Cur);
 
-        //임시 목적지
+        //목적지
         tMapPoint_Destination = new TMapPoint(DestinationLatitude, DestinationLongitude);
         TmapMarker_Destination = new TMapMarkerItem();
         TmapMarker_Destination.setTMapPoint(tMapPoint_Destination);
@@ -189,25 +201,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         TmapMarker_Destination.setCalloutTitle("목적지");
         tMapView.addMarkerItem("Destination", TmapMarker_Destination);
 
+    }//onCreate 부분 끝내기
 
-
-        //버튼 이벤트
-        button_find.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //TODO 실제 사용 할 때는 풀어주기
-                //Tmap에 경로 알려주기
-                //findPath();
-
-                //TODO 실제 사용할 때는 주석처리하기
-                //새로운 방향 화살표 만들어주기
-                newArrow();
-            }
-        });
-
-
-    }
 
     //api를 이용하여서 도보 경로 값 받아오기
     public void findPath() {
@@ -216,20 +211,21 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
             @Override
             public void onFindPathData(TMapPolyLine tMapPolyLine) {//길찾기 경로보여주기
                 tMapPolyLine.setLineColor(Color.RED);//line을 빨간색으로
-                tMapPolyLine.setLineWidth(5);//라인 두께
+                tMapPolyLine.setLineWidth(7);//라인 두께
                 print_distance(tMapPolyLine);//handler로 값을 보내서 화면에 보여줄 수 있게하기
             }
         });
+        //경유지 정보를 알 수 있음 (현재는 사용하지 않음)
         tMapData.findPathDataAllType(TMapData.TMapPathType.PEDESTRIAN_PATH, tMapPoint_Cur, tMapPoint_Destination, new TMapData.FindPathDataAllListenerCallback() {
             @Override
             public void onFindPathDataAll(Document document) {
                 Element root = document.getDocumentElement();
                 NodeList nodeListPlacemark = root.getElementsByTagName("Placemark");
-
+                Log.e(TAG,"1111: "+nodeListPlacemark.toString());
                 for (int i = 0; i < nodeListPlacemark.getLength(); i++) {
                     NodeList nodeListPlacemarkItem = nodeListPlacemark.item(i).getChildNodes();
                     for (int j = 0; j < nodeListPlacemarkItem.getLength(); j++) {
-                        Log.e(TAG, nodeListPlacemarkItem.item(j).getTextContent().trim());
+//                        Log.e(TAG, nodeListPlacemarkItem.item(j).getTextContent().trim());
                         if (nodeListPlacemarkItem.item(j).getNodeName().equals("description")) {
 //                            Log.e(TAG, nodeListPlacemarkItem.item(j).getTextContent().trim() );
                         }
@@ -238,7 +234,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
             }
         });
-        test(curLatitude, curLongitude, 37.477128, 126.965875);
     }
 
     //도보 경로 받아온 값을 토대로 지도에 표시
@@ -282,14 +277,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     //위치가 바뀔 때마다 나침반을 이용하여 목적지까지 몇도 차이나는지 확인
     @Override
     public void onLocationChange(Location location) {
-
-        Toast.makeText(this, "위치 바뀜", Toast.LENGTH_SHORT).show();
-
-        //TODO 실제 사용할 때는 주석 풀어주기
         //새로운 방향 화살표 만들어주기
-        //newArrow();
-
-
+//        newArrow();
     }
 
     //센서가 변할 때 마다 나침반 수치가 달라짐
@@ -310,7 +299,25 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
             azimuthinDegree = (int) (Math.toDegrees(SensorManager.getOrientation(mR, mOrientation)[0]) + 360) % 360;
             if(firstBarrior){
                 firstBarrior=false;
+
+
+                //3초마다 길찾기 화살표 나오게
+               timer=new Timer();
+                TT=new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                newArrow();
+                            }
+                        });
+                    }
+                };
+                timer.schedule(TT,2000,3000);
+
                 firstArrow();
+                findPath();//길 찾기
             }
         }
     }
@@ -319,7 +326,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
 
     @Override
     protected void onResume() {
@@ -340,7 +346,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        timer.cancel();//반복으로 화살표 나오는 부분 끝내기
 
     }
 
@@ -397,6 +403,10 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
     //새로운 방향 화살표 만들기
     private void newArrow() {
+
+        curLatitude = gpsTracker.getLatitude();//현재위치 위도
+        curLongitude = gpsTracker.getLongitude();//현재위치 경도
+
         // 목표지점 - 북쪽 - 나 각도
         int degree = test(curLatitude, curLongitude, DestinationLatitude, DestinationLongitude);
 
@@ -430,7 +440,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                             // 세션에 앵커만들기
                             Anchor newAnchor = session.createAnchor(
                                     // 이것도 -1이면 1m 앞에 // v는 위아래 연관된것 같고 // v1은 좌우 // v2는 앞뒤 ( 근데 벡터성분이 조금씩 섞인 느낌이다 : 테스트 더 필요함)
-                                    frame.getCamera().getPose().compose(Pose.makeTranslation(0.5f, 0.0f, -3.0f))
+                                    frame.getCamera().getPose().compose(Pose.makeTranslation(0.5f, 0.0f, -3.5f))
                                             .extractTranslation());
 
                             // 앵커에 infocard 붙여주기
@@ -495,5 +505,80 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         return true;
     }
 
+    //권한체크
+   public void permissionCheck(){
+       int permissionCheckCamera= ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+       int permissionCheckInternet=ContextCompat.checkSelfPermission(this,Manifest.permission.INTERNET);
+       int permissionCheckCoarseLocation=ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION);
+       int permissionCheckFineLocation=ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
 
+       if(permissionCheckCamera!= PackageManager.PERMISSION_GRANTED){
+           if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
+
+           }else{
+               ActivityCompat.requestPermissions(this,
+                       new String[]{Manifest.permission.CAMERA},
+                       1001);
+           }
+       }
+       if(permissionCheckInternet!= PackageManager.PERMISSION_GRANTED){
+           if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.INTERNET)){
+
+           }else{
+               ActivityCompat.requestPermissions(this,
+                       new String[]{Manifest.permission.INTERNET},
+                       1002);
+           }
+       }
+       if(permissionCheckCoarseLocation!= PackageManager.PERMISSION_GRANTED&&
+               permissionCheckFineLocation!= PackageManager.PERMISSION_GRANTED){
+           if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION)&&
+                   ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+                Log.e(TAG,"!!!!!");
+               ActivityCompat.requestPermissions(this,
+                       new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                       1003);
+
+           }else{
+               Log.e(TAG,"@@@@@@");
+               ActivityCompat.requestPermissions(this,
+                       new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                       1003);
+           }
+       }
+   }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+          case  1001:{
+              if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                  Toast.makeText(this, "카메라 승인이 허가되어있습니다.", Toast.LENGTH_SHORT).show();
+              }else{
+                  Toast.makeText(this, "카메라 승인이 허가되어있지않습ㄴ디ㅏ.", Toast.LENGTH_SHORT).show();
+              }
+              return;
+          }
+            case 1002:{
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                    Toast.makeText(this, "인터넷 승인이 허가되어있습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "인터넷 승인이 허가되어있지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            case 1003:{
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "위치 승인이 허가되어있습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "위치 승인이 허가되어있지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return;
+
+        }
+    }
 }

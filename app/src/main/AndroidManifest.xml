@@ -50,6 +50,7 @@
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_answer" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_wrong" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_answer" />
+
         <activity android:name="com.google.ar.core.examples.java.game.Game0Next" />
         <activity android:name="com.google.ar.core.examples.java.game.Game0Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.Game3Next" />
@@ -68,6 +69,7 @@
         <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
         <activity android:name="com.google.ar.core.examples.java.Road" />
         <activity android:name="com.google.ar.core.examples.java.Map" />
+
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity" />
         <activity android:name="com.google.ar.core.examples.java.DescriptionActivity" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoDescriptionActivity" />
@@ -85,13 +87,8 @@
         </activity>
         <activity android:name="com.google.ar.core.examples.java.HomeTestActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
+
         <activity android:name="com.google.ar.core.examples.java.MapInfoActivity" />
         <activity
             android:name="com.google.ar.core.examples.java.kotlingif.GifActivity"
