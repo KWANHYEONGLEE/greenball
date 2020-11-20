@@ -3,9 +3,11 @@ package com.google.ar.core.examples.java;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +26,7 @@ import com.google.ar.core.examples.java.recomendActivity.ArNpc1;
 
 public class HomeActivity extends AppCompatActivity {
 
-    LinearLayout linearLayout_Home_Recommend,linearLayout_Home_Introduce,linearLayout_Home_ARroad,linearLayout_Home_ARgame;
+    LinearLayout linearLayout_Home_Recommend, linearLayout_Home_Introduce, linearLayout_Home_ARroad, linearLayout_Home_ARgame;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -33,27 +35,26 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //xml과 연결하기
-        linearLayout_Home_Recommend=findViewById(R.id.linearLayout_Home_Recommend);
-        linearLayout_Home_Introduce=findViewById(R.id.linearLayout_Home_Introduce);
-        linearLayout_Home_ARroad=findViewById(R.id.linearLayout_Home_ARroad);
-        linearLayout_Home_ARgame=findViewById(R.id.linearLayout_Home_ARgame);
-
+        linearLayout_Home_Recommend = findViewById(R.id.linearLayout_Home_Recommend);
+        linearLayout_Home_Introduce = findViewById(R.id.linearLayout_Home_Introduce);
+        linearLayout_Home_ARroad = findViewById(R.id.linearLayout_Home_ARroad);
+        linearLayout_Home_ARgame = findViewById(R.id.linearLayout_Home_ARgame);
 
 
         // 쉐어드에 추천받은 정보가 있  다면
         // 스낵바를 통해 알림 예) 추천 받은 곳은 마음에 드셨나요?
         String recommendItem = getSharedString("recommendItem");
-        Log.i("홈액티비티", "recommendItem: "+ recommendItem);
-        if(recommendItem.equals("null")) {
+        Log.i("홈액티비티", "recommendItem: " + recommendItem);
+        if (recommendItem.equals("null")) {
             Log.i("홈액티비티", "recommendItem: null 과 같다.");
 
-        }else {
+        } else {
             Log.i("홈액티비티", "recommendItem: null이 아님으로 추천받은 곳이 있다.");
             // 추천받은 곳이 있는 경우
-            if(getSharedString("recommendItemCount").equals("0")) {
+            if (getSharedString("recommendItemCount").equals("0")) {
                 // 업데이트 이후 처음 홈화면에 온 경우에는 스낵바를 띄우지 않는다.
                 updateSharedString("recommendItemCount", "1");
-            }else if(getSharedString("recommendItemCount").equals("1")){
+            } else if (getSharedString("recommendItemCount").equals("1")) {
                 // 1 인 겨우 2번째 본것으로 판단하고 스낵바를 띄우는 로직 실행한다.
                 // 스낵바는 상단에 띄운다.
 
@@ -76,22 +77,30 @@ public class HomeActivity extends AppCompatActivity {
                                         deleteShared("recommendItem");
                                         deleteShared("recommendItemCount");
 
-                                        if(result == true) {
+                                        if (result == true) {
                                             // YES버튼 클릭시 처리
 
                                             // 추천받았던 정보 쉐어드에서 삭제
                                             deleteShared("recommendItem");
                                             deleteShared("recommendItemCount");
 
+
+                                            
+                                            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                                                    "://" + getResources().getResourcePackageName(R.drawable.ic_launcher)
+                                                    + '/' + getResources().getResourceTypeName(R.drawable.ic_launcher) + '/' + getResources().getResourceEntryName(R.drawable.ic_launcher) );
+
                                             // 인스타 추천 로직 실행
                                             Intent intent = new Intent(Intent.ACTION_SEND);
-                                            //intent.setType("image/*");
-                                            intent.putExtra(Intent.EXTRA_STREAM, "");
+                                            intent.setType("image/*");
+                                            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
                                             intent.setPackage("com.instagram.android");
+
                                             startActivity(intent);
 
+
                                             //startActivityC(InstagramActivity.class);
-                                        }else {
+                                        } else {
                                             // 추천받았던 정보 쉐어드에서 삭제
                                             deleteShared("recommendItem");
                                             deleteShared("recommendItemCount");
@@ -112,8 +121,6 @@ public class HomeActivity extends AppCompatActivity {
                 snackbar.show();
             }
         }
-
-
 
 
         // 푸른길 추천 클릭
@@ -141,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivityC(Map.class);
             }
         });
-      
+
         // AR 게임 클릭
         linearLayout_Home_ARgame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +169,7 @@ public class HomeActivity extends AppCompatActivity {
         // 화면전환 애니메이션 없애기
         overridePendingTransition(0, 0);
     }
+
     // 인텐트 화면전환 하는 함수
     // FLAG_ACTIVITY_CLEAR_TOP = 불러올 액티비티 위에 쌓인 액티비티 지운다.
     public void startActivityflag(Class c) {
@@ -173,7 +181,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     // 문자열 인텐트 전달 함수
-    public void startActivityString(Class c, String name , String sendString) {
+    public void startActivityString(Class c, String name, String sendString) {
         Intent intent = new Intent(getApplicationContext(), c);
         intent.putExtra(name, sendString);
         startActivity(intent);
@@ -182,7 +190,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     // 백스택 지우고 새로 만들어 전달
-    public void startActivityNewTask(Class c){
+    public void startActivityNewTask(Class c) {
         Intent intent = new Intent(getApplicationContext(), c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -210,7 +218,6 @@ public class HomeActivity extends AppCompatActivity {
         editor.remove(key);
         editor.commit();
     }
-
 
 
 }

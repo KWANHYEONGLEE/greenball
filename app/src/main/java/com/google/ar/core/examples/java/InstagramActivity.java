@@ -54,7 +54,6 @@ public class InstagramActivity extends AppCompatActivity {
                     REQUEST_PERMISSION_CODE);
         }
 
-
     }
 
     @Override
