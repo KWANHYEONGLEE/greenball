@@ -39,7 +39,8 @@ public class ep3_question extends AppCompatActivity {
         startActivity(intent);
         // 화면전환 애니메이션 없애기
         overridePendingTransition(0, 0);
-  
+    }
+
     // EditText가 아닌 다른 곳 클릭시 키보드 내리기
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
