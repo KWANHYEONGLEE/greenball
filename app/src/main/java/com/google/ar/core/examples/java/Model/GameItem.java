@@ -14,13 +14,14 @@ public class GameItem implements Serializable {
         this.lock = lock;
     }
 
-    public boolean isLock() {
+    public boolean getLock() {
         return lock;
     }
 
     public void setLock(boolean lock) {
         this.lock = lock;
     }
+
 
     public String getDescription() {
         return description;
