@@ -84,21 +84,22 @@ public class HomeActivity extends AppCompatActivity {
                                             deleteShared("recommendItem");
                                             deleteShared("recommendItemCount");
 
+
                                             
-                                            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                                                    "://" + getResources().getResourcePackageName(R.drawable.green_instagram)
-                                                    + '/' + getResources().getResourceTypeName(R.drawable.green_instagram) + '/' + getResources().getResourceEntryName(R.drawable.green_instagram) );
+//                                            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+//                                                    "://" + getResources().getResourcePackageName(R.drawable.green_instagram)
+//                                                    + '/' + getResources().getResourceTypeName(R.drawable.green_instagram) + '/' + getResources().getResourceEntryName(R.drawable.green_instagram) );
+//
+//                                            // 인스타 추천 로직 실행
+//                                            Intent intent = new Intent(Intent.ACTION_SEND);
+//                                            intent.setType("image/*");
+//                                            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+//                                            intent.setPackage("com.instagram.android");
 
-                                            // 인스타 추천 로직 실행
-                                            Intent intent = new Intent(Intent.ACTION_SEND);
-                                            intent.setType("image/*");
-                                            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                                            intent.setPackage("com.instagram.android");
-
-                                            startActivity(intent);
+//                                            startActivity(intent);
 
 
-                                            //startActivityC(InstagramActivity.class);
+                                            startActivityC(InstagramActivity.class);
                                         } else {
                                             // 추천받았던 정보 쉐어드에서 삭제
                                             deleteShared("recommendItem");
