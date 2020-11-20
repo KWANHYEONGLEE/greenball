@@ -110,7 +110,6 @@ public class ArNpc1 extends AppCompatActivity {
         //Create the transformable model and add it to the anchor.
         //TransformableNode model = new TransformableNode(arFragment.getTransformationSystem());
         Node model = new Node();
-
         model.setParent(arFragment.getArSceneView().getScene());
         model.setLocalPosition(new Vector3(0.0f, -1.5f, -1.5f));
 

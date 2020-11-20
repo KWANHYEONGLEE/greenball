@@ -16,13 +16,11 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
@@ -35,9 +33,13 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.ExternalTexture;
 import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.rendering.PlaneRenderer;
+import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+
+import java.util.concurrent.CompletableFuture;
 
 
 public class Game3Activity extends AppCompatActivity {
@@ -49,6 +51,7 @@ public class Game3Activity extends AppCompatActivity {
     @Nullable
     private ModelRenderable videoRenderable;
     private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer2;
 
     // The color to filter out of the video.
     private static final Color CHROMA_KEY_COLOR = new Color(0.1843f, 1.0f, 0.098f);
@@ -73,7 +76,15 @@ public class Game3Activity extends AppCompatActivity {
 
 
 
-        //
+        // 숨기기
+        arFragment.getPlaneDiscoveryController().hide();
+        View aaa = (View) findViewById(R.id.btn_answer) ;
+        arFragment.getPlaneDiscoveryController().setInstructionView(aaa);
+        changePlane();
+
+
+
+        // 답변하기 버튼
         Button btn_answer = (Button) findViewById(R.id.btn_answer) ;
         btn_answer.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -81,59 +92,13 @@ public class Game3Activity extends AppCompatActivity {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
 
-                Intent intent= new Intent(Game3Activity.this, Game1Next.class);
+                Intent intent= new Intent(Game3Activity.this, Game3Next.class);
                 startActivity(intent);
 
             }
         });
 
-        Button btn_restart = (Button) findViewById(R.id.btn_restart) ;
-        btn_restart.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    mediaPlayer.seekTo(0,MediaPlayer.SEEK_CLOSEST);
-                else
-                    mediaPlayer.seekTo((int)0);
-                mediaPlayer.start();
-
-
-            }
-        });
-
-        Button btn_pause = (Button) findViewById(R.id.btn_pause) ;
-        btn_pause.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                mediaPlayer.pause();
-
-
-
-            }
-        });
-
-        Button btn_seek = (Button) findViewById(R.id.btn_seek) ;
-        btn_seek.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    mediaPlayer.seekTo(3000,MediaPlayer.SEEK_CLOSEST);
-                else
-                    mediaPlayer.seekTo((int)3000);
-
-
-
-            }
-        });
 
 
 
@@ -141,9 +106,82 @@ public class Game3Activity extends AppCompatActivity {
         ExternalTexture texture = new ExternalTexture();
 
         // mediaplayer -> texture
-        mediaPlayer = MediaPlayer.create(this, R.raw.sound_test);
+        mediaPlayer = MediaPlayer.create(this, R.raw.talk1);
         mediaPlayer.setSurface(texture.getSurface());
         mediaPlayer.setLooping(false);
+
+
+        // mediaplayer -> texture
+
+
+
+
+
+
+        //////////////////////////////////////////////////// 쓰리디 생성 ///////////////////////////////////////////////////
+        //////////// mediaplayer -> texture -> videoRenderable -> model_node -> anchorNode ->  hitResult
+
+        Node model = new Node();
+        model.setParent(arFragment.getArSceneView().getScene());
+        model.setLocalPosition(new Vector3(0.0f, -0.5f, -1.0f));
+
+        //Node videoNode = new Node();
+        //videoNode.setParent(anchorNode);
+
+        // 영상노드 크기정해주고
+        float videoWidth = mediaPlayer.getVideoWidth();
+        float videoHeight = mediaPlayer.getVideoHeight();
+        model.setLocalScale(
+                new Vector3(
+                        VIDEO_HEIGHT_METERS * (videoWidth / videoHeight), VIDEO_HEIGHT_METERS, 1.0f));
+
+
+        // 쓰리디 모델 리스너
+        model.setOnTouchListener(new Node.OnTouchListener() {
+            @Override
+            public boolean onTouch(HitTestResult hitTestResult, MotionEvent motionEvent) {
+                //Toast.makeText(Game1Activity.this, "아래캐릭터", Toast.LENGTH_SHORT).show();
+
+
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    mediaPlayer.seekTo(0,MediaPlayer.SEEK_CLOSEST);
+                else
+
+                    mediaPlayer.seekTo((int)0);
+                mediaPlayer.start();
+
+                return true;
+
+            }
+        });
+
+
+        // 미디어 플레이 중에 따라 텍스쳐를 프레임별로 갱신 -> 그리고 렌더러블해줌
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+
+
+            // Wait to set the renderable until the first frame of the  video becomes available.
+            // This prevents the renderable from briefly appearing as a black quad before the video
+            // plays.
+            texture
+                    .getSurfaceTexture()
+                    .setOnFrameAvailableListener(
+                            (SurfaceTexture surfaceTexture) -> {
+
+                                //videoNode.setRenderable(videoRenderable);
+
+                                texture.getSurfaceTexture().setOnFrameAvailableListener(null);
+                            });
+        } else {
+
+            // 주석한다면 새로 생기지 않겠지?
+            //videoNode.setRenderable(videoRenderable);
+
+        }
+
 
         ModelRenderable.builder()
                 .setSource(this, R.raw.chroma_key_video)
@@ -153,6 +191,9 @@ public class Game3Activity extends AppCompatActivity {
 
                             // 평평한것 렌더링 해줌
                             videoRenderable = renderable;
+
+                            model.setRenderable(renderable);
+
                             // mediaplayer -> texture -> 3dmodel
                             renderable.getMaterial().setExternalTexture("videoTexture", texture);
 
@@ -169,119 +210,18 @@ public class Game3Activity extends AppCompatActivity {
                             return null;
                         });
 
+        //////////////////////////////////////////////////// 쓰리디 생성 ///////////////////////////////////////////////////
 
-        //탭을 하면!!!!!!!!!!!!!
+        ////////////////// 탭을 하면!!!!!!!!!!!!! (일단안씀)
         arFragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
                     if (videoRenderable == null) {
                         return;
                     }
 
-                    //////////// mediaplayer -> texture -> videoRenderable -> model_node -> anchorNode ->  hitResult
-
-
-                    Anchor anchor = hitResult.createAnchor();
-                    AnchorNode anchorNode = new AnchorNode(anchor);
-                    anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-                    // 이게 움직이는 모델
-                    TransformableNode model = new TransformableNode(arFragment.getTransformationSystem());
-                    model.setParent(anchorNode);
-                    model.setRenderable(videoRenderable);
-                    //model.select(); // 끄면 안움직임
-
-                    //Node videoNode = new Node();
-                    //videoNode.setParent(anchorNode);
-
-                    // 영상노드 크기정해주고
-                    float videoWidth = mediaPlayer.getVideoWidth();
-                    float videoHeight = mediaPlayer.getVideoHeight();
-                    model.setLocalScale(
-                            new Vector3(
-                                    VIDEO_HEIGHT_METERS * (videoWidth / videoHeight), VIDEO_HEIGHT_METERS, 1.0f));
-
-
-                    // 쓰리디 모델 리스너
-                    model.setOnTouchListener(new Node.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(HitTestResult hitTestResult, MotionEvent motionEvent) {
-                            Toast.makeText(Game3Activity.this, "아래캐릭터", Toast.LENGTH_SHORT).show();
-                            return true;
-
-                        }
-                    });
-
-
-                    // 미디어 플레이 중에 따라 텍스쳐를 프레임별로 갱신 -> 그리고 렌더러블해줌
-                    if (!mediaPlayer.isPlaying()) {
-                        mediaPlayer.start();
-
-
-                        // Wait to set the renderable until the first frame of the  video becomes available.
-                        // This prevents the renderable from briefly appearing as a black quad before the video
-                        // plays.
-                        texture
-                                .getSurfaceTexture()
-                                .setOnFrameAvailableListener(
-                                        (SurfaceTexture surfaceTexture) -> {
-
-                                            //videoNode.setRenderable(videoRenderable);
-
-                                            texture.getSurfaceTexture().setOnFrameAvailableListener(null);
-                                        });
-                    } else {
-
-                        // 주석한다면 새로 생기지 않겠지?
-                        //videoNode.setRenderable(videoRenderable);
-
-                        arFragment.getPlaneDiscoveryController().hide();
-                        //changePlane();
-
-                    }
-
-
-                    ////////////////////////// 말풍선 ////////////////////////
-
-                    // 노드라는건 새로운 하나의 쓰리디일뿐...
-                    Node tigerTitleNode = new Node();
-
-                    tigerTitleNode.setParent(model);
-                    tigerTitleNode.setEnabled(false);
-                    tigerTitleNode.setLocalPosition(new Vector3(0.0f, 1.0f, 0.0f));
-
-                    ViewRenderable.builder()
-                            .setView(this, R.layout.game3_image)
-                            .build()
-                            .thenAccept(
-                                    (renderable) -> {
-
-                                        tigerTitleNode.setRenderable(renderable);
-                                        tigerTitleNode.setEnabled(true);
-
-                                        ImageView aaa = (ImageView) renderable.getView();
-
-
-                                        aaa.setOnClickListener(new Button.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                aaa.setImageDrawable(getResources().getDrawable(R.drawable.arrow_t2));
-
-                                            }
-                                        });
-
-
-                                    })
-                            .exceptionally(
-                                    (throwable) -> {
-                                        throw new AssertionError("Could not load card view.", throwable);
-                                    }
-                            );
-
-                    ////////////////////////// 말풍선 ////////////////////////
 
                 });
-
+        ////////////////// 탭을 하면!!!!!!!!!!!!! (일단안씀)
 
     }
 
@@ -294,6 +234,29 @@ public class Game3Activity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    private void changePlane() {
+        Texture.Sampler sampler = Texture.Sampler.builder()
+                .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+                .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
+                .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+                .build();
+
+        // Build texture with sampler
+        CompletableFuture<Texture> trigrid = Texture.builder()
+                /*************
+                 //R.drawable.arrow_t1 -> 투명 배경으로 변경하시면 됩니다.*/
+                .setSource(this, R.drawable.opacity)
+                .setSampler(sampler).build();
+
+        // Set plane texture
+        this.arFragment.getArSceneView()
+                .getPlaneRenderer()
+                .getMaterial()
+                .thenAcceptBoth(trigrid, (material, texture) -> {
+                    material.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture);
+                });
     }
 
     /**

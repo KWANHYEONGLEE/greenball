@@ -4,6 +4,7 @@ package com.google.ar.core.examples.java.game;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +23,8 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.PlaneRenderer;
 import com.google.ar.sceneform.rendering.Texture;
@@ -53,21 +58,59 @@ public class Game2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_game2);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
+
+        //바닥 이미지 바꾸기
+        arFragment.getPlaneDiscoveryController().hide();
+        View aaa = (View) findViewById(R.id.btn_answer) ;
+        arFragment.getPlaneDiscoveryController().setInstructionView(aaa);
+        changePlane();
+
+        // 답변하기 버튼
+        Button btn_answer = (Button) findViewById(R.id.btn_answer) ;
+        btn_answer.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
+
+                Intent intent= new Intent(Game2Activity.this, Game2Next.class);
+                startActivity(intent);
+
+            }
+        });
+
         //모델 설정(렌더링)
         setUpModel();
 
         //바닥 설정(바닥 클릭 이벤트)
-        //setUpPlane();
+        setUpPlane();
     }
 
     //3D 모델을 노드에 연결(?)하여 렌더링
     private void setUpModel() {
+
+
+        Node model = new Node();
+        model.setParent(arFragment.getArSceneView().getScene());
+        model.setLocalPosition(new Vector3(0.0f, -1.0f, -2.0f));
+
+
+
         // When you build a Renderable, Sceneform loads its resources in the background while returning
         // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
         ModelRenderable.builder()
-                //.setSource(this, R.raw.monster)
+                .setSource(this, R.raw.pepero)
                 .build()
-                .thenAccept(renderable -> andyRenderable = renderable)
+                .thenAccept(
+                        renderable -> {
+
+                            // 평평한것 렌더링 해줌
+                            andyRenderable = renderable;
+                            model.setRenderable(renderable);
+
+
+
+                        })
                 .exceptionally(
                         throwable -> {
                             Toast toast = Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
@@ -81,11 +124,15 @@ public class Game2Activity extends AppCompatActivity {
     private void setUpPlane(){
         // Build texture sampler
 
-        //바닥 이미지 바꾸기
-        changePlane();
+
 
 //        arFragment.getArSceneView().setCameraStreamRenderPriority();
 //        arFragment.getArSceneView().getPlaneRenderer().getMaterial();
+
+
+
+
+
         //바닥 클릭 이벤트
         arFragment.setOnTapArPlaneListener(
                 //HitResult : Ray(?)와 추정된 실제 기하학 사이의 교차점을 젇의
@@ -107,18 +154,18 @@ public class Game2Activity extends AppCompatActivity {
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
                     Log.d("LogTest", arFragment.getArSceneView().getScene().toString());
 
-                    // Create the transformable andy and add it to the anchor.
-                    TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
-                    andy.setParent(anchorNode);
-                    andy.setRenderable(andyRenderable);
-                    andy.select();
+
+
+
+                    // 움직이는거
+//                    TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
+//                    andy.setParent(anchorNode);
+//                    andy.setRenderable(andyRenderable);
+//                    andy.select();
+
                 });
 
-//        arFragment.getArSceneView().getScene().addOnPeekTouchListener((hitTestResult, motionEvent) -> {
-//            Log.d("LogTest", "addOnPeekTouchListener");
-//        });
 
-        //arFragment.getArSceneView().getScene().addOnUpdateListener(frameTime -> Log.d("LogTest", "addOnUpdateListener"));
     }
 
     private void changePlane(){
