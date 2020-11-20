@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
+import com.google.ar.core.examples.java.Model.GameItem;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
@@ -32,7 +34,11 @@ import com.google.ar.sceneform.rendering.PlaneRenderer;
 import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -44,6 +50,10 @@ public class MonsterOneActivity extends AppCompatActivity {
 
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
+
+    // json 변환 라이브러리
+    private Gson gson = new Gson();
+
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -74,6 +84,27 @@ public class MonsterOneActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
+
+                // 쉐어드에 진행중이던 게임이 있는경우
+                String gameItemData = getSharedString("gameItem");
+                Log.i("게임카드액티비티", "gameItemData:" + gameItemData);
+
+                if(gameItemData.equals("null") || gameItemData.equals("[]")) {
+                    // 저장중인 게임이 없는경우
+                    Log.i("게임카드액티비티", "저장중인 게임이 없는경우");
+                }else {
+                    // 저장중인 게임이 있는경우
+                    Log.i("게임카드액티비티", "저장중인 게임이 있는경우");
+                    Type type = new TypeToken<ArrayList<GameItem>>() {}.getType();
+                    ArrayList<GameItem> gameItems = gson.fromJson(gameItemData, type);
+                    // 다음스테이지 오픈
+                    gameItems.get(3).setLock(true);
+                    String gameitemData = gson.toJson(gameItems);
+                    updateSharedString("gameItem", gameitemData);
+
+                }
+
+
 
                 Intent intent= new Intent(MonsterOneActivity.this, Game2Next.class);
                 startActivity(intent);
@@ -289,4 +320,26 @@ public class MonsterOneActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    // 쉐어드 함수정의
+    public void updateSharedString(String key, String value) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String getSharedString(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        String result = prefs.getString(key, "null");
+        return result;
+    }
+
+    public void deleteShared(String key) {
+        SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(key);
+        editor.commit();
+    }
+
 }
