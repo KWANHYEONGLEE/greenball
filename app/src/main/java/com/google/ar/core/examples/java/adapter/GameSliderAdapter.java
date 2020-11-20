@@ -30,7 +30,7 @@ public class GameSliderAdapter extends
     private ArrayList<GameItem> mGameItems = new ArrayList<>();
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, boolean lock);
     }
 
     GameSliderAdapter.OnItemClickListener mListener;
@@ -74,6 +74,7 @@ public class GameSliderAdapter extends
         if(gameItem.getLock()) {
             // 열린 스토리 경우
             Glide.with(context).load(gameItem.getImageDrawable()).into(viewHolder.imageViewBackground);
+
         }else {
             // 닫힌 스토리 경우
             Glide.with(context).load(R.drawable.ic_lock).into(viewHolder.imageViewBackground);
@@ -90,7 +91,7 @@ public class GameSliderAdapter extends
             @Override
             public void onClick(View v) {
                 if(mListener != null){
-                    mListener.onItemClick(viewHolder.itemView, position);
+                    mListener.onItemClick(viewHolder.itemView, position, gameItem.getLock());
                 }
             }
         });
