@@ -87,8 +87,8 @@ public class HomeActivity extends AppCompatActivity {
 
                                             
                                             Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                                                    "://" + getResources().getResourcePackageName(R.drawable.ic_launcher)
-                                                    + '/' + getResources().getResourceTypeName(R.drawable.ic_launcher) + '/' + getResources().getResourceEntryName(R.drawable.ic_launcher) );
+                                                    "://" + getResources().getResourcePackageName(R.drawable.green_instagram)
+                                                    + '/' + getResources().getResourceTypeName(R.drawable.green_instagram) + '/' + getResources().getResourceEntryName(R.drawable.green_instagram) );
 
                                             // 인스타 추천 로직 실행
                                             Intent intent = new Intent(Intent.ACTION_SEND);
