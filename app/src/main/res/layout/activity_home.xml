@@ -189,4 +189,82 @@
 
     </LinearLayout>
 
+    <Button
+        android:textSize="8dp"
+        android:id="@+id/game1"
+        android:layout_width="56dp"
+        android:layout_height="41dp"
+        android:text="game1"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintEnd_toStartOf="@+id/gl_end"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/game2"
+        android:layout_width="56dp"
+        android:layout_height="41dp"
+        android:text="game2"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintEnd_toStartOf="@+id/gl_end"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/game3"
+        android:layout_width="56dp"
+        android:layout_height="41dp"
+        android:text="game3"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintEnd_toStartOf="@+id/gl_end"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/game4"
+        android:layout_width="56dp"
+        android:layout_height="31dp"
+        android:text="game4"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintEnd_toStartOf="@+id/gl_end"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/game5"
+        android:layout_width="56dp"
+        android:layout_height="31dp"
+        android:text="game5"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintEnd_toStartOf="@+id/gl_end"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/game6"
+        android:layout_width="56dp"
+        android:layout_height="31dp"
+        android:text="game6"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_top"
+        app:layout_constraintEnd_toStartOf="@+id/gl_end"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@+id/gl_center_v"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -100,16 +100,12 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     //private static final String TAG = ArNavigationActivity.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
 
+
+    // ar용 변수들
     private ArFragment arFragment;
-
-    private float meter = -1.5f;
-    private int userangle = 0;
-    private int xxx;
-
+    private int angle_correction;
+    private boolean count = true;
     private Node infoCard;
-
-    /////////////////////////////////////////////////////////AR용
-    /////////////////////////////////////////////////////////AR용
 
 
     @Override
@@ -124,60 +120,23 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         //DestinationLongitude=intent.getFloatExtra("longitude",0.0f);
 
 
-        ////////////////////////
-        infoCard = new Node();
-
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-
         arFragment.getPlaneDiscoveryController().hide();
         changePlane();
-
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
 
-        ////////////////////////
 
-        // 처음 그냥 생기는 것 ( 각도 이런거 안맞음 )
-        /////////////////////////////////////////////////////////AR용
-        /////////////////////////////////////////////////////////AR용
-        /////////////////////////////////////////////////////////AR용
+        /////////////////////////////////////////////////////////화살표 초기화
 
-        // 노드 생성후 정보확인
-
+        infoCard = new Node();
         infoCard.setParent(arFragment.getArSceneView().getScene());
-        //infoCard.setParent(arFragment.getArSceneView().getScene());
-        //
-        // infoCard.setEnabled(true);
-
-        double angle = Math.PI * (90 - userangle) / 180.0;
-        double sinAngle = Math.sin(angle);
-        double cosAngle = Math.cos(angle);
-
-        //1 번이랑 3번을 바꿔야지 //1번이 -가 왼쪽 , 3번은 -가 앞쪽 // 2번은 바닥쪽으로 가도록 한것
-        //infoCard.setLocalPosition(new Vector3((float) (-1 * meter * cosAngle), -1.5f, (float) (meter * sinAngle)));
-        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f)));
-        // v:x오른쪽왼쪽(+-) //  v1:z위아래로(+-) // v2: 앞뒤로(+-)
-
-        //infoCard.setLocalPosition(new Vector3(1.0f, -1.5f, -2.5f));
-
-        //Vector3 aaa = new Vector3(0.0f,0.0f,1.0f);
-
-        int degree = test(curLatitude, curLongitude, 37.484460, 126.972891);
-        int resultDegree;
-        if (azimuthinDegree > degree) {
-            resultDegree = 360 - (azimuthinDegree - degree);
-        } else {
-            resultDegree = degree - azimuthinDegree;
-        }
+        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f))); // 카메라위치(0,0,0)에 딱 뜨겠지 // 수정필요하면 해야함.
 
         Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), resultDegree); // rotate Y axis 90 degrees
+        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), 0); // rotate Y axis 90 degrees
         infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-
-        //viewArrow();
-
 
         ViewRenderable.builder()
                 .setView(this, R.layout.tiger_card_view2)
@@ -193,17 +152,14 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                             TextView textView = (TextView) renderable.getView();
                             //textView.setText("Value from setImage");
 
-                            Camera camera = arFragment.getArSceneView().getScene().getCamera();
-                            xxx = (int) camera.getLocalRotation().y;
 
                         })
                 .exceptionally(
                         (throwable) -> {
                             throw new AssertionError("Could not load info card view.", throwable);
                         });
-        /////////////////////////////////////////////////////////AR용
-        /////////////////////////////////////////////////////////AR용
-        /////////////////////////////////////////////////////////AR용
+
+        /////////////////////////////////////////////////////////화살표 초기화
 
 
         //xml 과 연결하기
@@ -214,40 +170,41 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         button_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //findPath();
+
                 //viewArrow();
-                int degree=test(curLatitude, curLongitude, 37.484460, 126.972891);
-                int resultDegree;
-                if(azimuthinDegree>degree){
-                    resultDegree=360-(azimuthinDegree-degree);
-                }else{
-                    resultDegree=degree-azimuthinDegree;
-                }
-                if(resultDegree>180){
-                    resultDegree= resultDegree-180;
-                }
-                    Log.e("TMAP"," "+resultDegree);
-                Toast.makeText(TmapActivity.this, "목표지점까지와의 각도: " + resultDegree, Toast.LENGTH_SHORT).show();
 
-                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
+                // 목표지점 - 북쪽 - 나 각도
+                int degree = test(curLatitude, curLongitude, 37.484460, 126.972891);
+//                int resultDegree;
+//                if(azimuthinDegree>degree){
+//                    resultDegree=360-(azimuthinDegree-degree);
+//                }else{
+//                    resultDegree=degree-azimuthinDegree;
+//                }
+//                if(resultDegree>180){
+//                    resultDegree= resultDegree-180;
+//                }
+//                    Log.e("TMAP"," "+resultDegree);
 
+                //Toast.makeText(TmapActivity.this, "목표지점까지와의 각도: " + resultDegree, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TmapActivity.this, "X: " + infoCard.getWorldRotation().x + "Y: " + infoCard.getWorldRotation().y  +"Z: " + infoCard.getWorldRotation().z, Toast.LENGTH_SHORT).show();
+
+                // 핸드폰 돌아간 만큼 가상공간 보정
+                if (count) {
+                    angle_correction = azimuthinDegree;
+                    count = false;
+                }
+
+                // infoCard 위치 공간 정보
                 infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f)));
-
                 Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-                Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), resultDegree); // rotate Y axis 90 degrees
+                Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), degree - angle_correction); // rotate Y axis 90 degrees
                 infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-
                 infoCard.setParent(arFragment.getArSceneView().getScene());
 
-                //카메라에 묶이면 카메라에서 나옴옴
-                //infoCard.setParent(arFragment.getArSceneView().getScene().getCamera());
-
-                double angle = Math.PI * (90 - userangle) / 180.0;
-                double sinAngle = Math.sin(angle);
-                double cosAngle = Math.cos(angle);
-
-
+                // infoCard ViewRenderable 생성
                 ViewRenderable.builder()
                         .setView(getApplicationContext(), R.layout.opacity)
                         .build()
@@ -257,22 +214,21 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                                     arFragment.getPlaneDiscoveryController().hide();
                                     changePlane();
 
-
+                                    // 세션구하기
                                     Frame frame = arFragment.getArSceneView().getArFrame();
                                     Session session = arFragment.getArSceneView().getSession();
 
-
+                                    // 세션에 앵커만들기
                                     Anchor newAnchor = session.createAnchor(
                                             // 이것도 -1이면 1m 앞에 // v는 위아래 연관된것 같고 // v1은 좌우 // v2는 앞뒤 ( 근데 벡터성분이 조금씩 섞인 느낌이다 : 테스트 더 필요함)
                                             frame.getCamera().getPose().compose(Pose.makeTranslation(0.5f, 0.0f, -3.0f))
                                                     .extractTranslation());
 
+                                    // 앵커에 infocard 붙여주기
                                     AnchorNode cameraPositionNode = new AnchorNode(newAnchor);
-
-
                                     infoCard.setParent(cameraPositionNode);
 
-
+                                    // 렌더링
                                     cameraPositionNode.setRenderable(renderable);
                                     cameraPositionNode.setParent(arFragment.getArSceneView().getScene());
 
@@ -283,10 +239,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
                                     throw new AssertionError("Could not load info card view.", throwable);
                                 });
 
-
-                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
-                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
-                /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
 
             }
         });
@@ -430,7 +382,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         int degree = test(curLatitude, curLongitude, 37.484460, 126.972891);
         int resultDegree;
         if (azimuthinDegree > degree) {
-            resultDegree=360-(azimuthinDegree-degree);
+            resultDegree = 360 - (azimuthinDegree - degree);
             Log.e(TAG, "resultDegree: " + resultDegree);
 
 
@@ -441,64 +393,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         }
         /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
 
+
         Toast.makeText(TmapActivity.this, "버튼 눌림", Toast.LENGTH_SHORT).show();
-
-
-        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f)));
-
-        Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), resultDegree); // rotate Y axis 90 degrees
-        infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-
-        infoCard.setParent(arFragment.getArSceneView().getScene());
-
-        //카메라에 묶이면 카메라에서 나옴옴
-        //infoCard.setParent(arFragment.getArSceneView().getScene().getCamera());
-
-        double angle = Math.PI * (90 - userangle) / 180.0;
-        double sinAngle = Math.sin(angle);
-        double cosAngle = Math.cos(angle);
-
-
-        ViewRenderable.builder()
-                .setView(getApplicationContext(), R.layout.opacity)
-                .build()
-                .thenAccept(
-                        (renderable) -> {
-
-                            arFragment.getPlaneDiscoveryController().hide();
-                            changePlane();
-
-
-                            Frame frame = arFragment.getArSceneView().getArFrame();
-                            Session session = arFragment.getArSceneView().getSession();
-
-
-                            Anchor newAnchor = session.createAnchor(
-                                    // 이것도 -1이면 1m 앞에 // v는 위아래 연관된것 같고 // v1은 좌우 // v2는 앞뒤 ( 근데 벡터성분이 조금씩 섞인 느낌이다 : 테스트 더 필요함)
-                                    frame.getCamera().getPose().compose(Pose.makeTranslation(0.5f, 0.0f, -3.0f))
-                                            .extractTranslation());
-
-                            AnchorNode cameraPositionNode = new AnchorNode(newAnchor);
-
-
-                            infoCard.setParent(cameraPositionNode);
-
-
-                            cameraPositionNode.setRenderable(renderable);
-                            cameraPositionNode.setParent(arFragment.getArSceneView().getScene());
-
-
-                        })
-                .exceptionally(
-                        (throwable) -> {
-                            throw new AssertionError("Could not load info card view.", throwable);
-                        });
-
-
-        /////////////////////////////////////// AR 화살표 테스트용 ///////////////////////////////////////
-
 
 
     }
@@ -555,7 +451,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     }
 
     private void newArrow() {
-
 
 
     }
