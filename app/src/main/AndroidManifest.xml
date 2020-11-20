@@ -27,11 +27,20 @@
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name="com.google.ar.core.examples.java.monster.MonsterThreeActivity">
 
-        <activity android:name="com.google.ar.core.examples.java.game.Game4Activity"></activity>
+
+        </activity>
+        <activity android:name="com.google.ar.core.examples.java.monster.MonsterTwoActivity">
+
+
+        </activity>
+        <activity android:name="com.google.ar.core.examples.java.game.MonsterOneActivity">
+
+        </activity>
+        <activity android:name="com.google.ar.core.examples.java.game.Game4Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.Game0Intro" />
-
-        <activity android:name="com.google.ar.core.examples.java.gamelist.ep3_question"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep3_question" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_wrong" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_answer" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_wrong" />
@@ -53,7 +62,6 @@
         <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
         <activity android:name="com.google.ar.core.examples.java.Road" />
         <activity android:name="com.google.ar.core.examples.java.Map" />
-
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity" />
         <activity android:name="com.google.ar.core.examples.java.DescriptionActivity" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoDescriptionActivity" />
@@ -61,20 +69,22 @@
         <activity android:name="com.google.ar.core.examples.java.ArNavigationActivity" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.ArNpc1" />
         <activity android:name="com.google.ar.core.examples.java.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
         </activity>
         <activity android:name="com.google.ar.core.examples.java.HomeTestActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name="com.google.ar.core.examples.java.MapInfoActivity" />
         <activity
