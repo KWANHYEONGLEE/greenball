@@ -8,8 +8,8 @@
         <shape android:shape="rectangle">
             <corners
 
-                android:bottomLeftRadius="12dp"
-                android:bottomRightRadius="12dp"/>
+                android:topLeftRadius="12dp"
+                android:topRightRadius="12dp" />
 
             <stroke android:width="0.5dp"
                 android:color="@color/gray"/>

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.ar.core.examples.java.DescriptionActivity;
 import com.google.ar.core.examples.java.IntroduceItem;
@@ -46,10 +47,24 @@ public class RecoActivity extends AppCompatActivity {
     //후식 정보 아이템 리스트
     private ArrayList<IntroduceItem> List_dessert = new ArrayList<IntroduceItem>();
 
+    // 뒤로가기 버튼
+    private ImageView back_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reco);
+
+        // 뒤로가기 뷰 연결
+        back_btn = findViewById(R.id.back_btn);
+
+        // 뒤로가기 클릭
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         //객체전달받기
         Log.i("추천액티비티", "객체전달받는 부분");
