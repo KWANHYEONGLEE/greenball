@@ -9,12 +9,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.game.Game1Activity;
 import com.google.ar.core.examples.java.recomendActivity.ArNpc1;
 
 public class HomeActivity extends AppCompatActivity {
@@ -109,6 +111,26 @@ public class HomeActivity extends AppCompatActivity {
                 startActivityC(GameInfoActivity.class);
             }
         });
+
+
+        //////////// 게임 테스팅용 /////////
+
+
+        // 게임1
+        Button game1 = (Button) findViewById(R.id.game1) ;
+        game1.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), Game1Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+        //////////// 게임 테스팅용 /////////
+
     }
 
 
@@ -169,5 +191,7 @@ public class HomeActivity extends AppCompatActivity {
         editor.remove(key);
         editor.commit();
     }
+
+
 
 }
