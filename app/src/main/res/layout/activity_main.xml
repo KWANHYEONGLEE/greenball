@@ -26,7 +26,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="15dp"
         android:background="@drawable/btn_white"
-        android:text="정답을 적어주세요"
+        android:text="어디로 가야할지 알았다!"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:textStyle="bold" />

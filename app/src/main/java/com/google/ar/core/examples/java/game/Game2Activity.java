@@ -22,6 +22,7 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.gamelist.ep4_answer;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
@@ -58,7 +59,6 @@ public class Game2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_game2);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
-
         //바닥 이미지 바꾸기
         arFragment.getPlaneDiscoveryController().hide();
         View aaa = (View) findViewById(R.id.btn_answer) ;
@@ -73,8 +73,9 @@ public class Game2Activity extends AppCompatActivity {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
 
-                Intent intent= new Intent(Game2Activity.this, Game2Next.class);
+                Intent intent= new Intent(Game2Activity.this, ep4_answer.class);
                 startActivity(intent);
+                finish();
 
             }
         });

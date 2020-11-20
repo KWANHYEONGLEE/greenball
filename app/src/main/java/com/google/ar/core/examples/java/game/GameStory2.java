@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.kotlingif.GifActivity;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
@@ -170,6 +171,8 @@ public class GameStory2 extends AppCompatActivity {
                                     if(bagun_speach2.getText().toString().trim().equals("스캔하기")) {
                                         // 여기가 어디더라 말버튼 클릭하면
                                         Log.i("GameStory2액티비티", "스캔하기 클릭");
+                                        startActivityC(GifActivity.class);
+                                        finish();
                                     }
                                 }
                             });

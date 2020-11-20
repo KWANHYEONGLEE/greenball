@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogNoAnswer;
+import com.google.ar.core.examples.java.game.GameStory2;
 
 public class ep1_answer extends AppCompatActivity {
 
@@ -61,7 +62,8 @@ public class ep1_answer extends AppCompatActivity {
                     if(answer.equals("백운광장") || answer.equals("백운 광장")){
                         Toast.makeText(ep1_answer.this, "정답", Toast.LENGTH_SHORT).show();
                         //다음 에피소드로 넘어가야함
-                        startActivityC(ep2_answer.class);
+                        startActivityC(GameStory2.class);
+                        finish();
                     }
                     //정답 아닐때
                     else {

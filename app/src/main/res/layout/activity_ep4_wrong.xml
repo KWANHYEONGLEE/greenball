@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c"
-    tools:context="com.google.ar.core.examples.java.gamelist.ep2_answer">
+    tools:context="com.google.ar.core.examples.java.gamelist.ep4_wrong">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ep2_layout_top"
+        android:id="@+id/ep1_layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="모험의 시작"
+            android:text="저주를 풀다 1"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,58 +43,32 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/ep2_question"
-        android:layout_width="wrap_content"
+        android:id="@+id/ep2_wrong_message"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="어디로 가야하지?"
+        android:layout_margin="30dp"
+        android:text="틀렸어!\n\n화면에 나타난 빼빼로의 개수를\n천천히 잘 세어봐!"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_layout_top" />
-
-    <TextView
-        android:id="@+id/ep2_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="출입구 기둥을 스캔하고 살펴보세요"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ep2_question" />
-
-    <EditText
-        android:id="@+id/ep2_answer_"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:background="@drawable/edittext_background"
-        android:hint="정답을 입력하세요"
-        android:maxLength="10"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_hint">
-        <requestFocus />
-    </EditText>
+        app:layout_constraintTop_toBottomOf="@+id/ep1_layout_top" />
 
     <Button
-        android:id="@+id/answer_button"
+        android:id="@+id/answer_wrong_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/btn_white"
-        android:text="확인"
+        android:text="돌아가기"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_answer_" />
+        app:layout_constraintTop_toBottomOf="@id/ep2_wrong_message" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

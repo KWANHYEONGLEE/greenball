@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="1시간 이내"
+                        android:text="30분 이내"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
