@@ -26,6 +26,7 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.gamelist.ep5_answer;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Node;
@@ -71,7 +72,7 @@ public class Game3Activity extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_game1);
+        setContentView(R.layout.activity_game3);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
 
@@ -92,8 +93,9 @@ public class Game3Activity extends AppCompatActivity {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
 
-                Intent intent= new Intent(Game3Activity.this, Game3Next.class);
+                Intent intent= new Intent(Game3Activity.this, ep5_answer.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -106,7 +108,7 @@ public class Game3Activity extends AppCompatActivity {
         ExternalTexture texture = new ExternalTexture();
 
         // mediaplayer -> texture
-        mediaPlayer = MediaPlayer.create(this, R.raw.talk1);
+        mediaPlayer = MediaPlayer.create(this, R.raw.talk_05);
         mediaPlayer.setSurface(texture.getSurface());
         mediaPlayer.setLooping(false);
 

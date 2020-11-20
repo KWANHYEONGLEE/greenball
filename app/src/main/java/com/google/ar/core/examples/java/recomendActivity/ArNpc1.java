@@ -33,6 +33,7 @@ import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogWhereGo;
 import com.google.ar.core.examples.java.dialog.DialogWithWho;
 import com.google.ar.core.examples.java.game.GameStory1;
+import com.google.ar.core.examples.java.game.GameStory2;
 import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
 import com.google.ar.core.examples.java.listener.OnDialogReturnResultListener;
 import com.google.ar.sceneform.AnchorNode;
@@ -171,14 +172,14 @@ public class ArNpc1 extends AppCompatActivity {
 
                             View view = (View) renderable.getView();
 
-                            //게임 테스트
-                            Button btn_gametest = (Button) findViewById(R.id.btn_gametest) ;
-                            btn_gametest.setOnClickListener(new Button.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    startActivityC(GameStory1.class);
-                                }
-                            });
+//                            //게임 테스트
+//                            Button btn_gametest = (Button) findViewById(R.id.btn_gametest) ;
+//                            btn_gametest.setOnClickListener(new Button.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    startActivityC(GameStory2.class);
+//                                }
+//                            });
 
                             Log.i("ArNpc1Test", "ArNpc1 다이얼로그 onResult 실행");
                             TextView textView = view.findViewById(R.id.test_test);

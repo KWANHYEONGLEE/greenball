@@ -47,7 +47,7 @@ class AugmentedImageFragment : ArFragment() {
     private fun setupImageDatabase(config: Config, session: Session?): Boolean {
         val imageDatabase = AugmentedImageDatabase(session)
         return try {
-            requireContext().assets.open("default03.jpg").use { inputStream ->
+            requireContext().assets.open("default01.jpg").use { inputStream ->
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imageDatabase.addImage("default", bitmap, 0.12f)
             }

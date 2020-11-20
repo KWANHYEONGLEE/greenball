@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,13 +66,18 @@ public class GameSliderAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
+        Log.i("게임카드액티비티", "onBindViewHolder : ");
         GameItem gameItem = mGameItems.get(position);
-
         viewHolder.textViewDescription.setText(gameItem.getDescription());
-        Log.i("체크", "이미지 : " + gameItem.getImageDrawable());
+        Log.i("게임카드액티비티", "이미지 : " + gameItem.getImageDrawable());
 
-        Glide.with(context).load(gameItem.getImageDrawable()).into(viewHolder.imageViewBackground);
+        if(gameItem.getLock()) {
+            // 열린 스토리 경우
+            Glide.with(context).load(gameItem.getImageDrawable()).into(viewHolder.imageViewBackground);
+        }else {
+            // 닫힌 스토리 경우
+            Glide.with(context).load(R.drawable.ic_lock).into(viewHolder.imageViewBackground);
+        }
 
 //        Glide.with(context)
 //                .load("https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile7.uf.tistory.com%2Fimage%2F24283C3858F778CA2EFABE")// sliderItem.getImageUrl()
@@ -115,6 +121,7 @@ public class GameSliderAdapter extends
             game_cardview = itemView.findViewById(R.id.game_cardview);
             imageViewBackground = itemView.findViewById(R.id.iv_auto_game_slider);
             textViewDescription = itemView.findViewById(R.id.tv_title_game_slider);
+
             this.itemView = itemView;
         }
     }

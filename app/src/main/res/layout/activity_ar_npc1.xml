@@ -29,29 +29,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <Button
-            android:id="@+id/button"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="Button" />
+<!--        <Button-->
+<!--            android:id="@+id/button"-->
+<!--            android:layout_width="115dp"-->
+<!--            android:layout_height="59dp"-->
+<!--            android:text="Button" />-->
 
-        <Button
-            android:id="@+id/btn_showDialog"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="디이얼로그" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_showDialog"-->
+<!--            android:layout_width="115dp"-->
+<!--            android:layout_height="59dp"-->
+<!--            android:text="디이얼로그" />-->
 
-        <Button
-            android:id="@+id/btn_imgSlider"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="추천이미지" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_imgSlider"-->
+<!--            android:layout_width="115dp"-->
+<!--            android:layout_height="59dp"-->
+<!--            android:text="추천이미지" />-->
 
-        <Button
-            android:id="@+id/btn_gametest"
-            android:layout_width="115dp"
-            android:layout_height="59dp"
-            android:text="게임테스트" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_gametest"-->
+<!--            android:layout_width="115dp"-->
+<!--            android:layout_height="59dp"-->
+<!--            android:text="게임테스트" />-->
 
     </LinearLayout>
 

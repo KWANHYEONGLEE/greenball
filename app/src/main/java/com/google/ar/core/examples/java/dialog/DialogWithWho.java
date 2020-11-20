@@ -114,7 +114,7 @@ public class DialogWithWho {
             }
         });
 
-        // 먹거리 버튼 클릭
+        // 혼자 버튼 클릭
         img_btn_alone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,7 +146,7 @@ public class DialogWithWho {
             }
         });
 
-        // 후식 버튼 클릭
+        // 친구 버튼 클릭
         img_btn_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,7 +180,7 @@ public class DialogWithWho {
             }
         });
 
-        // 놀거리 버튼 클릭
+        // 연인 버튼 클릭
         img_btn_couple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,13 +200,13 @@ public class DialogWithWho {
                     img_btn_family.setBackgroundResource(0);
                     check_family.setVisibility(View.INVISIBLE);
 
-                    friendCheckBool = true;
+                    coupleCheckBool = true;
                     img_btn_couple.setBackgroundResource(drawable.border);
                     check_couple.setVisibility(View.VISIBLE);
 
                 }else {
-                    // 놀거리 변수 선택안되어 있어 선택
-                    friendCheckBool = true;
+                    // 연인 변수 선택안되어 있어 선택
+                    coupleCheckBool = true;
                     img_btn_couple.setBackgroundResource(drawable.border);
                     check_couple.setVisibility(View.VISIBLE);
                 }
@@ -215,7 +215,7 @@ public class DialogWithWho {
             }
         });
 
-        // 볼거리 버튼 클릭
+        // 가족 버튼 클릭
         img_btn_family.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,12 +237,12 @@ public class DialogWithWho {
                     img_btn_family.setBackgroundResource(0);
                     check_family.setVisibility(View.INVISIBLE);
 
-                    friendCheckBool = true;
+                    familyCheckBool = true;
                     img_btn_family.setBackgroundResource(drawable.border);
                     check_family.setVisibility(View.VISIBLE);
                 }else {
                     // 볼거리 변수 선택안되어 있어 선택
-                    friendCheckBool = true;
+                    familyCheckBool = true;
                     img_btn_family.setBackgroundResource(drawable.border);
                     check_family.setVisibility(View.VISIBLE);
                 }

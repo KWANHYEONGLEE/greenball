@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogWhereGo;
 import com.google.ar.core.examples.java.dialog.DialogWithWho;
+import com.google.ar.core.examples.java.gamelist.ep1_answer;
 import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
 import com.google.ar.core.examples.java.listener.OnDialogReturnResultListener;
 import com.google.ar.core.examples.java.recomendActivity.RecoActivity;
@@ -175,6 +176,8 @@ public class GameStory1 extends AppCompatActivity {
                                     if(bagun_speach.getText().toString().trim().equals("여기가 어디더라...")) {
                                         // 여기가 어디더라 말버튼 클릭하면
                                         Log.i("GameStory1액티비티", "여기가 어디더라 말버튼 클릭");
+                                        startActivityC(ep1_answer.class);
+                                        finish();
                                     }
                                 }
                             });
@@ -183,7 +186,7 @@ public class GameStory1 extends AppCompatActivity {
                             textView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.i("NPC", "텍스트뷰 클릭");
+                                    Log.i("NPC", "텍스트뷰 클릭"+storyPage);
                                     switch (storyPage) {
                                         case 0:
                                             textView.setText("여기가 어딘지 알겠어?");

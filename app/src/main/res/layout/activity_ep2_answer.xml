@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ep2_question" />
 
     <EditText
-        android:id="@+id/ep2_answer"
+        android:id="@+id/ep2_answer_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -94,7 +94,7 @@
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_answer" />
+        app:layout_constraintTop_toBottomOf="@id/ep2_answer_" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,7 @@
             app:sliderIndicatorRadius="2dp"
             app:sliderIndicatorSelectedColor="#5A5A5A"
             app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderStartAutoCycle="false"
             app:sliderScrollTimeInSec="1" />
 
     </androidx.cardview.widget.CardView>
