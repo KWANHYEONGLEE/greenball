@@ -61,8 +61,8 @@ class AugmentedImageNode(context: Context) : AnchorNode() {
         anchor = image.createAnchor(image.centerPose)
 
         // TODO Get actual width of image dynamically, could just be luck that GIPHY images are 400 pixels wide
-        val imageWidth = 400
-        val viewWidth = (imageWidth / image.extentX).toInt()
+        val imageWidth = 450;
+        val viewWidth = (imageWidth+500 / image.extentX).toInt()
         gifView?.sizer = DpToMetersViewSizer(viewWidth)
 
 
@@ -72,6 +72,7 @@ class AugmentedImageNode(context: Context) : AnchorNode() {
         val pose = Pose.makeTranslation(0.0f, 0.0f, 0.0f)
         val localPosition = Vector3(pose.tx(), pose.ty(), pose.tz())
         val centerNode = Node()
+
         centerNode.setParent(this)
         centerNode.localPosition = localPosition
         centerNode.localRotation = Quaternion(pose.qx(), 90f, -90f, pose.qw())
@@ -85,7 +86,9 @@ class AugmentedImageNode(context: Context) : AnchorNode() {
                 //"gandalf" -> Uri.parse("https://media.giphy.com/media/TcdpZwYDPlWXC/giphy.gif")
 
 
-                    "default" -> Uri.parse("https://media.giphy.com/media/QwRvyCEIpXCeT2bqOv/source.gif")
+
+                    "default" -> Uri.parse("https://media.giphy.com/media/M7ljlZ5gWkME229AxS/giphy.gif")
+                    //"default" -> Uri.parse("https://media.giphy.com/media/gnGaQnxJKa79AJgc70/source.gif")
                // "default" -> Uri.parse("https://ezgif.com/images/bg-transparent.gif")
 
                 //"trampoline" -> Uri.parse("https://media.giphy.com/media/ToMjGpjwk1MxyYRcQnK/giphy.gif")

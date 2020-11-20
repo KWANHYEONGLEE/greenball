@@ -71,7 +71,7 @@ public class Game3Activity extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_game1);
+        setContentView(R.layout.activity_game3);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
 
@@ -106,7 +106,7 @@ public class Game3Activity extends AppCompatActivity {
         ExternalTexture texture = new ExternalTexture();
 
         // mediaplayer -> texture
-        mediaPlayer = MediaPlayer.create(this, R.raw.talk1);
+        mediaPlayer = MediaPlayer.create(this, R.raw.talk_05);
         mediaPlayer.setSurface(texture.getSurface());
         mediaPlayer.setLooping(false);
 
