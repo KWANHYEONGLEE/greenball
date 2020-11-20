@@ -16,7 +16,10 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.dialog.DialogSnsReq;
+import com.google.ar.core.examples.java.dialog.DialogWithWho;
 import com.google.ar.core.examples.java.game.Game1Activity;
+import com.google.ar.core.examples.java.listener.OnDialogReturnResultListener;
 import com.google.ar.core.examples.java.recomendActivity.ArNpc1;
 
 public class HomeActivity extends AppCompatActivity {
@@ -35,24 +38,6 @@ public class HomeActivity extends AppCompatActivity {
         linearLayout_Home_ARroad=findViewById(R.id.linearLayout_Home_ARroad);
         linearLayout_Home_ARgame=findViewById(R.id.linearLayout_Home_ARgame);
 
-        final View viewPos = findViewById(R.id.myCoordinatorLayout);
-
-        Snackbar snackbar = Snackbar.make(viewPos, "R.string.snackbar_text", Snackbar.LENGTH_INDEFINITE)
-                .setAction("이벤트 확인", new View.OnClickListener() {
-                    @SuppressLint("ResourceAsColor")
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(HomeActivity.this, "스낵바 클릭", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        View layout = snackbar.getView();
-        //setting background color
-        layout.setBackgroundColor(this.getResources().getColor(R.color.d));
-        // action 버튼 색상변경
-        snackbar.setActionTextColor(Color.WHITE);
-
-        snackbar.show();
 
 
         // 쉐어드에 추천받은 정보가 있  다면
@@ -71,6 +56,54 @@ public class HomeActivity extends AppCompatActivity {
             }else if(getSharedString("recommendItemCount").equals("1")){
                 // 1 인 겨우 2번째 본것으로 판단하고 스낵바를 띄우는 로직 실행한다.
                 // 스낵바는 상단에 띄운다.
+
+                final View viewPos = findViewById(R.id.myCoordinatorLayout);
+
+                Snackbar snackbar = Snackbar.make(viewPos, "추천 받은 곳은 마음에 드셨나요?", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("이벤트 확인", new View.OnClickListener() {
+                            @SuppressLint("ResourceAsColor")
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(HomeActivity.this, "스낵바 클릭", Toast.LENGTH_SHORT).show();
+
+                                DialogSnsReq dialogSnsReq = new DialogSnsReq(HomeActivity.this);
+                                dialogSnsReq.setOnItemClickListener(new DialogSnsReq.OnItemClickListener() {
+                                    @Override
+                                    public void onitemClick(boolean result) {
+                                        Log.i("홈액티비티", "result :" + result);
+
+                                        // 추천받았던 정보 쉐어드에서 삭제
+                                        deleteShared("recommendItem");
+                                        deleteShared("recommendItemCount");
+
+                                        if(result == true) {
+                                            // YES버튼 클릭시 처리
+
+                                            // 추천받았던 정보 쉐어드에서 삭제
+                                            deleteShared("recommendItem");
+                                            deleteShared("recommendItemCount");
+
+                                            // 인스타 추천 로직 실행
+                                            startActivityC(InstagramActivity.class);
+                                        }else {
+                                            // 추천받았던 정보 쉐어드에서 삭제
+                                            deleteShared("recommendItem");
+                                            deleteShared("recommendItemCount");
+                                        }
+
+                                    }
+                                });
+                                dialogSnsReq.callDialog();
+                            }
+                        });
+
+                View layout = snackbar.getView();
+                //setting background color
+                layout.setBackgroundColor(this.getResources().getColor(R.color.d));
+                // action 버튼 색상변경
+                snackbar.setActionTextColor(Color.WHITE);
+
+                snackbar.show();
             }
         }
 
@@ -86,7 +119,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
         // 관광지 소개 클릭
         linearLayout_Home_Introduce.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         linearLayout_Home_ARroad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityC(TmapActivity.class);
+                startActivityC(Map.class);
             }
         });
       
@@ -111,25 +143,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivityC(GameInfoActivity.class);
             }
         });
-
-
-        //////////// 게임 테스팅용 /////////
-
-
-        // 게임1
-//        Button game1 = (Button) findViewById(R.id.game1) ;
-//        game1.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent intent = new Intent(getApplicationContext(), Game1Activity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
-
-        //////////// 게임 테스팅용 /////////
 
     }
 

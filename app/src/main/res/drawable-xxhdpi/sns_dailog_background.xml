@@ -3,14 +3,11 @@
     <item
         android:start="12dp"
         android:end="12dp"
-        android:top="12dp"
         >
 
         <shape android:shape="rectangle">
             <corners
-
-                android:topLeftRadius="12dp"
-                android:topRightRadius="12dp" />
+                android:radius="30dp"/>
 
             <stroke android:width="0.5dp"
                 android:color="@color/gray"/>

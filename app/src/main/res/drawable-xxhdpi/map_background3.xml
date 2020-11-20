@@ -3,7 +3,6 @@
     <item
         android:start="12dp"
         android:end="12dp"
-        android:top="12dp"
         >
 
         <shape android:shape="rectangle">
