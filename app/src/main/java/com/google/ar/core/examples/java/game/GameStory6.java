@@ -21,13 +21,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.ar.core.examples.java.StartActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
-import com.google.ar.core.examples.java.dialog.DialogWhereGo;
-import com.google.ar.core.examples.java.dialog.DialogWithWho;
-import com.google.ar.core.examples.java.gamelist.ep1_answer;
-import com.google.ar.core.examples.java.itemdata.PersonChoiceInfo;
-import com.google.ar.core.examples.java.listener.OnDialogReturnResultListener;
-import com.google.ar.core.examples.java.recomendActivity.RecoActivity;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
@@ -41,8 +36,8 @@ import com.google.ar.sceneform.ux.ArFragment;
 import java.util.concurrent.CompletableFuture;
 
 
-public class GameStory1 extends AppCompatActivity {
-    private static final String TAG = GameStory1.class.getSimpleName();
+public class GameStory6 extends AppCompatActivity {
+    private static final String TAG = GameStory6.class.getSimpleName();
     private static final double MIN_OPENGL_VERSION = 3.0;
 
     private ArFragment arFragment;
@@ -79,7 +74,7 @@ public class GameStory1 extends AppCompatActivity {
 
 
 
-        setContentView(R.layout.activity_game_story1);
+        setContentView(R.layout.activity_game_story6);
 
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment_game);
@@ -164,19 +159,19 @@ public class GameStory1 extends AppCompatActivity {
 
                             View view = (View) renderable.getView();
                             TextView textView = view.findViewById(R.id.test_test);
-                            textView.setText("백운아! 백운아! \n 정신 차려봐!");
+                            textView.setText("백운아!!\n모든 친구들의 저주를 풀었구나!\n\n축하해!");
 //                            TextView textView = (TextView) renderable.getView();
 
                             // 백운이 말 모양 버튼
-                            Button bagun_speach = findViewById(R.id.bagun_speach);
+                            Button bagun_speach6 = findViewById(R.id.bagun_speach6);
 
-                            bagun_speach.setOnClickListener(new View.OnClickListener() {
+                            bagun_speach6.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if(bagun_speach.getText().toString().trim().equals("여기가 어디더라...")) {
+                                    if(bagun_speach6.getText().toString().trim().equals("퀴즈 풀러 가기")) {
                                         // 여기가 어디더라 말버튼 클릭하면
-                                        Log.i("GameStory1액티비티", "여기가 어디더라 말버튼 클릭");
-                                        startActivityC(ep1_answer.class);
+//                                        Log.i("GameStory2액티비티", "스캔하기 클릭");
+                                        startActivityC(Game3Activity.class);
                                         finish();
                                     }
                                 }
@@ -186,16 +181,16 @@ public class GameStory1 extends AppCompatActivity {
                             textView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.i("NPC", "텍스트뷰 클릭"+storyPage);
+                                    Log.i("NPC", "텍스트뷰 클릭");
                                     switch (storyPage) {
                                         case 0:
-                                            textView.setText("여기가 어딘지 알겠어?");
+                                            textView.setText("친구들과 함께 구름세계로 올라 갈수있게\n도와줄 사과친구를 데리고왔어!");
                                             storyPage = storyPage +1;
                                             break;
                                         case 1:
-                                            // 여기가 어디더라 부분
-                                            bagun_speach.setText("여기가 어디더라...");
-                                            bagun_speach.setVisibility(View.VISIBLE);
+                                            // 버튼 보이게, 문구 수정 여기서
+                                            //bagun_speach2.setText("스캔하기");
+                                            //bagun_speach2.setVisibility(View.VISIBLE);
                                             break;
                                         case 2:
 

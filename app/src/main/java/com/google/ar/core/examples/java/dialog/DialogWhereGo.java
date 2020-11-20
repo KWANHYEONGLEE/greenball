@@ -199,13 +199,13 @@ public class DialogWhereGo {
                     img_btn_attraction.setBackgroundResource(0);
                     check_attraction.setVisibility(View.INVISIBLE);
 
-                    dessertCheckBool = true;
+                    playingCheckBool = true;
                     img_btn_playing.setBackgroundResource(drawable.border);
                     check_playing.setVisibility(View.VISIBLE);
 
                 }else {
                     // 놀거리 변수 선택안되어 있어 선택
-                    dessertCheckBool = true;
+                    playingCheckBool = true;
                     img_btn_playing.setBackgroundResource(drawable.border);
                     check_playing.setVisibility(View.VISIBLE);
                 }
@@ -236,20 +236,18 @@ public class DialogWhereGo {
                     img_btn_attraction.setBackgroundResource(0);
                     check_attraction.setVisibility(View.INVISIBLE);
 
-                    dessertCheckBool = true;
+                    attractionCheckBool = true;
                     img_btn_attraction.setBackgroundResource(drawable.border);
                     check_attraction.setVisibility(View.VISIBLE);
                 }else {
                     // 볼거리 변수 선택안되어 있어 선택
-                    dessertCheckBool = true;
+                    attractionCheckBool = true;
                     img_btn_attraction.setBackgroundResource(drawable.border);
                     check_attraction.setVisibility(View.VISIBLE);
                 }
 
             }
         });
-
-
 
     }
 

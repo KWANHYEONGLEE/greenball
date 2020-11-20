@@ -30,19 +30,20 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/bagun_speach"
+            android:id="@+id/bagun_speach6"
             android:visibility="invisible"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:text="스캔하기"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/btn_white"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:text="퀴즈 풀러 가기"
+            android:textColor="@android:color/black"
             android:layout_marginBottom="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

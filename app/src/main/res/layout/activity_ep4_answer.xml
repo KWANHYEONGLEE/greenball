@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c"
-    tools:context="com.google.ar.core.examples.java.gamelist.ep2_answer">
+    tools:context="com.google.ar.core.examples.java.gamelist.ep4_answer">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ep2_layout_top"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="모험의 시작"
+            android:text="저주를 풀다 1"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="어디로 가야하지?"
+        android:text="빼빼로의 개수는 몇개일까?"
         android:textColor="@color/white"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -60,7 +60,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="출입구 기둥을 스캔하고 살펴보세요"
+        android:text="가상으로 생성된 빼빼로의\n개수를 세어보세요"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ep2_question" />
 
     <EditText
-        android:id="@+id/ep2_answer_"
+        android:id="@+id/ep4_answer_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -79,6 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ep2_hint">
+
         <requestFocus />
     </EditText>
 
@@ -94,7 +96,7 @@
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ep2_answer_" />
+        app:layout_constraintTop_toBottomOf="@id/ep4_answer_" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

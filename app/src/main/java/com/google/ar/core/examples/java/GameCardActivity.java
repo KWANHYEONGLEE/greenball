@@ -18,15 +18,19 @@ import com.google.ar.core.examples.java.Model.SliderItem;
 import com.google.ar.core.examples.java.adapter.GameSliderAdapter;
 import com.google.ar.core.examples.java.adapter.SliderAdapterExample;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.game.GameStory1;
+import com.google.ar.core.examples.java.game.GameStory2;
 import com.google.ar.core.examples.java.gamelist.ep1_answer;
 import com.google.ar.core.examples.java.gamelist.ep2_answer;
 import com.google.ar.core.examples.java.gamelist.ep3_question;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,23 +77,23 @@ public class GameCardActivity extends AppCompatActivity {
             }
         });
 
-        renewGameItems();
-    }
+        // 쉐어드에 진행중이던 게임이 있는경우
+        String gameItemData = getSharedString("gameItem");
+        Log.i("게임카드액티비티", "gameItemData:" + gameItemData);
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+        if(gameItemData.equals("null") || gameItemData.equals("[]")) {
+            // 저장중인 게임이 없는경우
+            Log.i("게임카드액티비티", "저장중인 게임이 없는경우");
+            renewGameItems();
+        }else {
+            // 저장중인 게임이 있는경우
+            Log.i("게임카드액티비티", "저장중인 게임이 있는경우");
+            Type type = new TypeToken<ArrayList<GameItem>>() {}.getType();
+            gameItems = gson.fromJson(gameItemData, type);
+            adapter.renewGameItems(gameItems);
+        }
 
-        // 쉐어드에 현재 상태 업데이트
-        String saveGameItemData = gson.toJson(gameItems);
-        updateSharedString("gameItem", saveGameItemData);
-
-    }
-
-    public void renewGameItems() {
-        gameItems.add(new GameItem("1단계 모험의 시작", R.drawable.dessert_somsatang, true));
-        gameItems.add(new GameItem("2단계 모험의 시작", R.drawable.dessert_somsatang, false));
-
+        // 어댑터 클릭처리
         adapter.renewGameItems(gameItems);
         adapter.setOnItemClickListener(new GameSliderAdapter.OnItemClickListener() {
             @Override
@@ -100,13 +104,13 @@ public class GameCardActivity extends AppCompatActivity {
                     //ep 1
                     //npc : 백운아! 정신차려봐! 여기가 어딘지 알겠어?
                     //버튼1 : 여기가 어디더라... (정답입력 페이지)
-                    startActivityC(ep1_answer.class);
+                    startActivityC(GameStory1.class);
                 }
                 else if(position == 1){
                     //ep 2
                     //npc : 시간이 없어! 육교를 내려가서 백운광장역 6번출입구 기둥을 스캔해봐!
                     //버튼 : 스캔하기 (스캔 페이지)
-                    startActivityC(ep3_question.class);
+                    startActivityC(GameStory2.class);
                 }
                 else if(position == 2){
                     //ep 3
@@ -115,6 +119,27 @@ public class GameCardActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("게임카드액티비티", "온디스트로이드");
+        // 쉐어드에 현재 상태 업데이트
+        String saveGameItemData = gson.toJson(gameItems);
+        updateSharedString("gameItem", saveGameItemData);
+
+    }
+
+    public void renewGameItems() {
+        gameItems.add(new GameItem("1단계\n백운이의 모험", R.drawable.dessert_somsatang, true));
+        gameItems.add(new GameItem("2단계\n모험의 시작", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("3단계\n몬스터의 저주", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("4단계\n저주를 풀다 1", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("5단계\n저주를 풀다 2", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("6단계\n저주를 풀다 3", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("7단계\n구름이 되어", R.drawable.dessert_somsatang, false));
     }
 
     public void removeLastGame(View view) {

@@ -11,9 +11,11 @@ import com.google.ar.core.AugmentedImage
 import com.google.ar.core.TrackingState
 import com.google.ar.core.examples.java.StartActivity
 import com.google.ar.core.examples.java.augmentedimage.R
+import com.google.ar.core.examples.java.gamelist.ep2_answer
 import com.google.ar.sceneform.FrameTime
 import com.google.ar.sceneform.ux.ArFragment
 import kotlinx.android.synthetic.main.activity_ar.*
+import kotlinx.android.synthetic.main.activity_ep2_answer.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class GifActivity : AppCompatActivity() {
@@ -36,8 +38,9 @@ class GifActivity : AppCompatActivity() {
 
         btn_go_java.setOnClickListener {
 
-            val nextIntent = Intent(this, StartActivity::class.java)
+            val nextIntent = Intent(this, ep2_answer::class.java)
             startActivity(nextIntent)
+            finish()
 
 
         }

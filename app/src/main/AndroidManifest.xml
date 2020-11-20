@@ -27,17 +27,22 @@
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+
         <activity android:name="com.google.ar.core.examples.java.monster.MonsterThreeActivity">
-
-
         </activity>
         <activity android:name="com.google.ar.core.examples.java.monster.MonsterTwoActivity">
-
-
         </activity>
         <activity android:name="com.google.ar.core.examples.java.game.MonsterOneActivity">
-
         </activity>
+
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep7"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep6_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep6_answer" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep5_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep5_answer" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep4_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep4_answer" />
+
         <activity android:name="com.google.ar.core.examples.java.game.Game4Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.Game0Intro" />
         <activity android:name="com.google.ar.core.examples.java.gamelist.ep3_question" />
@@ -58,6 +63,7 @@
         <activity android:name="com.google.ar.core.examples.java.game.Game1Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.GameStory1" />
         <activity android:name="com.google.ar.core.examples.java.game.GameStory2" />
+        <activity android:name="com.google.ar.core.examples.java.game.GameStory6" />
         <activity android:name="com.google.ar.core.examples.java.GameCardActivity" />
         <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
         <activity android:name="com.google.ar.core.examples.java.Road" />

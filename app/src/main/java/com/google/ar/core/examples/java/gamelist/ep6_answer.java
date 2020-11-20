@@ -16,18 +16,18 @@ import android.widget.Toast;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.dialog.DialogNoAnswer;
 
-public class ep2_answer extends AppCompatActivity {
+public class ep6_answer extends AppCompatActivity {
 
     private ImageView back_game_card;
-    private EditText ep2_answer_;
+    private EditText ep6_answer_;
     private Button answer_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ep2_answer);
+        setContentView(R.layout.activity_ep6_answer);
 
-        back_game_card = (ImageView)findViewById(R.id.back_game_card);
+        back_game_card = (ImageView) findViewById(R.id.back_game_card);
         back_game_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,33 +35,31 @@ public class ep2_answer extends AppCompatActivity {
             }
         });
 
-        ep2_answer_ = (EditText)findViewById(R.id.ep2_answer_);
-        ep2_answer_.requestFocus();
+        ep6_answer_ = (EditText) findViewById(R.id.ep6_answer_);
+        ep6_answer_.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-        answer_button = (Button)findViewById(R.id.answer_button);
+        answer_button = (Button) findViewById(R.id.answer_button);
         answer_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //공백 제거가 안돼.........
-                String answer = ep2_answer_.getText().toString().trim();
-                if(answer.length() <= 0){
-                    DialogNoAnswer dialogNoAnswer = new DialogNoAnswer(ep2_answer_.getContext());
+                String answer = ep6_answer_.getText().toString().trim();
+                if (answer.length() <= 0) {
+                    DialogNoAnswer dialogNoAnswer = new DialogNoAnswer(ep6_answer_.getContext());
                     dialogNoAnswer.show();
-                }
-
-                else{
+                } else {
                     Log.d("backwoon", answer);
                     //정답 맞췄을 때
-                    if(answer.equals("스트리트 푸드존") || answer.equals("스트리트푸드존")){
-                        Toast.makeText(ep2_answer.this, "정답", Toast.LENGTH_SHORT).show();
-                        startActivityC(ep3_question.class);
+                    if (answer.equals("ten") || answer.equals("10") || answer.equals("십") || answer.equals("열")) {
+                        Toast.makeText(ep6_answer.this, "정답", Toast.LENGTH_SHORT).show();
+                        startActivityC(ep7.class);
                         finish();
                     }
                     //정답 아닐때
                     else {
-                        startActivityC(ep2_wrong.class);
+                        startActivityC(ep6_wrong.class);
                     }
                 }
             }
