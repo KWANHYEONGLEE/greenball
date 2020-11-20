@@ -103,3 +103,8 @@ sceneform.asset('sampledata/pepero.obj',
         'default',
         'sampledata/pepero.sfa',
         'src/main/res/raw/pepero')
+
+sceneform.asset('sampledata/monster.obj', // 'Source Asset Path' specified during import.
+        'default',                    // 'Material Path' specified during import.
+        'sampledata/monster.sfa', // '.sfa Output Path' specified during import.
+        'src/main/res/raw/monster')      // '.sfb Output Path' specified during import.
