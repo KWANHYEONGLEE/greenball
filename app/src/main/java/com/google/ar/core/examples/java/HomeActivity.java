@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
                             @SuppressLint("ResourceAsColor")
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(HomeActivity.this, "스낵바 클릭", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(HomeActivity.this, "스낵바 클릭", Toast.LENGTH_SHORT).show();
 
                                 DialogSnsReq dialogSnsReq = new DialogSnsReq(HomeActivity.this);
                                 dialogSnsReq.setOnItemClickListener(new DialogSnsReq.OnItemClickListener() {
