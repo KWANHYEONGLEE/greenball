@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.ar.core.examples.java.DescriptionActivity;
 import com.google.ar.core.examples.java.IntroduceItem;
@@ -50,6 +51,9 @@ public class RecoActivity extends AppCompatActivity {
     // 뒤로가기 버튼
     private ImageView back_btn;
 
+    // 추천 제목 텍스트뷰
+    private TextView txt_reco_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,9 @@ public class RecoActivity extends AppCompatActivity {
 
         // 뒤로가기 뷰 연결
         back_btn = findViewById(R.id.back_btn);
+
+        // 추천 텍스트 뷰 연결
+        txt_reco_title = findViewById(R.id.txt_reco_title);
 
         // 뒤로가기 클릭
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +81,7 @@ public class RecoActivity extends AppCompatActivity {
             pschoice = (PersonChoiceInfo) intent.getParcelableExtra("psChoice");
             Log.i("추천액티비티", pschoice.getFromWho());
             Log.i("추천액티비티", pschoice.getWantSomthing());
+            txt_reco_title.setText("푸른길 " + pschoice.getWantSomthing() + " 추천목록");
         }
 
         //리스트에 정보 추가

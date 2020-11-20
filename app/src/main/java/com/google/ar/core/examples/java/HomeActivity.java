@@ -84,7 +84,6 @@ public class HomeActivity extends AppCompatActivity {
                                             deleteShared("recommendItem");
                                             deleteShared("recommendItemCount");
 
-
                                             
                                             Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                                                     "://" + getResources().getResourcePackageName(R.drawable.green_instagram)
