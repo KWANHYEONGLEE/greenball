@@ -54,7 +54,7 @@ public class ep6_answer extends AppCompatActivity {
                     //정답 맞췄을 때
                     if (answer.equals("ten") || answer.equals("10") || answer.equals("십") || answer.equals("열")) {
                         Toast.makeText(ep6_answer.this, "정답", Toast.LENGTH_SHORT).show();
-                        //startActivityC(ep3_question.class);
+                        startActivityC(ep7.class);
                         finish();
                     }
                     //정답 아닐때

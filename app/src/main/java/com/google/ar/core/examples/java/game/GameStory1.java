@@ -186,7 +186,7 @@ public class GameStory1 extends AppCompatActivity {
                             textView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Log.i("NPC", "텍스트뷰 클릭");
+                                    Log.i("NPC", "텍스트뷰 클릭"+storyPage);
                                     switch (storyPage) {
                                         case 0:
                                             textView.setText("여기가 어딘지 알겠어?");

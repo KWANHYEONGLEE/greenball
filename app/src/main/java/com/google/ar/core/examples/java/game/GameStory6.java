@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.ar.core.examples.java.StartActivity;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
@@ -167,9 +168,11 @@ public class GameStory6 extends AppCompatActivity {
                             bagun_speach6.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if(bagun_speach6.getText().toString().trim().equals("스캔하기")) {
+                                    if(bagun_speach6.getText().toString().trim().equals("퀴즈 풀러 가기")) {
                                         // 여기가 어디더라 말버튼 클릭하면
-                                        Log.i("GameStory2액티비티", "스캔하기 클릭");
+//                                        Log.i("GameStory2액티비티", "스캔하기 클릭");
+                                        startActivityC(Game3Activity.class);
+                                        finish();
                                     }
                                 }
                             });

@@ -133,11 +133,13 @@ public class GameCardActivity extends AppCompatActivity {
     }
 
     public void renewGameItems() {
-        gameItems.add(new GameItem("1단계 모험의 시작", R.drawable.dessert_somsatang, true));
-        gameItems.add(new GameItem("2단계 모험의 시작", R.drawable.dessert_somsatang, false));
-
-
-
+        gameItems.add(new GameItem("1단계\n백운이의 모험", R.drawable.dessert_somsatang, true));
+        gameItems.add(new GameItem("2단계\n모험의 시작", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("3단계\n몬스터의 저주", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("4단계\n저주를 풀다 1", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("5단계\n저주를 풀다 2", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("6단계\n저주를 풀다 3", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("7단계\n구름이 되어", R.drawable.dessert_somsatang, false));
     }
 
     public void removeLastGame(View view) {
