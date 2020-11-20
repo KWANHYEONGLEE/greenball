@@ -23,6 +23,7 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.game.Game2Activity;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
@@ -44,6 +45,8 @@ public class MonsterTwoActivity extends AppCompatActivity {
 
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
+
+    private Button btn_answer;
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -68,15 +71,16 @@ public class MonsterTwoActivity extends AppCompatActivity {
         changePlane();
 
         // 답변하기 버튼
-        Button btn_answer = (Button) findViewById(R.id.btn_answer) ;
+        btn_answer = (Button) findViewById(R.id.btn_answer) ;
         btn_answer.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
 
-//                Intent intent= new Intent(MonsterTwoActivity.this, Game2Next.class);
-//                startActivity(intent);
+                Intent intent= new Intent(MonsterTwoActivity.this, Game2Activity.class);
+                startActivity(intent);
+                finish();
 
             }
         });
@@ -162,16 +166,17 @@ public class MonsterTwoActivity extends AppCompatActivity {
 
                             //앞으로 내가 낼 문제들을 맞추면 친구들의 저주를 풀어주도록하지!
 
-//                            textView.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//
-//                                    if(textView.getText().equals("내가 너 친구들한테 \n" + " 저주를 걸어놨다!")){
-//
-//
-//                                        textView.setText("앞으로 내가 낼 \n" + " 문제들을 맞추면...");
-//
-//                                    }
+                            textView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    if(textView.getText().equals("첫 번째 문제는 \n" + "빼빼로 게임으로하지!")){
+
+
+                                        textView.setText("빼빼로가 몇갠지\n" + " 잘 세어봐!");
+                                        btn_answer.setVisibility(View.VISIBLE);
+
+                                    }
 //                                    else if (textView.getText().equals("앞으로 내가 낼 \n" + " 문제들을 맞추면...")) {
 //
 //
@@ -179,8 +184,8 @@ public class MonsterTwoActivity extends AppCompatActivity {
 //
 //
 //                                    }
-//                                }
-//                            });
+                                }
+                            });
 
 
                             ////////////////////////////////////////////////////////////////////

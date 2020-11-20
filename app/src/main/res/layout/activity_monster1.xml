@@ -17,15 +17,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_answer"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_answer_m1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="정답입력하기"
+        android:background="@drawable/btn_white"
+        android:text="문제 풀러 가기"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.51" />
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/textView"

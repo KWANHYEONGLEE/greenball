@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -123,5 +125,27 @@ public class ep5_answer extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(key);
         editor.commit();
+    }
+
+    // EditText가 아닌 다른 곳 클릭시 키보드 내리기
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //Log.i("login_log", "이벤트 발생");
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            //Log.i("login_log", "포커스가 있다면");
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y)) {
+                // 터치위치가 태그위치에 속하지 않으면 키보드 내리기
+                //Log.i("login_log", "터치위치가 태그위치에 속하지 않으면 키보드 내리기");
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
