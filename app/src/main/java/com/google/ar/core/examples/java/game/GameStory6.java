@@ -63,6 +63,8 @@ public class GameStory6 extends AppCompatActivity {
     // 초기 변수 설정
     private Button btn_showDialog;
 
+    Button bagun_speach6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class GameStory6 extends AppCompatActivity {
         }
 
 
+        bagun_speach6 = findViewById(R.id.bagun_speach6);
 
 
         setContentView(R.layout.activity_game_story6);
@@ -163,7 +166,7 @@ public class GameStory6 extends AppCompatActivity {
 //                            TextView textView = (TextView) renderable.getView();
 
                             // 백운이 말 모양 버튼
-                            Button bagun_speach6 = findViewById(R.id.bagun_speach6);
+                            bagun_speach6 = findViewById(R.id.bagun_speach6);
 
                             bagun_speach6.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -184,16 +187,17 @@ public class GameStory6 extends AppCompatActivity {
                                     Log.i("NPC", "텍스트뷰 클릭");
                                     switch (storyPage) {
                                         case 0:
-                                            textView.setText("친구들과 함께 구름세계로 올라 갈수있게\n도와줄 사과친구를 데리고왔어!");
+                                            textView.setText("친구들과 함께 구름세계로\n올라 갈수있게 도와줄\n사과친구를 데리고왔어!");
                                             storyPage = storyPage +1;
                                             break;
                                         case 1:
+                                            textView.setText("사과친구가 내는 퀴즈를\n잘 듣고 풀어봐!");
+                                            storyPage = storyPage +1;
                                             // 버튼 보이게, 문구 수정 여기서
-                                            //bagun_speach2.setText("스캔하기");
-                                            //bagun_speach2.setVisibility(View.VISIBLE);
+                                            bagun_speach6.setText("퀴즈 풀러 가기");
+                                            bagun_speach6.setVisibility(View.VISIBLE);
                                             break;
                                         case 2:
-
                                             break;
                                         case 3:
 

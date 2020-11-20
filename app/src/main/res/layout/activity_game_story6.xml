@@ -31,7 +31,6 @@
 
         <Button
             android:id="@+id/bagun_speach6"
-            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"

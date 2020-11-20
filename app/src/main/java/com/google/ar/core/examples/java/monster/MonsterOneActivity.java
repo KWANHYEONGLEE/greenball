@@ -25,6 +25,7 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.Model.GameItem;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.monster.MonsterTwoActivity;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
@@ -54,6 +55,8 @@ public class MonsterOneActivity extends AppCompatActivity {
     // json 변환 라이브러리
     private Gson gson = new Gson();
 
+    private Button btn_answer;
+
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -78,7 +81,7 @@ public class MonsterOneActivity extends AppCompatActivity {
         changePlane();
 
         // 답변하기 버튼
-        Button btn_answer = (Button) findViewById(R.id.btn_answer) ;
+        btn_answer = (Button) findViewById(R.id.btn_answer_m1) ;
         btn_answer.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,10 +107,9 @@ public class MonsterOneActivity extends AppCompatActivity {
 
                 }
 
-
-
-                Intent intent= new Intent(MonsterOneActivity.this, Game2Next.class);
+                Intent intent= new Intent(MonsterOneActivity.this, MonsterTwoActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -205,6 +207,7 @@ public class MonsterOneActivity extends AppCompatActivity {
 
 
                                         textView.setText("친구들의 저주를 \n" + "풀어주도록하지!");
+                                        btn_answer.setVisibility(View.VISIBLE);
 
 
                                     }

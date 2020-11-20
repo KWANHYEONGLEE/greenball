@@ -27,6 +27,7 @@ import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.augmentedimage.R;
 import com.google.ar.core.examples.java.gamelist.ep5_answer;
+import com.google.ar.core.examples.java.gamelist.ep6_answer;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Node;
@@ -93,7 +94,7 @@ public class Game3Activity extends AppCompatActivity {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
 
-                Intent intent= new Intent(Game3Activity.this, ep5_answer.class);
+                Intent intent= new Intent(Game3Activity.this, ep6_answer.class);
                 startActivity(intent);
                 finish();
 

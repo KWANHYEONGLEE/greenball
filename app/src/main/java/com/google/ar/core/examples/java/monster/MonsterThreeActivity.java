@@ -23,6 +23,7 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.examples.java.augmentedimage.R;
+import com.google.ar.core.examples.java.game.Game1Activity;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
@@ -44,6 +45,8 @@ public class MonsterThreeActivity extends AppCompatActivity {
 
     private ArFragment arFragment;
     private ModelRenderable andyRenderable;
+
+    private Button btn_answer;
 
     @Override
     @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -68,15 +71,16 @@ public class MonsterThreeActivity extends AppCompatActivity {
         changePlane();
 
         // 답변하기 버튼
-        Button btn_answer = (Button) findViewById(R.id.btn_answer) ;
+        btn_answer = (Button) findViewById(R.id.btn_answer_m1) ;
         btn_answer.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Toast.makeText(Game1Activity.this, "123123", Toast.LENGTH_SHORT).show();
 
-//                Intent intent= new Intent(MonsterThreeActivity.this, Game2Next.class);
-//                startActivity(intent);
+                Intent intent= new Intent(MonsterThreeActivity.this, Game1Activity.class);
+                startActivity(intent);
+                finish();
 
             }
         });
@@ -168,6 +172,7 @@ public class MonsterThreeActivity extends AppCompatActivity {
 
 
                                         textView.setText("하지만 이번 문제는 \n" + "만만치 않을걸??");
+                                        btn_answer.setVisibility(View.VISIBLE);
 
                                     }
 
