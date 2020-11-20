@@ -27,9 +27,14 @@
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name="com.google.ar.core.examples.java.GameCardActivity"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep3_question"></activity>
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep2_answer" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_wrong" />
+        <activity android:name="com.google.ar.core.examples.java.gamelist.ep1_answer" />
+        <activity android:name="com.google.ar.core.examples.java.GameCardActivity" />
         <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
-        <activity android:name="com.google.ar.core.examples.java.Road"></activity>
+        <activity android:name="com.google.ar.core.examples.java.Road" />
         <activity android:name="com.google.ar.core.examples.java.Map" />
         <activity android:name=".Map" />
         <activity android:name="com.google.ar.core.examples.java.recomendActivity.RecoActivity" />

@@ -5,17 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c"
-    tools:context="com.google.ar.core.examples.java.GameCardActivity">
-<!--    android:background="@drawable/skyblue"-->
+    tools:context="com.google.ar.core.examples.java.gamelist.ep2_wrong">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_top"
+        android:id="@+id/ep1_layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/back_game_card"
@@ -29,7 +28,7 @@
             app:tint="@android:color/black" />
 
         <TextView
-            android:id="@+id/game_card_top"
+            android:id="@+id/ep1_game_card_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -43,38 +42,33 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_slider_mainActivity"
+    <TextView
+        android:id="@+id/ep2_wrong_message"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="틀렸어!\n\n백운광장역 출입구 기둥에\n어떤 글자가 나타나는지\n잘 살펴봐!"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_top"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="0dp">
+        app:layout_constraintTop_toBottomOf="@+id/ep1_layout_top" />
 
-        <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/gameSlider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:sliderAnimationDuration="600"
-            app:sliderAutoCycleDirection="back_and_forth"
-            app:sliderIndicatorAnimationDuration="600"
-            app:sliderIndicatorEnabled="true"
-            app:sliderIndicatorGravity="center_horizontal|bottom"
-            app:sliderIndicatorMargin="15dp"
-            app:sliderIndicatorOrientation="horizontal"
-            app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="1.9dp"
-            app:sliderIndicatorSelectedColor="#5A5A5A"
-            app:sliderIndicatorUnselectedColor="#FFF"
-            app:sliderScrollTimeInSec="1"
-            android:background="@null"/>
+    <Button
+        android:id="@+id/answer_wrong_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/btn_white"
+        android:text="돌아가기"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ep2_wrong_message" />
 
-    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
