@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
 //                                            startActivity(intent);
 
 
-                                            startActivityC(InstagramActivity.class);
+                                            startActivityC(InstargramShare.class);
                                         } else {
                                             // 추천받았던 정보 쉐어드에서 삭제
                                             deleteShared("recommendItem");
