@@ -98,12 +98,18 @@ public class GameCardActivity extends AppCompatActivity {
             adapter.renewGameItems(gameItems);
         }
 
+        Log.i("게임카드액티비티", "gameItems:"+gameItems);
+
         // 어댑터 클릭처리
         adapter.renewGameItems(gameItems);
         adapter.setOnItemClickListener(new GameSliderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, boolean lock) {
                 GameItem gameItem = gameItems.get(position);
+
+                Log.i("게임카드액티비티", "gameItems lock:"+gameItems.get(position).getLock());
+                Log.i("게임카드액티비티", "lock:"+lock);
+
 //                startActivityObject(DescriptionActivity.class, "gameItem", gameItem);
                 if (position == 0) {
                     //ep 1
@@ -149,12 +155,30 @@ public class GameCardActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("게임카드액티비티", "온리줌");
+        adapter.renewGameItems(gameItems);
+        // 쉐어드에 진행중이던 게임이 있는경우
+        String gameItemData = getSharedString("gameItem");
+        Log.i("게임카드액티비티", "gameItemData:" + gameItemData);
+
+        // 저장중인 게임이 있는경우
+        Log.i("게임카드액티비티", "저장중인 게임이 있는경우");
+        Type type = new TypeToken<ArrayList<GameItem>>() {
+        }.getType();
+        gameItems = gson.fromJson(gameItemData, type);
+        adapter.renewGameItems(gameItems);
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.i("게임카드액티비티", "온디스트로이드");
         // 쉐어드에 현재 상태 업데이트
-        String saveGameItemData = gson.toJson(gameItems);
-        updateSharedString("gameItem", saveGameItemData);
+//        String saveGameItemData = gson.toJson(gameItems);
+//        updateSharedString("gameItem", saveGameItemData);
 
     }
 
