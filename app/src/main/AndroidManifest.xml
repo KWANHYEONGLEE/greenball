@@ -39,6 +39,7 @@
         <activity android:name="com.google.ar.core.examples.java.game.Game2Activity" />
         <activity android:name="com.google.ar.core.examples.java.game.Game1Next" />
         <activity android:name="com.google.ar.core.examples.java.game.Game1Activity" />
+        <activity android:name="com.google.ar.core.examples.java.game.GameStory1" />
         <activity android:name="com.google.ar.core.examples.java.GameCardActivity" />
         <activity android:name="com.google.ar.core.examples.java.GameInfoActivity" />
         <activity android:name="com.google.ar.core.examples.java.Road" />
