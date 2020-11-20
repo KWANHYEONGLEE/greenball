@@ -90,8 +90,12 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
 
     //intent로 넘어오는 값들
-    float DestinationLatitude;
-    float DestinationLongitude;
+    double DestinationLatitude;
+    double DestinationLongitude;
+
+    boolean firstBarrior;
+
+
 
 
     /////////////////////////////////////////////////////////AR용
@@ -116,9 +120,10 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
         //intent로 값 받아오기
         Intent intent=getIntent();
-        DestinationLatitude=intent.getFloatExtra("latitude",0.0f);
-        DestinationLongitude=intent.getFloatExtra("longitude",0.0f);
+        DestinationLatitude=intent.getDoubleExtra("latitude",0.0);
+        DestinationLongitude=intent.getDoubleExtra("longitude",0.0);
 
+        firstBarrior=true;
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         arFragment.getPlaneDiscoveryController().hide();
@@ -126,40 +131,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
-
-
-        /////////////////////////////////////////////////////////화살표 초기화
-
-        infoCard = new Node();
-        infoCard.setParent(arFragment.getArSceneView().getScene());
-        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f))); // 카메라위치(0,0,0)에 딱 뜨겠지 // 수정필요하면 해야함.
-
-        Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
-        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), 0); // rotate Y axis 90 degrees
-        infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
-
-        ViewRenderable.builder()
-                .setView(this, R.layout.tiger_card_view2)
-                .build()
-                .thenAccept(
-                        (renderable) -> {
-
-                            arFragment.getPlaneDiscoveryController().hide();
-                            changePlane();
-
-                            // 이 node를 생성
-                            infoCard.setRenderable(renderable);
-                            TextView textView = (TextView) renderable.getView();
-                            //textView.setText("Value from setImage");
-
-
-                        })
-                .exceptionally(
-                        (throwable) -> {
-                            throw new AssertionError("Could not load info card view.", throwable);
-                        });
-
-        /////////////////////////////////////////////////////////화살표 초기화
 
 
         //xml 과 연결하기
@@ -217,6 +188,8 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         TmapMarker_Destination.setCanShowCallout(true);
         TmapMarker_Destination.setCalloutTitle("목적지");
         tMapView.addMarkerItem("Destination", TmapMarker_Destination);
+
+
 
         //버튼 이벤트
         button_find.setOnClickListener(new View.OnClickListener() {
@@ -300,7 +273,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         } else {
             true_bearing = radian_bearing * (180 / 3.141592);
         }
-        Log.e(TAG, "result: " + true_bearing);
 
         return (int) true_bearing;
 
@@ -323,6 +295,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     //센서가 변할 때 마다 나침반 수치가 달라짐
     @Override
     public void onSensorChanged(SensorEvent event) {
+
         if (event.sensor == mAccelerometer) {
 
             System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
@@ -333,9 +306,12 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
             mLastMagnetometerSet = true;
         }
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
-
             SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
             azimuthinDegree = (int) (Math.toDegrees(SensorManager.getOrientation(mR, mOrientation)[0]) + 360) % 360;
+            if(firstBarrior){
+                firstBarrior=false;
+                firstArrow();
+            }
         }
     }
 
@@ -366,6 +342,57 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         super.onDestroy();
 
 
+    }
+
+    //처음 화면에 화살표만들어주기
+    private void firstArrow(){
+        /////////////////////////////////////////////////////////화살표 초기화
+
+        infoCard = new Node();
+
+        infoCard.setParent(arFragment.getArSceneView().getScene());
+        int degree = test(curLatitude, curLongitude, DestinationLatitude, DestinationLongitude);//북쪽기준 목적지 위치각도
+        Log.e(TAG,"curLatitude: "+curLatitude);
+        Log.e(TAG,"curLongitude: "+curLongitude);
+        Log.e(TAG,"DestinationLatitude: "+DestinationLatitude);
+        Log.e(TAG,"DestinationLongitude: "+DestinationLongitude);
+        int realDegree;
+        if(azimuthinDegree>degree){
+            realDegree=azimuthinDegree-degree;
+        }else{
+            realDegree=360-(degree-azimuthinDegree);
+        }
+        Log.e(TAG,"realDegree: "+realDegree);
+        Log.e(TAG,"azimuthinDegree: "+azimuthinDegree);
+        infoCard.setLocalPosition(new Vector3((float) (0), 0f, (0f))); // 카메라위치(0,0,0)에 딱 뜨겠지 // 수정필요하면 해야함.
+
+        Quaternion rotation1 = Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90); // rotate X axis 90 degrees
+        Quaternion rotation2 = Quaternion.axisAngle(new Vector3(0.0f, 0.0f, 1.0f), realDegree); // rotate Y axis 90 degrees
+        infoCard.setLocalRotation(Quaternion.multiply(rotation1, rotation2));
+
+
+        ViewRenderable.builder()
+                .setView(this, R.layout.tiger_card_view2)
+                .build()
+                .thenAccept(
+                        (renderable) -> {
+
+                            arFragment.getPlaneDiscoveryController().hide();
+                            changePlane();
+
+                            // 이 node를 생성
+                            infoCard.setRenderable(renderable);
+                            TextView textView = (TextView) renderable.getView();
+                            //textView.setText("Value from setImage");
+
+
+                        })
+                .exceptionally(
+                        (throwable) -> {
+                            throw new AssertionError("Could not load info card view.", throwable);
+                        });
+
+        /////////////////////////////////////////////////////////화살표 초기화
     }
 
     //새로운 방향 화살표 만들기

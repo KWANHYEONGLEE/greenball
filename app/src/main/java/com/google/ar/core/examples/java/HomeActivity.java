@@ -112,25 +112,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-        //////////// 게임 테스팅용 /////////
-
-
-        // 게임1
-//        Button game1 = (Button) findViewById(R.id.game1) ;
-//        game1.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent intent = new Intent(getApplicationContext(), Game1Activity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
-
-        //////////// 게임 테스팅용 /////////
-
     }
 
 
