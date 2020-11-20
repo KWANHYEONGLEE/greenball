@@ -85,7 +85,7 @@ class AugmentedImageNode(context: Context) : AnchorNode() {
                 //"gandalf" -> Uri.parse("https://media.giphy.com/media/TcdpZwYDPlWXC/giphy.gif")
 
 
-                    "default" -> Uri.parse("https://media.giphy.com/media/coK5nWbgOir0An4q02/source.gif")
+                    "default" -> Uri.parse("https://media.giphy.com/media/QwRvyCEIpXCeT2bqOv/source.gif")
                // "default" -> Uri.parse("https://ezgif.com/images/bg-transparent.gif")
 
                 //"trampoline" -> Uri.parse("https://media.giphy.com/media/ToMjGpjwk1MxyYRcQnK/giphy.gif")
