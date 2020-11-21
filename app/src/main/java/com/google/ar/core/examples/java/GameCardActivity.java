@@ -183,13 +183,13 @@ public class GameCardActivity extends AppCompatActivity {
     }
 
     public void renewGameItems() {
-        gameItems.add(new GameItem("1단계\n백운이의 모험", R.drawable.dessert_somsatang, true));
-        gameItems.add(new GameItem("2단계\n모험의 시작", R.drawable.dessert_somsatang, false));
-        gameItems.add(new GameItem("3단계\n몬스터의 저주", R.drawable.dessert_somsatang, false));
-        gameItems.add(new GameItem("4단계\n저주를 풀다 1", R.drawable.dessert_somsatang, false));
-        gameItems.add(new GameItem("5단계\n저주를 풀다 2", R.drawable.dessert_somsatang, false));
-        gameItems.add(new GameItem("6단계\n저주를 풀다 3", R.drawable.dessert_somsatang, false));
-        gameItems.add(new GameItem("7단계\n구름이 되어", R.drawable.dessert_somsatang, false));
+        gameItems.add(new GameItem("1단계\n백운이의 모험", R.drawable.ep1, true));
+        gameItems.add(new GameItem("2단계\n모험의 시작", R.drawable.ep2, false));
+        gameItems.add(new GameItem("3단계\n몬스터의 저주", R.drawable.ep3, false));
+        gameItems.add(new GameItem("4단계\n저주를 풀다 1", R.drawable.ep4, false));
+        gameItems.add(new GameItem("5단계\n저주를 풀다 2", R.drawable.ep5, false));
+        gameItems.add(new GameItem("6단계\n저주를 풀다 3", R.drawable.ep6, false));
+        gameItems.add(new GameItem("7단계\n구름이 되어", R.drawable.ep7, false));
         // 쉐어드에 현재 상태 업데이트
         String saveGameItemData = gson.toJson(gameItems);
         updateSharedString("gameItem", saveGameItemData);
